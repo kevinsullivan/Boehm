@@ -1,5 +1,12 @@
 (** ** SYSTEM MODULE**)
 
+(**
+Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
+Barry Boehm, and Adam Ross 
+
+March, 2015
+*)
+
 Module System.
 (** 
 We can't concretely specify non-functional properties absent a model of the system.

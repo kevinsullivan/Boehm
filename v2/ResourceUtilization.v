@@ -1,5 +1,4 @@
-(** * Draft Coq Spec derived from Boehm 2015 QA Ontology *)
-
+(** ** RESOURCE UTILIZATION *)
 (**
 Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
 Barry Boehm, and Adam Ross 
@@ -7,18 +6,14 @@ Barry Boehm, and Adam Ross
 March, 2015
 *)
 
-(** SYSTEM definition now is imported here as a seprate module.**)
 Require Import System.
-
-(** CONTEXT definition now is imported here as a seprate module.**)
 Require Import Context.
 
 Module ResourceUtilization.
-(** ** RESOURCE UTILIZATION **)
 (** ** The basic system properties for [ResourceUtilization]*)
 (**
 We define two types of cost: 1) cost in development phase, and 2) cost of running a system in 
-different contexts. The development cost is not related to context, but the cost in running time does.
+different contexts. The development cost is not related to context, but the cost in running time is.
 *)
 
 Inductive CostInDev: System.System -> Prop := 
@@ -54,4 +49,8 @@ Inductive ResourceUtilization_In_Context (s: System.System) (c: Context.Context)
                         OtherScarceResources s c -> Manufacturability s c ->
                         Sustainability s c -> ResourceUtilization_In_Context s c.
 
-Inductive ResourceUtilization (s: Syst
+Inductive ResourceUtilization (s: System.System): Prop :=
+    mk_resource_utilization: 
+      (forall c: Context.Context, ResourceUtilization_In_Context s c) -> ResourceUtilization s.
+
+End ResourceUtilization.

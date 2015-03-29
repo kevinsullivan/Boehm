@@ -1,4 +1,4 @@
-(** * Draft Coq Spec derived from Boehm 2015 QA Ontology *)
+(** * MissionEffective *)
 
 (**
 Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
@@ -7,10 +7,8 @@ Barry Boehm, and Adam Ross
 March 23, 2015
 *)
 
-(** CONTEXT definition now is imported here as a seprate module.**)
+Require Import System.
 Require Import Context.
-
-(** Stakeholder definition now is imported here as a seprate module.**)
 Require Import Stakeholder.
 
 Module MissionEffective.
@@ -43,49 +41,49 @@ hold for all such pairs. In real systems, that might not always be the case,
 and even if it were, it would in general be harder to prove! 
 *)
 
-Inductive hasRequiredPhysicalCapability: System.System -> Context.Context -> Prop := 
-  proofOfPhysicalCapability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredPhysicalCapability s c.
+  Inductive hasRequiredPhysicalCapability: System.System -> Context.Context -> Prop := 
+    proofOfPhysicalCapability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredPhysicalCapability s c.
 
-Inductive hasRequiredCyberCapability: System.System -> Context.Context -> Prop := 
-  proofOfCyberCapability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredCyberCapability s c.
+  Inductive hasRequiredCyberCapability: System.System -> Context.Context -> Prop := 
+    proofOfCyberCapability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredCyberCapability s c.
 
-Inductive hasRequiredHumanUsability: System.System -> Context.Context ->  Prop := 
-  proofOfHumanUsability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredHumanUsability s c.
+  Inductive hasRequiredHumanUsability: System.System -> Context.Context ->  Prop := 
+    proofOfHumanUsability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredHumanUsability s c.
 
-Inductive hasRequiredSpeed: System.System -> Context.Context -> Prop := 
-  proofOfSpeed: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredSpeed s c.
+  Inductive hasRequiredSpeed: System.System -> Context.Context -> Prop := 
+    proofOfSpeed: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredSpeed s c.
 
-Inductive hasRequiredEndurability: System.System -> Context.Context -> Prop := 
-  proofOfEndurability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredEndurability s c.
+  Inductive hasRequiredEndurability: System.System -> Context.Context -> Prop := 
+    proofOfEndurability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredEndurability s c.
 
-Inductive hasRequiredManeuverability: System.System -> Context.Context -> Prop := 
-  proofOfManeuverability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredManeuverability s c.
+  Inductive hasRequiredManeuverability: System.System -> Context.Context -> Prop := 
+    proofOfManeuverability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredManeuverability s c.
 
-Inductive hasRequiredAccuracy: System.System -> Context.Context -> Prop := 
-  proofOfAccuracy: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredAccuracy s c.
+  Inductive hasRequiredAccuracy: System.System -> Context.Context -> Prop := 
+    proofOfAccuracy: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredAccuracy s c.
 
-Inductive hasRequiredImpact: System.System -> Context.Context -> Prop := 
-  proofOfImpact: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredImpact s c.
+  Inductive hasRequiredImpact: System.System -> Context.Context -> Prop := 
+    proofOfImpact: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredImpact s c.
 
-Inductive hasRequiredScalability: System.System -> Context.Context -> Prop := 
-  proofOfScalability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredScalability s c.
+  Inductive hasRequiredScalability: System.System -> Context.Context -> Prop := 
+    proofOfScalability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredScalability s c.
 
-Inductive hasRequiredVersatility: System.System -> Context.Context -> Prop := 
-  proofOfVersatility: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredVersatility s c.
+  Inductive hasRequiredVersatility: System.System -> Context.Context -> Prop := 
+    proofOfVersatility: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredVersatility s c.
 
-Inductive hasRequiredInteroperability: System.System -> Context.Context -> Prop := 
-  proofOfInteroperability: forall (s: System.System), forall (c: Context.Context), 
-    hasRequiredInteroperability s c.
+  Inductive hasRequiredInteroperability: System.System -> Context.Context -> Prop :=   
+    proofOfInteroperability: forall (s: System.System), forall (c: Context.Context), 
+      hasRequiredInteroperability s c.
 
 (**
 One potentially important insight that "jumps out" even from this simple 
@@ -121,7 +119,7 @@ required "proof" types, then it will return a proof of stakeholder mission effec
 given [System] in the given [Context] for the given [Stakeholder].
 *)
 
-Inductive Is_stakeholder_effective_in_context (s: System.System) (sh: Stakeholder.Stakeholder s) (c: Context.Context): Prop :=
+  Inductive Is_stakeholder_effective_in_context (s: System.System) (sh: Stakeholder.Stakeholder s) (c: Context.Context): Prop :=
    is_stakeholder_mission_effective: 
       hasRequiredPhysicalCapability s c -> hasRequiredCyberCapability s c -> 
       hasRequiredHumanUsability s c -> hasRequiredSpeed s c -> hasRequiredEndurability s c -> 
@@ -136,9 +134,9 @@ proposition that the [System] is subjectively mission effective for all stakehol
 in the given [Context]. 
 *)
 
-Inductive MissionEffectiveInContext (s: System.System) (c: Context.Context): Prop := 
-  is_mission_eff_in_context: 
-    (forall sh: Stakeholder.Stakeholder s, Is_stakeholder_effective_in_context s sh c) -> 
+  Inductive MissionEffectiveInContext (s: System.System) (c: Context.Context): Prop := 
+    is_mission_eff_in_context: 
+      (forall sh: Stakeholder.Stakeholder s, Is_stakeholder_effective_in_context s sh c) -> 
         MissionEffectiveInContext s c.
 
 (**
@@ -146,6 +144,9 @@ Finally we can formalize the property of a [System] being mission effective, whe
 proof of this property requires as a input a proof that, for all [Contexts], the system is
 mission effective (implicitly for all [Stakeholders]) in those [Contexts]. 
 *)
-Inductive MissionEffective (s: System.System): Prop := 
-  mk_mission_eff: 
-    (forall c: Context.Context, forall sh: Stakeholder.Stakeholder s, MissionEffectiv
+  Inductive MissionEffective (s: System.System): Prop := 
+    mk_mission_eff: 
+      (forall c: Context.Context, forall sh: Stakeholder.Stakeholder s, MissionEffectiveInContext s c) -> 
+        MissionEffective s.
+
+End MissionEffective.
