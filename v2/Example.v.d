@@ -1,0 +1,1 @@
+Example.vo Example.glob Example.v.beautified: Example.v ./CpdtTactics.vo ./MissionEffective.vo ./ResourceUtilization.vo ./Dependability.vo ./Flexibility.vo ./Affordability.vo ./Resilient.vo ./System.vo ./Context.vo ./Stakeholder.vo
