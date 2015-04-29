@@ -381,7 +381,7 @@ Definition changeStatement1 : changeStatement :=
     phase_preOps 
     (agent_internal "aAgent")
     (mk_change direction_increase (parameter_level "aParameter") (origin_one "anOrginin") (destination_one "aDestination") aspect_function)
-    (mechanism_descption "some mechanism") 
+    (mechanism_description "some mechanism") 
     (mk_change direction_increase(parameter_level "anotherParameter") (origin_one "anotherOrginin") (destination_one "anotherDestination") aspect_function)
     (abstraction_architecture "anAbstraction")
     (valuable_compound "valuable because of" 
