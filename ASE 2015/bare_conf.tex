@@ -11,22 +11,36 @@
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Michael Shell}
-\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
-Georgia Institute of Technology\\
-Atlanta, Georgia 30332--0250\\
-Email: http://www.michaelshell.org/contact.html}
+\author{\IEEEauthorblockN{Chong Tang}
+\IEEEauthorblockA{Department of Computer Science\\
+University of Virginia\\
+Charlottesville, Virginia 22904-4740\\
+Email: ctang@virginia.edu}
 \and
-\IEEEauthorblockN{Homer Simpson}
-\IEEEauthorblockA{Twentieth Century Fox\\
-Springfield, USA\\
-Email: homer@thesimpsons.com}
+\IEEEauthorblockN{Kevin Sullivan}
+\IEEEauthorblockA{Department of Computer Science\\
+University of Virginia\\
+Charlottesville, Virginia 22904-4740\\
+Email: sullivan@virginia.edu}
 \and
-\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
-\IEEEauthorblockA{Starfleet Academy\\
-San Francisco, California 96678-2391\\
-Telephone: (800) 555--1212\\
-Fax: (888) 555--1212}}
+\IEEEauthorblockN{Ke Dou}
+\IEEEauthorblockA{Department of Computer Science\\
+University of Virginia\\
+Charlottesville, Virginia 22904-4740\\
+Email: kdou@virginia.edu}
+\and
+\IEEEauthorblockN{Koleman Nix}
+\IEEEauthorblockA{Department of Computer Science\\
+University of Virginia\\
+Charlottesville, Virginia 22904-4740\\
+Email: jkn3wn@virginia.edu}
+\and
+\IEEEauthorblockN{Barry Boehm}
+\IEEEauthorblockA{Department of Computer Science\\
+University of Southern California\\
+Los Angeles, California 90089-0781\\
+Email: boehm@sunset.usc.edu}
+}
 
 
 % make the title area
@@ -44,29 +58,58 @@ The value of system arises from a combination of many system qualities: from fun
 Significant progress in these areas has been made for certain properties, particularly for system dependability properties, but not for others, such as flexibility, security, resilience, and many others. Yet the challenge in systems engineering is to produce value by achieving quality across broad ranges of system properties.
 \begin{itemize}
 	\item Our overall approach is to create a scientific innovation experiment system to develop an integrated framework for quality definition, specification, realization, assurance
-	\begin{itemize} 		\item formal theory expressed using highly expressive language capable of unified treatment of mathematical, computational, and logical concerns that arise in relation to definition, specification, and assurances of diverse system qualities		\item	continuous deployment supported by software synthesis from such expressions to create tools for concept dissemination, user-driven validation, and evolution
-	\end{itemize}	\item Elements of the specific framework that we are constructing
-	\begin{itemize}		\item hierarchies of qualities and relationships (Boehm)		\item languages for expressing specific requirements (e.g., Ross)		\item formalization of these preceding constructs 		\item integrate diverse approaches to system qualities, e.g., Boehm?s top-down system quality taxonomy and Ross?s bottom-up semantic approach		\item reusable theories that can be instantiated for many projects (parameterization)
+	\begin{itemize} 
+		\item formal theory expressed using highly expressive language capable of unified treatment of mathematical, computational, and logical concerns that arise in relation to definition, specification, and assurances of diverse system qualities
+		\item	continuous deployment supported by software synthesis from such expressions to create tools for concept dissemination, user-driven validation, and evolution
+	\end{itemize}
+	\item Elements of the specific framework that we are constructing
+	\begin{itemize}
+		\item hierarchies of qualities and relationships (Boehm)
+		\item languages for expressing specific requirements (e.g., Ross)
+		\item formalization of these preceding constructs 
+		\item integrate diverse approaches to system qualities, e.g., Boehm?s top-down system quality taxonomy and Ross?s bottom-up semantic approach
+		\item reusable theories that can be instantiated for many projects (parameterization)
 	\end{itemize}
 \end{itemize}
 
 \subsection{Shortcoming of Related Work}
 \begin{itemize}
 \item Weak engineering foundations
-	\begin{itemize}		\item No consensus definitions for many system properties		\item Weak understanding of means-ends relationships among system properties		\item Lack a framework for reasoning about tradeoffs among system qualities		\item Poor ability to manage full range of system qualities across system lifecycle 		\item	Fundamental weaknesses in our ability to handle system requirements 
-	\end{itemize}	\item	Weak scientific foundations
-	\begin{itemize}		\item Lack of rigor in research, notations, and methods employed in this area
-		\begin{itemize}			\item Research in this area has been informal, qualitative, even sloppy 			\item	Theories are expressed informally: natural language, tables, graphics			\item	No use of mathematical, computational, and logical notations critical to producing clear, unambiguous, testable theories			\item Weak basis for automation, a key to dissemination, testing, validation, and to adoption and evolution of basic concepts, method, and tools			\item Lack of rigorous and usable notations / languages for specifying the full range of system qualities that systems have to have
-		\end{itemize}		\item	Weak understanding the nature of assurance, in particular in understanding the role and interpretation of evidence and the relationship between inductive and deductive reasoning in system quality assurance
+	\begin{itemize}
+		\item No consensus definitions for many system properties
+		\item Weak understanding of means-ends relationships among system properties
+		\item Lack a framework for reasoning about tradeoffs among system qualities
+		\item Poor ability to manage full range of system qualities across system lifecycle 
+		\item	Fundamental weaknesses in our ability to handle system requirements 
+	\end{itemize}
+	\item	Weak scientific foundations
+	\begin{itemize}
+		\item Lack of rigor in research, notations, and methods employed in this area
+		\begin{itemize}
+			\item Research in this area has been informal, qualitative, even sloppy 
+			\item	Theories are expressed informally: natural language, tables, graphics
+			\item	No use of mathematical, computational, and logical notations critical to producing clear, unambiguous, testable theories
+			\item Weak basis for automation, a key to dissemination, testing, validation, and to adoption and evolution of basic concepts, method, and tools
+			\item Lack of rigorous and usable notations / languages for specifying the full range of system qualities that systems have to have
+		\end{itemize}
+		\item	Weak understanding the nature of assurance, in particular in understanding the role and interpretation of evidence and the relationship between inductive and deductive reasoning in system quality assurance
 	\end{itemize}
 \end{itemize}
 
 \section{Approach}
 \begin{itemize}
 	\item	Our overall approach is to create a scientific innovation experiment system to develop an integrated framework for quality definition, specification, realization, assurance 
-	\begin{itemize}		\item	formal theory expressed using highly expressive language capable of unified treatment of mathematical, computational, and logical concerns that arise in relation to definition, specification, and assurances of diverse system qualities		\item	continuous deployment supported by software synthesis from such expressions to create tools for concept dissemination, user-driven validation, and evolution
-	\end{itemize}	\item	Elements of the specific framework that we are constructing
-	\begin{itemize}		\item	hierarchies of qualities and relationships (Boehm)		\item	languages for expressing specific requirements (e.g., Ross)		\item	formalization of these preceding constructs 		\item	integrate diverse approaches to system qualities, e.g., Boehm?s top-down system quality taxonomy and Ross?s bottom-up semantic approach		\item	reusable theories that can be instantiated for many projects (parameterization)
+	\begin{itemize}
+		\item	formal theory expressed using highly expressive language capable of unified treatment of mathematical, computational, and logical concerns that arise in relation to definition, specification, and assurances of diverse system qualities
+		\item	continuous deployment supported by software synthesis from such expressions to create tools for concept dissemination, user-driven validation, and evolution
+	\end{itemize}
+	\item	Elements of the specific framework that we are constructing
+	\begin{itemize}
+		\item	hierarchies of qualities and relationships (Boehm)
+		\item	languages for expressing specific requirements (e.g., Ross)
+		\item	formalization of these preceding constructs 
+		\item	integrate diverse approaches to system qualities, e.g., Boehm?s top-down system quality taxonomy and Ross?s bottom-up semantic approach
+		\item	reusable theories that can be instantiated for many projects (parameterization)
 	\end{itemize}
 \end{itemize}
 
