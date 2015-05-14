@@ -20,12 +20,6 @@
 \usepackage{amsmath,amssymb}
 \usetikzlibrary{decorations.fractals}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\definedescription[latexdesc][
-% headstyle=bold,style=normal,align=left,location=hanging,
-% width=broad,margin=1cm]
-
-
 %% Beamer Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \useoutertheme[subsection=false,shadow]{miniframes}
 \useinnertheme{default}
@@ -485,6 +479,7 @@ To provide a framework for:
 \begin{frame}{Our approach}
 \begin{itemize}
 		\item Combining Bosch's innovation experiment systems  theory
+        \item Integrating Boehm's theory and Ross's approach
 		\item Using rigorous formal specification and software synthesis
 		\item Refining and expressing quality theories using Coq
 		\item Building web-based tools to implement the theory concepts
@@ -494,59 +489,48 @@ To provide a framework for:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Framework Architecture}
+\begin{figure}
+\includegraphics[scale=0.6]{figures/architecture}
+\caption{The overall architecture of our framework}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{\scshape formalized taxonomy}
 \begin{frame}{Top-Most System Value -- \small{Satisfactory}}
 \tiny{
 \begin{coqdoccode}
-%\coqdocnoindent
-%\coqdockw{Add} \coqdocvar{Rec} \coqdocvar{LoadPath} "./ContributeQA".\coqdoceol
-%\coqdocemptyline
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{MissionEffective}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{ResourceUtilization}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Dependable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Flexible}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Affordable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Resilient}.\coqdoceol
-%\coqdocemptyline
 \coqdocnoindent
-\coqdockw{Class} \coqdocvar{\textbf{Satisfactory}} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Stakeholder}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) := \{\coqdoceol
+\coqdockw{Class} \coqdef{Satisfactory.Satisfactory}{Satisfactory}{\coqdocrecord{Satisfactory}} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Stakeholder}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) := \{\coqdoceol
 \coqdocindent{3.00em}
-\coqdocvar{system}: \coqdocvar{System}\coqdoceol
+\coqdef{Satisfactory.sys}{sys}{\coqdocprojection{sys}}: \coqdocvariable{System}\coqdoceol
 \coqdocnoindent
 \coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{mission\_effective}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+; \coqdef{Satisfactory.physicalCapability}{physicalCapability}{\coqdocprojection{physicalCapability}} : \coqdocvariable{System} \ensuremath{\rightarrow} \coqdocvariable{Stakeholder} \ensuremath{\rightarrow} \coqdocvariable{Context} \ensuremath{\rightarrow} \coqdockw{Prop} \coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{resource\_utilization} : \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+; \coqdef{Satisfactory.cyberCapability}{cyberCapability}{\coqdocprojection{cyberCapability}} : \coqdocvariable{System} \ensuremath{\rightarrow} \coqdocvariable{Stakeholder} \ensuremath{\rightarrow} \coqdocvariable{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{dependable} : \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+; \coqdef{Satisfactory.humanUsability}{humanUsability}{\coqdocprojection{humanUsability}} : \coqdocvariable{System} \ensuremath{\rightarrow} \coqdocvariable{Stakeholder} \ensuremath{\rightarrow} \coqdocvariable{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{flexible} : \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+\coqdockw{......}\coqdoceol
+\coqdocindent{2.00em}
+; \coqdef{Satisfactory.adaptability}{adaptability}{\coqdocprojection{adaptability}} : \coqdocvariable{System} \ensuremath{\rightarrow} \coqdocvariable{Context} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
 \coqdocnoindent
 \coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{ME}: \coqdocvar{MissionEffective} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{system} \coqdocvar{mission\_effective}\coqdoceol
+; \coqdef{Satisfactory.me}{me}{\coqdocprojection{me}}: \coqdocinductive{MissionEffective} \coqdocvariable{System} \coqdocvariable{Stakeholder} \coqdocvariable{Context} \coqref{Satisfactory.sys}{\coqdocmethod{sys}} \coqref{Satisfactory.physicalCapability}{\coqdocmethod{physicalCapability}} \coqref{Satisfactory.cyberCapability}{\coqdocmethod{cyberCapability}} \coqref{Satisfactory.humanUsability}{\coqdocmethod{humanUsability}} \coqref{Satisfactory.speed}{\coqdocmethod{speed}}
+\coqref{Satisfactory.endurability}{\coqdocmethod{endurability}} \coqref{Satisfactory.maneuverability}{\coqdocmethod{maneuverability}} \coqref{Satisfactory.accuracy}{\coqdocmethod{accuracy}} \coqref{Satisfactory.impact}{\coqdocmethod{impact}} \coqref{Satisfactory.scalability}{\coqdocmethod{scalability}} \coqref{Satisfactory.versability}{\coqdocmethod{versability}} \coqref{Satisfactory.interoperability}{\coqdocmethod{interoperability}}\coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{RU}: \coqdocvar{ResourceUtilization} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{system} \coqdocvar{resource\_utilization}\coqdoceol
+; \coqdef{Satisfactory.ru}{ru}{\coqdocprojection{ru}}: \coqdocinductive{ResourceUtilization} \coqdocvariable{System} \coqdocvariable{Context} \coqref{Satisfactory.sys}{\coqdocmethod{sys}} \coqref{Satisfactory.cost}{\coqdocmethod{cost}} \coqref{Satisfactory.duration}{\coqdocmethod{duration}} \coqref{Satisfactory.keyPersonnel}{\coqdocmethod{keyPersonnel}} \coqref{Satisfactory.otherScareResources}{\coqdocmethod{otherScareResources}} \coqref{Satisfactory.manufacturability}{\coqdocmethod{manufacturability}} \coqref{Satisfactory.sustainability}{\coqdocmethod{sustainability}}\coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{DP}: \coqdocvar{Dependable} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{system} \coqdocvar{dependable}\coqdoceol
+; \coqdef{Satisfactory.dp}{dp}{\coqdocprojection{dp}}: \coqdocinductive{Dependable} \coqdocvariable{System} \coqdocvariable{Context} \coqref{Satisfactory.sys}{\coqdocmethod{sys}} \coqref{Satisfactory.security}{\coqdocmethod{security}} \coqref{Satisfactory.safety}{\coqdocmethod{safety}} \coqref{Satisfactory.reliability}{\coqdocmethod{reliability}} \coqref{Satisfactory.maintainability}{\coqdocmethod{maintainability}} \coqref{Satisfactory.availability}{\coqdocmethod{availability}} \coqref{Satisfactory.survivability}{\coqdocmethod{survivability}} \coqref{Satisfactory.robustness}{\coqdocmethod{robustness}}\coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{FL}: \coqdocvar{Flexible} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{system} \coqdocvar{flexible}\coqdoceol
-\coqdocnoindent
-%\coqdoceol
+; \coqdef{Satisfactory.fl}{fl}{\coqdocprojection{fl}}: \coqdocinductive{Flexible} \coqdocvariable{System} \coqdocvariable{Context} \coqref{Satisfactory.sys}{\coqdocmethod{sys}} \coqref{Satisfactory.modifiability}{\coqdocmethod{modifiability}} \coqref{Satisfactory.tailorability}{\coqdocmethod{tailorability}} \coqref{Satisfactory.adaptability}{\coqdocmethod{adaptability}}\coqdoceol
 \coqdocindent{2.00em}
-; \coqdocvar{Affordable}: \coqdocvar{Affordable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{system} \coqdocvar{ME} \coqdocvar{RU}\coqdoceol
-\coqdocindent{2.00em}
-; \coqdocvar{Resillient}: \coqdocvar{Resilient} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{system} \coqdocvar{DP} \coqdocvar{FL}\coqdoceol
-\coqdocnoindent
-\}.\coqdoceol
 \end{coqdoccode}
 }
 \end{frame}
@@ -567,40 +551,11 @@ Mission Effectiveness: a System has achieved a\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Missions Effective}
-\begin{frame}{Mission Effective}
+\begin{frame}{Second-Level Property --	\small{Mission Effective}}
 \tiny{
 \begin{coqdoccode}
-%\coqdocemptyline
-%\coqdocnoindent
-%\coqdockw{Add} \coqdocvar{Rec} \coqdocvar{LoadPath} "./ContributeQA".\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{PhysicalCapable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{CyberCapable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{HumanUsable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Speed}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Endurable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{......}
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Maneuverable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Maneuverable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Impact}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Scalable}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Versatile}.\coqdoceol
-%\coqdocnoindent
-%\coqdockw{Require} \coqdockw{Export} \coqdocvar{Interoperable}.\coqdoceol
-%\coqdocemptyline
 \coqdocnoindent
-\coqdockw{Inductive} \coqdocvar{MissionEffective} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Stakeholder}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) (\coqdocvar{sys}: \coqdocvar{System}) \coqdoceol
-\coqdocindent{11.50em}
-(\coqdocvar{mission\_effective}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
+\coqdockw{Inductive} \coqdocvar{\textbf{MissionEffective}} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Stakeholder}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) (\coqdocvar{sys}: \coqdocvar{System}) \coqdoceol
 \coqdocindent{11.50em}
 (\coqdocvar{physical\_capable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
 \coqdocindent{11.50em}
@@ -613,46 +568,28 @@ Mission Effectiveness: a System has achieved a\\
 (\coqdocvar{endurable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
 \coqdocindent{11.50em}
 \coqdockw{......}\coqdoceol
-%(\coqdocvar{maneuverable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
-%\coqdocindent{11.50em}
-%(\coqdocvar{accurate}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
-%\coqdocindent{11.50em}
-%(\coqdocvar{impact}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
-%\coqdocindent{11.50em}
-%(\coqdocvar{scalable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
-%\coqdocindent{11.50em}
-%(\coqdocvar{versatile}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
-%\coqdocindent{11.50em}
-%(\coqdocvar{interoperable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
+\coqdocindent{11.50em}
+(\coqdocvar{interoperable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdockw{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
 \coqdocindent{11.50em}
 : \coqdockw{Prop} := \coqdoceol
 \coqdocindent{1.00em}
 \coqdocvar{mk\_mission\_eff}:\coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{PhysicalCapable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{physical\_capable} \ensuremath{\rightarrow} \coqdoceol
+\coqdocvar{\textbf{PhysicalCapable}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{physical\_capable} \ensuremath{\rightarrow} \coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{CyberCapable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{cyber\_capable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocvar{\textbf{CyberCapable}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{cyber\_capable} \ensuremath{\rightarrow}\coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{HumanUsable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{human\_usable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocvar{\textbf{HumanUsable}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{human\_usable} \ensuremath{\rightarrow}\coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{Speed} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{speed} \ensuremath{\rightarrow}\coqdoceol
+\coqdocvar{\textbf{Speed}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{speed} \ensuremath{\rightarrow}\coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{Endurable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{endurable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocvar{\textbf{Endurable}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{endurable} \ensuremath{\rightarrow}\coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{Maneuverable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{maneuverable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocvar{\textbf{Maneuverable}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{maneuverable} \ensuremath{\rightarrow}\coqdoceol
 \coqdocindent{2.00em}
 \coqdockw{......}\coqdoceol
-%\coqdocvar{Maneuverable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{accurate} \ensuremath{\rightarrow}\coqdoceol
-%\coqdocindent{2.00em}
-%\coqdocvar{Impact} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{impact} \ensuremath{\rightarrow}\coqdoceol
-%\coqdocindent{2.00em}
-%\coqdocvar{Scalable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{scalable} \ensuremath{\rightarrow}\coqdoceol
-%\coqdocindent{2.00em}
-%\coqdocvar{Versatile} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{versatile} \ensuremath{\rightarrow}\coqdoceol
-%\coqdocindent{2.00em}
-%\coqdocvar{Interoperable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{interoperable} \ensuremath{\rightarrow}\coqdoceol
 \coqdocindent{2.00em}
-\coqdocvar{MissionEffective} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{mission\_effective} \coqdocvar{physical\_capable} \coqdocvar{cyber\_capable} 
+\coqdocvar{\textbf{MissionEffective}} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{mission\_effective} \coqdocvar{physical\_capable} \coqdocvar{cyber\_capable}
 \coqdocvar{human\_usable} \coqdocvar{speed} \coqdocvar{endurable} \coqdocvar{maneuverable} \coqdocvar{accurate} \coqdocvar{impact} \coqdocvar{scalable} \coqdocvar{versatile} \coqdocvar{interoperable}.\coqdoceol
 \end{coqdoccode}
 }
@@ -660,25 +597,55 @@ Mission Effectiveness: a System has achieved a\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Flexible}
+\begin{frame}{Second-Level Property --	\small{Flexible}}
+\small{
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Inductive} \coqdocvar{\textbf{Flexible}} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) (\coqdocvar{sys}: \coqdocvar{System}) \coqdoceol
+\coqdocindent{9.35em}
+(\coqdocvar{flexible}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop}) \coqdoceol
+\coqdocindent{9.35em}
+(\coqdocvar{modifiable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
+\coqdocindent{9.35em}
+(\coqdocvar{tailorable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
+\coqdocindent{9.35em}
+(\coqdocvar{adaptable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
+\coqdocindent{9.35em}
+: \coqdockw{Prop} := \coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{mk\_flexibility}:\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{\textbf{Modifiable}} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{modifiable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{\textbf{Tailorable}} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{tailorable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{\textbf{Adaptable}} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{adaptable} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{\textbf{Flexible}} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{flexible} \coqdocvar{modifiable} \coqdocvar{tailorable} \coqdocvar{adaptable}.\coqdoceol
+\end{coqdoccode}
+}
+\end{frame}
 
-\subsection{Physical Capable}
-\begin{frame}{Physical Capable}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Adaptable}
+\begin{frame}{Leaf Property --	\small{Adaptable}}
 \small{
 \begin{coqdoccode}
 \coqdocnoindent
-\coqdockw{Inductive} \coqdocvar{PhysicalCapable} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Stakeholder}: \coqdockw{Set}) \coqdoceol
- \coqdocindent{2.50em}
-(\coqdocvar{Context}: \coqdockw{Set}) (\coqdocvar{sys}: \coqdocvar{System}) \coqdoceol
-\coqdocindent{2.50em}
-(\coqdocvar{physical\_capable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop}) \coqdoceol
-\coqdocindent{2.50em}
+\coqdockw{Inductive} \coqdocvar{\textbf{Adaptable}} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) (\coqdocvar{sys}: \coqdocvar{System}) \coqdoceol
+\coqdocindent{10.50em}
+(\coqdocvar{adaptable}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdockw{Prop})\coqdoceol
+\coqdocindent{10.50em}
 : \coqdockw{Prop} := \coqdoceol
 \coqdocindent{1.00em}
-\coqdocvar{mk\_physical\_capable}:\coqdoceol
+\coqdocvar{mk\_adaptability}:\coqdoceol
 \coqdocindent{2.00em}
-(\coqdockw{\ensuremath{\forall}} \coqdocvar{cx}: \coqdocvar{Context}, \coqdockw{\ensuremath{\forall}} \coqdocvar{sh}: \coqdocvar{Stakeholder}, \coqdocvar{physical\_capable} \coqdocvar{sys} \coqdocvar{sh} \coqdocvar{cx}) \ensuremath{\rightarrow} \coqdoceol
-\coqdocindent{1.50em}
-\coqdocvar{PhysicalCapable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{physical\_capable}.\coqdoceol
+(\coqdockw{\ensuremath{\forall}} \coqdocvar{cx}: \coqdocvar{Context}, \coqdocvar{adaptable} \coqdocvar{sys} \coqdocvar{cx}) \ensuremath{\rightarrow} \coqdoceol
+\coqdocindent{3.00em}
+\coqdocvar{\textbf{Adaptable}} \coqdocvar{System} \coqdocvar{Context} \coqdocvar{sys} \coqdocvar{adaptable}.\coqdoceol
 \end{coqdoccode}
 }
 \end{frame}
@@ -687,11 +654,135 @@ Mission Effectiveness: a System has achieved a\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Example}
 \begin{frame}{Example -- Smart Home}
-
+\framesubtitle{Define System, Stakeholder, and Context for a Smart Home}
+\begin{coqdoccode}
+%\coqdocnoindent
+%\coqdockw{Add} \coqdocvar{Rec} \coqdocvar{LoadPath} "./ContributeQA".\coqdoceol
+\coqdocnoindent
+\coqdockw{Require} \coqdockw{Import} \coqdoclibrary{Satisfactory}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Require} \coqdockw{Import} \coqdoclibrary{Changeable}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Definition} \coqdef{Example.Smart Home System}{Smart\_Home\_System}{\coqdocdefinition{Smart\_Home\_System}} := \coqexternalref{unit}{http://coq.inria.fr/distrib/8.4pl3/stdlib/Coq.Init.Datatypes}{\coqdocinductive{Datatypes.unit}}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.Smart Home Stakeholder}{Smart\_Home\_Stakeholder}{\coqdocinductive{Smart\_Home\_Stakeholder}} := \coqdef{Example.investor}{investor}{\coqdocconstructor{investor}} \ensuremath{|} \coqdef{Example.end user}{end\_user}{\coqdocconstructor{end\_user}} \ensuremath{|} \coqdef{Example.developer}{developer}{\coqdocconstructor{developer}} \ensuremath{|} \coqdef{Example.maintainer}{maintainer}{\coqdocconstructor{maintainer}} \ensuremath{|} \coqdef{Example.public}{public}{\coqdocconstructor{public}}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.Smart Home Context}{Smart\_Home\_Context}{\coqdocinductive{Smart\_Home\_Context}} := \coqdef{Example.normal}{normal}{\coqdocconstructor{normal}}.\coqdoceol
+\end{coqdoccode}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Example -- Smart Home}
+\begin{coqdoccode}
+\framesubtitle{Create a Specific Adaptability Requirement using Ross's Approach}
+\small{
+\coqdocnoindent
+\coqdockw{Definition} \coqdef{Example.smart home system adaptability requirement}{smart\_home\_system\_adaptability\_requirement}{\coqdocdefinition{smart\_home\_system\_adaptability\_requirement}} : \coqdocrecord{changeStatement} := \coqdoceol
+\coqdocindent{1.00em}
+\coqdocconstructor{mk\_changeStatement} \coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{perturbation\_shift} "low temperature")\coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{context\_circumstantial} "late at night")\coqdoceol
+\coqdocindent{2.00em}
+\coqdocconstructor{phase\_preOps} \coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{agent\_internal} "controller")\coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{mk\_change} \coqdocconstructor{direction\_increase} (\coqdocconstructor{parameter\_level} "knob angle") (\coqdocconstructor{origin\_one} "degree") (\coqdocconstructor{destination\_one} "degree") \coqdocconstructor{aspect\_function})\coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{mechanism\_description} "regulating the airflow") \coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{mk\_change} \coqdocconstructor{direction\_increase}(\coqdocconstructor{parameter\_level} "temperature") (\coqdocconstructor{origin\_one} "degree") (\coqdocconstructor{destination\_one} "degree") \coqdocconstructor{aspect\_function})\coqdoceol
+\coqdocindent{2.00em}
+(\coqdocconstructor{abstraction\_architecture} " ")\coqdoceol
+\coqdocindent{2.00em}
+\coqdocconstructor{valuable\_simple} \coqdoceol
+\coqdocemptyline
+}
+\end{coqdoccode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example -- Smart Home}
+\small{
+\textbf{Corresponding requirement statement:}\\
+In response to (Perturbation\_shift) \emph{low temperature} (Context\_circumstantial) \emph{late at night}, during (Phase\_preOps) of system, desire (Agent\_internal) \emph{controller} to be able to (Direction\_increase) the (Parameter\_level) of \emph{knob angle} from (Origin\_one) state(s) to (Destination\_one) state(s) in the system (Aspect\_function) through (Mechanism\_description) \emph{regulating the airflow} that results in the effect of (Direction\_increase) the (Parameter\_level) of \emph{temperature} from (Origin\_one) state(s) to (Destination\_one) state(s) in the system (Aspect\_function) for a (Abstraction\_architecture) that is (Valuable\_simple).
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example -- Smart Home}
+\framesubtitle{Check a given system meets the adaptability requirement}
+\begin{coqdoccode}
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.systemMeetsSpecificAdaptabilityRequirement}{systemMeetsSpecificAdaptabilityRequirement}{\coqdocinductive{systemMeetsSpecificAdaptabilityRequirement}}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}} \ensuremath{\rightarrow} \coqdocrecord{changeStatement} \ensuremath{\rightarrow} \coqdockw{Prop} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdef{Example.systemMeetsSpecificAdaptabilityRequirement proof}{systemMeetsSpecificAdaptabilityRequirement\_proof}{\coqdocconstructor{systemMeetsSpecificAdaptabilityRequirement\_proof}}: \coqdoceol
+\coqdocindent{2.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{s}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}}, \coqdockw{\ensuremath{\forall}} \coqdocvar{c}: \coqdocrecord{changeStatement}, \coqdoceol
+\coqdocindent{3.00em}
+\coqexternalref{In}{http://coq.inria.fr/distrib/8.4pl3/stdlib/Coq.Lists.List}{\coqdocdefinition{In}} \coqdocconstructor{adaptability} (\coqdocdefinition{tipeAssignment} \coqdocvariable{c}) \ensuremath{\rightarrow} \coqref{Example.systemMeetsSpecificAdaptabilityRequirement}{\coqdocinductive{systemMeetsSpecificAdaptabilityRequirement}} \coqdocvariable{s} \coqdocvariable{c}.\coqdoceol
+\end{coqdoccode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example -- Smart Home}
+\framesubtitle{Check a given system has adaptability quality}
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.adaptability}{adaptability}{\coqdocinductive{adaptability}} (\coqdocvar{sys}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}}) (\coqdocvar{cx}: \coqref{Example.Smart Home Context}{\coqdocinductive{Smart\_Home\_Context}}): \coqdockw{Prop} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdef{Example.adaptability proof}{adaptability\_proof}{\coqdocconstructor{adaptability\_proof}}: \coqref{Example.systemMeetsSpecificAdaptabilityRequirement}{\coqdocinductive{systemMeetsSpecificAdaptabilityRequirement}} \coqdocvar{sys} \coqref{Example.smart home system adaptability requirement}{\coqdocdefinition{smart\_home\_system\_adaptability\_requirement}} \ensuremath{\rightarrow} \coqdoceol
+\coqdocindent{3.00em}
+\coqref{Example.adaptability}{\coqdocinductive{adaptability}} \coqdocvar{sys} \coqdocvar{cx}.\coqdoceol
+\end{coqdoccode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example -- Smart Home}
+\framesubtitle{Formalize two properties with trivial proofs}
+\begin{coqdoccode}
+\small{
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.systemCanControlFurnaceOnOffSwitch}{systemCanControlFurnaceOnOffSwitch}{\coqdocinductive{systemCanControlFurnaceOnOffSwitch}}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}} \ensuremath{\rightarrow} \coqdockw{Prop} := \coqdoceol
+\coqdocindent{1.00em}
+\coqdef{Example.systemCanControlFurnaceOnOffSwitch proof}{systemCanControlFurnaceOnOffSwitch\_proof}{\coqdocconstructor{systemCanControlFurnaceOnOffSwitch\_proof}}: \coqdockw{\ensuremath{\forall}} \coqdocvar{s}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}}, \coqref{Example.systemCanControlFurnaceOnOffSwitch}{\coqdocinductive{systemCanControlFurnaceOnOffSwitch}} \coqdocvariable{s}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.systemCanControlGarageDoorOpener}{systemCanControlGarageDoorOpener}{\coqdocinductive{systemCanControlGarageDoorOpener}}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}} \ensuremath{\rightarrow} \coqdockw{Prop} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdef{Example.systemCanControlGarageDoorOpener proof}{systemCanControlGarageDoorOpener\_proof}{\coqdocconstructor{systemCanControlGarageDoorOpener\_proof}}: \coqdockw{\ensuremath{\forall}} \coqdocvar{s}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}}, \coqref{Example.systemCanControlGarageDoorOpener}{\coqdocinductive{systemCanControlGarageDoorOpener}} \coqdocvariable{s}.\coqdoceol
+}
+\end{coqdoccode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Example -- Smart Home}
+\framesubtitle{Check a given system has Physical Capability quality}
+\begin{coqdoccode}
+\small{
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{Example.physicalCapability}{physicalCapability}{\coqdocinductive{physicalCapability}} (\coqdocvar{sys}: \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}}) (\coqdocvar{sh}: \coqref{Example.Smart Home Stakeholder}{\coqdocinductive{Smart\_Home\_Stakeholder}}) (\coqdocvar{cx}: \coqref{Example.Smart Home Context}{\coqdocinductive{Smart\_Home\_Context}}): \coqdockw{Prop} := \coqdoceol
+\coqdocindent{1.00em}
+\coqdef{Example.physicalCapability proof}{physicalCapability\_proof}{\coqdocconstructor{physicalCapability\_proof}}: \coqref{Example.systemCanControlFurnaceOnOffSwitch}{\coqdocinductive{systemCanControlFurnaceOnOffSwitch}} \coqdocvar{sys} \coqexternalref{:type scope:x '/x5C' x}{http://coq.inria.fr/distrib/8.4pl3/stdlib/Coq.Init.Logic}{\coqdocnotation{\ensuremath{\land}}} \coqref{Example.systemCanControlGarageDoorOpener}{\coqdocinductive{systemCanControlGarageDoorOpener}} \coqdocvar{sys} \ensuremath{\rightarrow} \coqref{Example.physicalCapability}{\coqdocinductive{physicalCapability}} \coqdocvar{sys} \coqdocvar{sh} \coqdocvar{cx}.\coqdoceol
+}
+\end{coqdoccode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Contribution}
 \begin{frame}{Our Contributions}
 \begin{itemize}
@@ -719,26 +810,6 @@ Mission Effectiveness: a System has achieved a\\
 \item Social process of learning, testing, {\em theory validation}
 \end{itemize}
 \end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\scshape Assessment}
-%\subsection{Case study}
-\begin{frame}{Assessment}
-\begin{itemize}
-  \item  Todo
-\end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Results and insights}
-\begin{frame}{Results and insights}
-\begin{itemize}
-\item To be added
-\end{itemize}
-\end{frame}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
