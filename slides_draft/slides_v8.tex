@@ -783,6 +783,37 @@ In response to (Perturbation\_shift) \emph{low temperature} (Context\_circumstan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}{Example -- Smart Home}
+\framesubtitle{Define an instance of Satisfactory for a smart home project}
+\begin{coqdoccode}
+\small{
+\coqdocnoindent
+\coqdockw{Instance} \coqdef{Example.Smart Home Instance}{Smart\_Home\_Instance}{\coqdocinstance{Smart\_Home\_Instance}}: \coqdocclass{Satisfactory} \coqref{Example.Smart Home System}{\coqdocdefinition{Smart\_Home\_System}} \coqref{Example.Smart Home Stakeholder}{\coqdocinductive{Smart\_Home\_Stakeholder}} \coqref{Example.Smart Home Context}{\coqdocinductive{Smart\_Home\_Context}} := \{\coqdoceol
+\coqdocindent{2.00em}
+\coqdocmethod{sys} := \coqexternalref{tt}{http://coq.inria.fr/distrib/8.4pl3/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{tt}}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{1.00em}
+; \coqdocmethod{physicalCapability} := \coqref{Example.physicalCapability}{\coqdocinductive{physicalCapability}}\coqdoceol
+\coqdocindent{1.00em}
+; \coqdocmethod{cyberCapability} := \coqref{Example.cyberCapability}{\coqdocinductive{cyberCapability}}\coqdoceol
+\coqdocindent{1.00em}
+; \coqdocmethod{humanUsability} := \coqref{Example.humanUsability}{\coqdocinductive{humanUsability}}\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{......}\coqdoceol
+\coqdocindent{1.00em}
+; \coqdocmethod{tailorability} := \coqref{Example.tailorability}{\coqdocinductive{tailorability}}\coqdoceol
+\coqdocindent{1.00em}
+; \coqdocmethod{adaptability} := \coqref{Example.adaptability}{\coqdocinductive{adaptability}}\coqdoceol
+\coqdocnoindent
+\}.\coqdoceol
+}
+\end{coqdoccode}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Contribution}
 \begin{frame}{Our Contributions}
 \begin{itemize}
