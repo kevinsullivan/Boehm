@@ -1,0 +1,50 @@
+\begin{thebibliography}{1}
+
+\bibitem{Laprie:dependability}
+Algirdas Avizienis, Jean-Claude Laprie, Brian Randell, et~al.
+\newblock {\em Fundamental concepts of dependability}.
+\newblock University of Newcastle upon Tyne, Computing Science, 2001.
+
+\bibitem{Boehm:ontology}
+Barry Boehm and Nupul Kukreja.
+\newblock An initial of an ontology for system ilities.
+\newblock In {\em To be presented in 25th Annual INCOSE International
+  Symposium}, 2015.
+
+\bibitem{Bosch:innovation}
+Jan Bosch.
+\newblock Building products as innovation experiment systems.
+\newblock In MichaelA. Cusumano, Bala Iyer, and N.~Venkatraman, editors, {\em
+  Software Business}, volume 114 of {\em Lecture Notes in Business Information
+  Processing}, pages 27--39. Springer Berlin Heidelberg, 2012.
+
+\bibitem{Sullivan:evolutionary}
+Ke~Dou, Xi~Wang, Chong Tang, Adam~Ross (MIT), and Kevin Sullivan.
+\newblock An evolutionary theory-systems approach to a science of the ilities.
+\newblock {\em Procedia Computer Science}, 44(0):433 -- 442, 2015.
+\newblock 2015 Conference on Systems Engineering Research.
+
+\bibitem{Kelly:GSN}
+Tim Kelly and Rob Weaver.
+\newblock The goal structuring notation--a safety argument notation.
+\newblock In {\em Proceedings of the dependable systems and networks 2004
+  workshop on assurance cases}. Citeseer, 2004.
+
+\bibitem{Ross:semantic}
+A.~M. Ross, J.~C. Beesemyer, D.~H. Rhodes, Adam~M. Ross, J.~Clark Beesemyer,
+  and Donna~H. Rhodes.
+\newblock seari.mit.edu a prescriptive semantic basis for system lifecycle
+  properties, 2012.
+
+\bibitem{Ross:changeability}
+A.~M. Ross, J.~C. Beesemyer, D.~H. Rhodes, Adam~M. Ross, J.~Clark Beesemyer,
+  and Donna~H. Rhodes.
+\newblock seari.mit.edu a prescriptive semantic basis for system lifecycle
+  properties, 2012.
+
+\bibitem{Rushby:formalism}
+John Rushby.
+\newblock Formalism in safety cases.
+\newblock In {\em Making Systems Safer}, pages 3--17. Springer, 2010.
+
+\end{thebibliography}

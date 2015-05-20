@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ASE2015.aux
+The style file: plain.bst
+Database file #1: mybib.bib
+Warning--I didn't find a database entry for "suh"
+Warning--I didn't find a database entry for "boehm-cser-2015-paper"
+Warning--I didn't find a database entry for "design-rules"
+Warning--I didn't find a database entry for "qcon-2012-talk"
+Warning--I didn't find a database entry for "sullivan-structure-and-value"
+Warning--I didn't find a database entry for "coq"
+Warning--I didn't find a database entry for "Dou:evolutionary"
+You've used 8 entries,
+            2118 wiz_defined-function locations,
+            557 strings with 5538 characters,
+and the built_in function-call counts, 2869 in all, are:
+= -- 258
+> -- 168
+< -- 3
++ -- 68
+- -- 57
+* -- 194
+:= -- 481
+add.period$ -- 26
+call.type$ -- 8
+change.case$ -- 49
+chr.to.int$ -- 0
+cite$ -- 8
+duplicate$ -- 108
+empty$ -- 228
+format.name$ -- 57
+if$ -- 608
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 7
+newline$ -- 42
+num.names$ -- 18
+pop$ -- 74
+preamble$ -- 1
+purify$ -- 42
+quote$ -- 0
+skip$ -- 71
+stack$ -- 0
+substring$ -- 109
+swap$ -- 24
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 30
+warning$ -- 0
+while$ -- 23
+width$ -- 9
+write$ -- 87
+(There were 7 warnings)
