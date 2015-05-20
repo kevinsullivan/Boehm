@@ -83,8 +83,8 @@ Inductive impact (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smar
 Inductive scalability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
   scalability_proof: scalability sys sh cx.
 
-Inductive versability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  versability_proof: versability sys sh cx.
+Inductive versatility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  versatility_proof: versatility sys sh cx.
 
 (* We formalize the properties that "a system can Works well with other systems (i.e. HVAC systems), 
    and can be accessed from other systems (pc, car, phone)", with trivial proofs.*)
@@ -107,8 +107,8 @@ Inductive duration (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
 Inductive keyPersonnel (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
   keyPersonnel_proof: keyPersonnel sys cx.
 
-Inductive otherScareResources (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  otherScareResources_proof: otherScareResources sys cx.
+Inductive otherScarceResources (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  otherScareResources_proof: otherScarceResources sys cx.
 
 Inductive manufacturability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
   manufacturability_proof: manufacturability sys cx.
@@ -166,13 +166,13 @@ Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakehol
   ; accuracy := accuracy
   ; impact := impact
   ; scalability := scalability
-  ; versability := versability
+  ; versability := versatility
   ; interoperability := interoperability
 
   ; cost := cost
   ; duration := duration
   ; keyPersonnel := keyPersonnel
-  ; otherScareResources := otherScareResources
+  ; otherScareResources := otherScarceResources
   ; manufacturability := manufacturability
   ; sustainability := sustainability
 
@@ -188,205 +188,34 @@ Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakehol
   ; tailorability := tailorability
   ; adaptability := adaptability
 }.
+Hint Constructors 
+
+  (** Composite **)
+  MissionEffective Dependable Flexible ResourceUtilization Affordable Resilient
+
+  (** Contributing **)
+  Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
+  Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
+  Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robustness
+  Modifiable Tailorable
+
+  (** Smart Home Specific **)
+  adaptability physicalCapability cyberCapability humanUsability speed endurability maneuverability
+  accuracy impact scalability versatility interoperability cost duration keyPersonnel otherScarceResources
+  manufacturability sustainability security safety reliability maintainability
+  availability survivability robustness modifiability tailorability.
 
 (* 
 If the instance can be proved, then we show the given system has all required qualities.
 If we cannot find proofs of this instance, then we can conclude that the system is not accepted. 
 *)
 Proof.
-apply mk_mission_eff.
-apply mk_physical_capable.
-intros; apply physicalCapability_proof.
-apply conj.
-apply systemCanControlFurnaceOnOffSwitch_proof.
-apply systemCanControlGarageDoorOpener_proof.
 
-apply mk_cyber_capable.
-intros; apply cyberCapability_proof.
+repeat constructor.
+repeat constructor.
+repeat constructor.
 
-apply mk_human_usable.
-intros; apply humanUsability_proof.
-
-apply mk_speed.
-intros; apply speed_proof.
-apply systemIsResponsive_proof.
-
-apply mk_endurable.
-intros; apply endurability_proof.
-
-apply mk_maneuverable.
-intros; apply maneuverability_proof.
-
-apply mk_accurate.
-intros; apply accuracy_proof.
-
-apply mk_impact.
-intros; apply impact_proof.
-
-apply mk_scalable.
-intros; apply scalability_proof.
-
-apply mk_versatile.
-intros; apply versability_proof.
-
-apply mk_interoperable.
-intros; apply interoperability_proof.
-apply conj.
-apply systemCanWorkWithOtherSystems_proof.
-apply systemCanBeAccessedFromOtherSystems_proof.
-
-apply mk_resource_utl.
-apply mk_cost.
-intros; apply cost_proof.
-
-apply mk_duration.
-intros; apply duration_proof.
-
-apply mk_key_personnel.
-intros; apply keyPersonnel_proof.
-
-apply mk_other_scarce_resources.
-intros; apply otherScareResources_proof.
-
-apply mk_manufacturability.
-intros; apply manufacturability_proof.
-
-apply mk_sustainability.
-intros; apply sustainability_proof.
-
-apply mk_dependability.
-apply mk_secure.
-intros; apply security_proof.
-apply conj.
-apply systemIsDifficultToHack_proof.
-apply systemDoesNotHarmOwners_proof.
-
-apply mk_safe.
-intros; apply safety_proof.
-
-apply mk_reliability.
-intros; apply reliability_proof.
-
-apply mk_maintainability.
-intros; apply maintainability_proof.
-
-apply mk_availability.
-intros; apply availability_proof.
-
-apply mk_survivability.
-intros; apply survivability_proof.
-
-apply mk_robustness.
-intros; apply robustness_proof.
-
-apply isFlexible.
-apply mk_modifiability.
-intros; apply modifiability_proof.
-
-apply mk_tailorability.
-intros; apply tailorability_proof.
-
-apply mk_adaptability.
-intros. apply adaptability_proof.
-apply systemMeetsSpecificAdaptabilityRequirement_proof.
-simpl;right;left;auto.
-
-apply isAffordable.
-apply mk_mission_eff.
-apply mk_physical_capable.
-intros; apply physicalCapability_proof.
-apply conj.
-apply systemCanControlFurnaceOnOffSwitch_proof.
-apply systemCanControlGarageDoorOpener_proof.
-
-apply mk_cyber_capable.
-intros; apply cyberCapability_proof.
-
-apply mk_human_usable.
-intros; apply humanUsability_proof.
-
-apply mk_speed.
-intros; apply speed_proof.
-apply systemIsResponsive_proof.
-
-apply mk_endurable.
-intros; apply endurability_proof.
-
-apply mk_maneuverable.
-intros; apply maneuverability_proof.
-
-apply mk_accurate.
-intros; apply accuracy_proof.
-
-apply mk_impact.
-intros; apply impact_proof.
-
-apply mk_scalable.
-intros; apply scalability_proof.
-
-apply mk_versatile.
-intros; apply versability_proof.
-
-apply mk_interoperable.
-intros; apply interoperability_proof.
-apply conj.
-apply systemCanWorkWithOtherSystems_proof.
-apply systemCanBeAccessedFromOtherSystems_proof.
-
-apply mk_resource_utl.
-apply mk_cost.
-intros; apply cost_proof.
-
-apply mk_duration.
-intros; apply duration_proof.
-
-apply mk_key_personnel.
-intros; apply keyPersonnel_proof.
-
-apply mk_other_scarce_resources.
-intros; apply otherScareResources_proof.
-
-apply mk_manufacturability.
-intros; apply manufacturability_proof.
-
-apply mk_sustainability.
-intros; apply sustainability_proof.
-
-apply isResilient.
-apply mk_dependability.
-apply mk_secure.
-intros; apply security_proof.
-apply conj.
-apply systemIsDifficultToHack_proof.
-apply systemDoesNotHarmOwners_proof.
-
-apply mk_safe.
-intros; apply safety_proof.
-
-apply mk_reliability.
-intros; apply reliability_proof.
-
-apply mk_maintainability.
-intros; apply maintainability_proof.
-
-apply mk_availability.
-intros; apply availability_proof.
-
-apply mk_survivability.
-intros; apply survivability_proof.
-
-apply mk_robustness.
-intros; apply robustness_proof.
-
-apply isFlexible.
-apply mk_modifiability.
-intros; apply modifiability_proof.
-
-apply mk_tailorability.
-intros; apply tailorability_proof.
-
-apply mk_adaptability.
-intros. apply adaptability_proof.
-apply systemMeetsSpecificAdaptabilityRequirement_proof.
-simpl;right;left;auto.
+repeat (simpl; auto; constructor).
+repeat (simpl; auto; constructor).
+repeat (simpl; auto; constructor).
 Defined.

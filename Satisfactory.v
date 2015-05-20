@@ -3,7 +3,6 @@
 (*
 Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
 Barry Boehm, and Adam Ross
-
 March, 2015
 *)
 Add Rec LoadPath "./ContributeQA".
@@ -18,7 +17,7 @@ Require Export Resilient.
 Class Satisfactory (System: Set) (Stakeholder: Set) (Context: Set) := {
       sys: System
 
-    ; physicalCapability : System -> Stakeholder -> Context -> Prop 
+    ; physicalCapability : System -> Stakeholder -> Context -> Prop
     ; cyberCapability : System -> Stakeholder -> Context -> Prop
     ; humanUsability : System -> Stakeholder -> Context -> Prop
     ; speed : System -> Stakeholder -> Context -> Prop
@@ -49,17 +48,17 @@ Class Satisfactory (System: Set) (Stakeholder: Set) (Context: Set) := {
     ; tailorability : System -> Context -> Prop
     ; adaptability : System -> Context -> Prop
 
-    ; me: MissionEffective System Stakeholder Context sys physicalCapability cyberCapability humanUsability speed 
+    ; mission_effective: MissionEffective System Stakeholder Context sys physicalCapability cyberCapability humanUsability speed
               endurability maneuverability accuracy impact scalability versability interoperability
-    ; ru: ResourceUtilization System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability
-    ; dp: Dependable System Context sys security safety reliability maintainability availability survivability robustness
-    ; fl: Flexible System Context sys modifiability tailorability adaptability
+    ; resource_utilization: ResourceUtilization System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability
+    ; dependable: Dependable System Context sys security safety reliability maintainability availability survivability robustness
+    ; flexible: Flexible System Context sys modifiability tailorability adaptability
     (* affordable is a composite property of "MissionEffective" and "ResourceUtilization"*)
-    ; af: Affordable System Stakeholder Context sys 
-              physicalCapability cyberCapability humanUsability speed 
+    ; affordable: Affordable System Stakeholder Context sys
+              physicalCapability cyberCapability humanUsability speed
               endurability maneuverability accuracy impact scalability versability interoperability
               cost duration keyPersonnel otherScareResources manufacturability sustainability
-    (* Resillient is a composite property of "Dependable" and "Flexible"*)
-    ; rs: Resilient System Context sys security safety reliability maintainability availability survivability robustness
-                                       modifiability tailorability adaptability
+    (* Resilient is a composite property of "Dependable" and "Flexible" *)
+    ; resilient: Resilient System Context sys security safety reliability maintainability availability survivability robustness
+              modifiability tailorability adaptability
 }.

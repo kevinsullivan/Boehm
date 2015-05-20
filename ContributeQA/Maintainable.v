@@ -1,5 +1,5 @@
 Inductive Maintainable (System: Set) (Context: Set) (sys: System) 
-                     (maintainability: System -> Context -> Prop) : Prop := 
-  mk_maintainability:
-    (forall cx: Context, maintainability sys cx) -> 
-      Maintainable System Context sys maintainability.
+                     (maintainable: System -> Context -> Prop) : Prop :=
+  satisfiesMaintainabilityRequirement:
+    (forall cx: Context, maintainable sys cx) ->
+      Maintainable System Context sys maintainable.

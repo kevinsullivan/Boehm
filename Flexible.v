@@ -1,8 +1,8 @@
 (** * Flexible General Theory *)
 
 (**
-Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
-Barry Boehm, and Adam Ross 
+Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
+Barry Boehm, and Adam Ross
 
 March, 2015
 *)
@@ -16,22 +16,22 @@ Require Export Adaptable.
 In the following definition, [Flexible] is parameterized by two typeclasses, [System],
 and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
 
-Those binary relations are associated with its sub-attributes. For example, [Modifiable] is one of the sub-attributes, 
-and modifiability represents a tenary relation, which is to say, a set of pairs, (s, c), 
-between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable, 
-iff system s satisfies its [Modifiable] requirement (which isn't represented explicitly here) in context, c.)
+Those binary relations are associated with its sub-attributes. For example, [Modifiable] is one of the sub-attributes,
+and modifiability represents a ternary relation, which is to say, a set of pairs, (s, c),
+between a system [s], and a context [c], that we expect to hold (The proposition is provable
+iff system [s] satisfies its modifiability requirement in context [c].)
 
-Its definition indicates that the property of a [System] being [Flexible] for all [Contexts], the system is
-flexible implicitly in those [Contexts], only if all the requirements of its sub-attributes are satisfied.
+Its definition indicates that a [System] is [Flexible] in all [Contexts] iff the system is
+all the requirements of its sub-attributes [Modifiability], [Tailorability], [Adaptability] are satisfied.
 *)
 
-Inductive Flexible (System: Set) (Context: Set) (sys: System) 
+Inductive Flexible (System: Set) (Context: Set) (sys: System)
                      (modifiability: System -> Context -> Prop)
                      (tailorability: System -> Context -> Prop)
-                     (adaptivity: System -> Context -> Prop)
-                     : Prop := 
+                     (adaptability: System -> Context -> Prop)
+                     : Prop :=
   isFlexible:
     Modifiable System Context sys modifiability ->
     Tailorable System Context sys tailorability ->
-    Adaptable System Context sys adaptivity ->
-    Flexible System Context sys modifiability tailorability adaptivity.
+    Adaptable System Context sys adaptability ->
+    Flexible System Context sys modifiability tailorability adaptability.

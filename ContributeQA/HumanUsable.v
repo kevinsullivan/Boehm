@@ -1,5 +1,5 @@
 Inductive HumanUsable (System: Set) (Stakeholder: Set) (Context: Set) (sys: System) 
-                     (humanUsability: System -> Stakeholder -> Context -> Prop) : Prop := 
-  mk_human_usable:
-    (forall cx: Context, forall sh: Stakeholder, humanUsability sys sh cx) -> 
-      HumanUsable System Stakeholder Context sys humanUsability.
+                     (humanUsable: System -> Stakeholder -> Context -> Prop) : Prop :=
+  satisfiesHumanUsabilityRequirement:
+    (forall cx: Context, forall sh: Stakeholder, humanUsable sys sh cx) ->
+      HumanUsable System Stakeholder Context sys humanUsable.
