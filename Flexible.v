@@ -1,4 +1,4 @@
-(** * Flexible General Theory *)
+(** * Flexibility General Theory *)
 
 (**
 Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
@@ -11,18 +11,21 @@ Require Export Modifiable.
 Require Export Tailorable.
 Require Export Adaptable.
 
-(** ** FLEXIBLE**)
+(** ** Flexible **)
 (**
-In the following definition, [Flexible] is parameterized by two typeclasses, [System],
-and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
+[Flexible] is parameterized by a [System] type, a [Context] type,
+an instance of type [System], and sevaral binary relations over [System] and [Context]
+representing the relationship between the given [System] set, [Context] set, and some
+constituent attribute. The constituent attributes of [Flexibility] are
+[Modifiability], [Tailorability], and [Adaptability].
 
-Those binary relations are associated with its sub-attributes. For example, [Modifiable] is one of the sub-attributes,
-and modifiability represents a ternary relation, which is to say, a set of pairs, (s, c),
-between a system [s], and a context [c], that we expect to hold (The proposition is provable
-iff system [s] satisfies its modifiability requirement in context [c].)
+These binary relations represent the given system type's ability to satisfy
+the specified requirement in the given context.
 
-Its definition indicates that a [System] is [Flexible] in all [Contexts] iff the system is
-all the requirements of its sub-attributes [Modifiability], [Tailorability], [Adaptability] are satisfied.
+Informally, in English:
+A system [sys] belonging to set of systems [System] is [Flexible] in all contexts belonging to set [Context]
+if and only if all the requirements of its sub-attributes ([Modifiability], [Tailorability], and [Adaptability])
+are satisfied given the same conditions.
 *)
 
 Inductive Flexible (System: Set) (Context: Set) (sys: System)
