@@ -23,19 +23,19 @@ That is, all the requirements of the subattributes of both [Dependable] and [Fle
 
 Inductive Resilient 
             (System: Set) (Context: Set) (sys: System) 
-            (dp_cx: System -> Context -> Prop)
-            (sec_cx: System -> Context -> Prop)
-            (sf_cx: System -> Context -> Prop)
-            (rl_cx: System -> Context -> Prop)
-            (mt_cx: System -> Context -> Prop)
-            (avl_cx: System -> Context -> Prop)
-            (svv_cx: System -> Context -> Prop)
-            (fl_cx: System -> Context -> Prop) 
-            (mf_cx: System -> Context -> Prop)
-            (tl_cx: System -> Context -> Prop)
-            (adp_cx: System -> Context -> Prop) : Prop :=
+            (security: System -> Context -> Prop)
+            (safety: System -> Context -> Prop)
+            (reliability: System -> Context -> Prop)
+            (maintainability: System -> Context -> Prop)
+            (availability: System -> Context -> Prop)
+            (survivability: System -> Context -> Prop)
+            (robustness: System -> Context -> Prop)
+            (manufacturability: System -> Context -> Prop)
+            (tailorability: System -> Context -> Prop)
+            (adaptivity: System -> Context -> Prop) : Prop :=
             isResilient: 
-                 Dependable System Context sys dp_cx sec_cx sf_cx rl_cx mt_cx avl_cx svv_cx ->
-                 Flexible System Context sys fl_cx mf_cx tl_cx adp_cx ->
+                 Dependable System Context sys security safety reliability maintainability availability survivability robustness ->
+                 Flexible System Context sys manufacturability tailorability adaptivity ->
                  Resilient System Context sys 
-                     dp_cx sec_cx sf_cx rl_cx mt_cx avl_cx svv_cx fl_cx mf_cx tl_cx adp_cx.
+                     security safety reliability maintainability availability survivability robustness
+                     manufacturability tailorability adaptivity.

@@ -14,6 +14,7 @@ Require Export Reliable.
 Require Export Maintainable.
 Require Export Available.
 Require Export Survivable.
+Require Export Robustness.
 
 (** ** DEPENDABLE**)
 (**
@@ -21,7 +22,7 @@ In the following definition, [Dependable] is parameterized by two typeclasses, [
 and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
 
 Those binary relations are associated with its sub-attributes. For example, [Secure] is one of the sub-attributes, 
-and sec_cx represents a tenary relation, which is to say, a set of pairs, (s, c), 
+and security represents a tenary relation, which is to say, a set of pairs, (s, c), 
 between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable, 
 iff system s satisfies its [Secure] requirement (which isn't represented explicitly here) in context, c.)
 
@@ -30,19 +31,20 @@ dependable implicitly in those [Contexts], only if all the requirements of its s
 *)
 
 Inductive Dependable (System: Set) (Context: Set) (sys: System) 
-                     (dp_cx: System -> Context -> Prop)
-                     (sec_cx: System -> Context -> Prop)
-                     (sf_cx: System -> Context -> Prop)
-                     (rl_cx: System -> Context -> Prop)
-                     (mt_cx: System -> Context -> Prop)
-                     (avl_cx: System -> Context -> Prop)
-                     (svv_cx: System -> Context -> Prop)
+                     (security: System -> Context -> Prop)
+                     (safety: System -> Context -> Prop)
+                     (reliability: System -> Context -> Prop)
+                     (maintainability: System -> Context -> Prop)
+                     (availability: System -> Context -> Prop)
+                     (survivability: System -> Context -> Prop)
+                     (robustness: System -> Context -> Prop)
                      : Prop := 
   mk_dependability:
-    Secure System Context sys sec_cx ->
-    Safe System Context sys sf_cx ->
-    Reliable System Context sys rl_cx ->
-    Maintainable System Context sys mt_cx ->
-    Available System Context sys avl_cx ->
-    Survivable System Context sys svv_cx ->
-    Dependable System Context sys dp_cx sec_cx sf_cx rl_cx mt_cx avl_cx svv_cx.
+    Secure System Context sys security ->
+    Safe System Context sys safety ->
+    Reliable System Context sys reliability ->
+    Maintainable System Context sys maintainability ->
+    Available System Context sys availability ->
+    Survivable System Context sys survivability ->
+    Robustness System Context sys robustness ->
+    Dependable System Context sys security safety reliability maintainability availability survivability robustness.

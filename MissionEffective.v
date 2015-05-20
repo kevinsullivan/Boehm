@@ -38,30 +38,29 @@ are satisfied.
 *)
 
 Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (sys: System) 
-                           (me_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (pc_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (cc_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (hu_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (sp_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (ed_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (mv_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (ac_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (ip_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (sc_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (vs_sh_cx: System -> Stakeholder -> Context -> Prop)
-                           (io_sh_cx: System -> Stakeholder -> Context -> Prop)
+                           (physicalCapability: System -> Stakeholder -> Context -> Prop)
+                           (cyberCapability: System -> Stakeholder -> Context -> Prop)
+                           (humanUsability: System -> Stakeholder -> Context -> Prop)
+                           (speed: System -> Stakeholder -> Context -> Prop)
+                           (endurability: System -> Stakeholder -> Context -> Prop)
+                           (maneuverability: System -> Stakeholder -> Context -> Prop)
+                           (accuracy: System -> Stakeholder -> Context -> Prop)
+                           (impact: System -> Stakeholder -> Context -> Prop)
+                           (scalability: System -> Stakeholder -> Context -> Prop)
+                           (versability: System -> Stakeholder -> Context -> Prop)
+                           (interoperability: System -> Stakeholder -> Context -> Prop)
                            : Prop := 
   mk_mission_eff:
-    PhysicalCapable System Stakeholder Context sys pc_sh_cx -> 
-    CyberCapable System Stakeholder Context sys cc_sh_cx ->
-    HumanUsable System Stakeholder Context sys hu_sh_cx ->
-    Speed System Stakeholder Context sys sp_sh_cx ->
-    Endurable System Stakeholder Context sys ed_sh_cx ->
-    Maneuverable System Stakeholder Context sys mv_sh_cx ->
-    Accurate System Stakeholder Context sys ac_sh_cx ->
-    Impact System Stakeholder Context sys ip_sh_cx ->
-    Scalable System Stakeholder Context sys sc_sh_cx ->
-    Versatile System Stakeholder Context sys vs_sh_cx ->
-    Interoperable System Stakeholder Context sys io_sh_cx ->
-    MissionEffective System Stakeholder Context sys me_sh_cx pc_sh_cx cc_sh_cx 
-        hu_sh_cx sp_sh_cx ed_sh_cx mv_sh_cx ac_sh_cx ip_sh_cx sc_sh_cx vs_sh_cx io_sh_cx.
+    PhysicalCapable System Stakeholder Context sys physicalCapability -> 
+    CyberCapable System Stakeholder Context sys cyberCapability ->
+    HumanUsable System Stakeholder Context sys humanUsability ->
+    Speed System Stakeholder Context sys speed ->
+    Endurable System Stakeholder Context sys endurability ->
+    Maneuverable System Stakeholder Context sys maneuverability ->
+    Accurate System Stakeholder Context sys accuracy ->
+    Impact System Stakeholder Context sys impact ->
+    Scalable System Stakeholder Context sys scalability ->
+    Versatile System Stakeholder Context sys versability ->
+    Interoperable System Stakeholder Context sys interoperability ->
+    MissionEffective System Stakeholder Context sys physicalCapability cyberCapability 
+        humanUsability speed endurability maneuverability accuracy impact scalability versability interoperability.

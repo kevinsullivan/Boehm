@@ -1,5 +1,5 @@
 Inductive Survivable (System: Set) (Context: Set) (sys: System) 
-                     (svv_cx: System -> Context -> Prop) : Prop := 
+                     (survivability: System -> Context -> Prop) : Prop := 
   mk_survivability:
-    (forall cx: Context, svv_cx sys cx) -> 
-      Survivable System Context sys svv_cx.
+    (forall cx: Context, survivability sys cx) -> 
+      Survivable System Context sys survivability.
