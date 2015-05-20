@@ -1,267 +1,392 @@
-(** * Examples to prove that a system has quality attributes. *)
+(** * Example -- Smart Home *)
 
 (**
 Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
 Barry Boehm, and Adam Ross 
 
-March, 2015
+May, 2015
 *)
 Add Rec LoadPath "./ContributeQA".
-
 Require Import Satisfactory.
-(*Require Import MissionEffective.
-Require Import ResourceUtilization.
-Require Import Dependable.
-Require Import Flexible.
+Require Import Changeable.
+
+Definition Smart_Home_System := Datatypes.unit.
+Inductive Smart_Home_Stakeholder := investor | end_user | developer | maintainer | public.
+Inductive Smart_Home_Context := normal.
+
+(* 
+Define relations (callback functions for Satisfactory class) to check a given system has corresponding quality.
+We formalize the property that "a system can control the furnace on/off switch", with a trivial proof.
 *)
-(**
-Example to create an instance for the TypeClass
-**)
+Inductive systemCanControlFurnaceOnOffSwitch: Smart_Home_System -> Prop := 
+  systemCanControlFurnaceOnOffSwitch_proof: forall s: Smart_Home_System, systemCanControlFurnaceOnOffSwitch s.
 
-Definition Example_System_Type := bool.
-Inductive Example_Stakeholder_Type := s1 | s2.
-Definition Example_Context_Type := nat.
+Inductive systemCanControlGarageDoorOpener: Smart_Home_System -> Prop :=
+  systemCanControlGarageDoorOpener_proof: forall s: Smart_Home_System, systemCanControlGarageDoorOpener s.
 
-Inductive me_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_me: sys = true -> me_sh_cx_example sys sh cx.
+Inductive physicalCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop := 
+  physicalCapability_proof: systemCanControlFurnaceOnOffSwitch sys /\ systemCanControlGarageDoorOpener sys -> physicalCapability sys sh cx.
 
-Inductive pc_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_pc: sys = true -> pc_sh_cx_example sys sh cx.
+(* An adaptivity change statement.*)
+Definition smart_home_system_adaptability_requirement : changeStatement := 
+  mk_changeStatement 
+    (perturbation_shift "some events")
+    (context_circumstantial "some circumstantial contexts")
+    phase_preOps 
+    (agent_internal "aAgent")
+    (mk_change direction_increase (parameter_level "aParameter") (origin_one "anOrginin") (destination_one "aDestination") aspect_function)
+    (mechanism_description "some mechanism") 
+    (mk_change direction_increase(parameter_level "anotherParameter") (origin_one "anotherOrginin") (destination_one "anotherDestination") aspect_function)
+    (abstraction_architecture "anAbstraction")
+    (valuable_compound "valuable because of" 
+      (reaction_sooner_than 11 unit_time_second)
+      (span_shorter_than 1 unit_time_day)
+      (cost_less_than 100 unit_money_dollar)
+      (benefit_same_as "keep power off")).
 
-Inductive cc_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_cc: sys = true -> cc_sh_cx_example sys sh cx.
+Inductive systemMeetsSpecificAdaptabilityRequirement: Smart_Home_System -> changeStatement -> Prop :=
+  systemMeetsSpecificAdaptabilityRequirement_proof: 
+    forall s: Smart_Home_System, forall c: changeStatement, 
+      In adaptability (tipeAssignment c) -> systemMeetsSpecificAdaptabilityRequirement s c.
 
-Inductive hu_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_hu: sys = true -> hu_sh_cx_example sys sh cx.
+(* This is the relation that check a given system has adaptability quality.*)
+Inductive adaptability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  adaptability_proof: systemMeetsSpecificAdaptabilityRequirement sys smart_home_system_adaptability_requirement -> 
+      adaptability sys cx.
 
-Inductive sp_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_sp: sys = true -> sp_sh_cx_example sys sh cx.
+Inductive cyberCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  cyberCapability_proof: cyberCapability sys sh cx.
 
-Inductive ed_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_ed: sys = true -> ed_sh_cx_example sys sh cx.
+Inductive humanUsability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  humanUsability_proof: humanUsability sys sh cx.
 
-Inductive mv_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_mv: sys = true -> mv_sh_cx_example sys sh cx.
+(* We formalize the property that "a system is responsive", with a trivial proof. *)
 
-Inductive ac_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_ac: sys = true -> ac_sh_cx_example sys sh cx.
+Inductive systemIsResponsive : Smart_Home_System -> Prop :=
+  systemIsResponsive_proof: forall sys: Smart_Home_System, systemIsResponsive sys.
 
-Inductive ip_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_ip: sys = true -> ip_sh_cx_example sys sh cx.
+Inductive speed (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  speed_proof: systemIsResponsive sys -> speed sys sh cx.
 
-Inductive sc_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_sc: sys = true -> sc_sh_cx_example sys sh cx.
+Inductive endurability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  endurability_proof: endurability sys sh cx.
 
-Inductive vs_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_vs: sys = true -> vs_sh_cx_example sys sh cx.
+Inductive maneuverability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  maneuverability_proof: maneuverability sys sh cx.
 
-Inductive io_sh_cx_example (sys: Example_System_Type) (sh: Example_Stakeholder_Type) (cx: Example_Context_Type): Prop :=
-  true_is_io: sys = true -> io_sh_cx_example sys sh cx.
+Inductive accuracy (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  accuracy_proof: accuracy sys sh cx.
 
-Inductive ru_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_ru: sys = true -> ru_cx_example sys cx.
+Inductive impact (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  impact_proof: impact sys sh cx.
 
-Inductive cs_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_cs: sys = true -> cs_cx_example sys cx.
+Inductive scalability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  scalability_proof: scalability sys sh cx.
 
-Inductive dr_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_dr: sys = true -> dr_cx_example sys cx.
+Inductive versability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  versability_proof: versability sys sh cx.
 
-Inductive kp_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_kp: sys = true -> kp_cx_example sys cx.
+(* We formalize the properties that "a system can Works well with other systems (i.e. HVAC systems), 
+   and can be accessed from other systems (pc, car, phone)", with trivial proofs.*)
 
-Inductive osr_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_osr: sys = true -> osr_cx_example sys cx.
+Inductive systemCanWorkWithOtherSystems: Smart_Home_System -> Prop := 
+  systemCanWorkWithOtherSystems_proof: forall sys: Smart_Home_System, systemCanWorkWithOtherSystems sys.
 
-Inductive mf_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_mf: sys = true -> mf_cx_example sys cx.
+Inductive systemCanBeAccessedFromOtherSystems: Smart_Home_System -> Prop :=
+  systemCanBeAccessedFromOtherSystems_proof: forall sys: Smart_Home_System, systemCanBeAccessedFromOtherSystems sys.
 
-Inductive sust_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_sust: sys = true -> sust_cx_example sys cx.
+Inductive interoperability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
+  interoperability_proof: systemCanWorkWithOtherSystems sys /\ systemCanBeAccessedFromOtherSystems sys -> interoperability sys sh cx.
 
-Inductive dp_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_dp: sys = true -> dp_cx_example sys cx.
+Inductive cost (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  cost_proof: cost sys cx.
 
-Inductive sec_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_sec: sys = true -> sec_cx_example sys cx.
+Inductive duration (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  duration_proof: duration sys cx.
 
-Inductive sf_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_sf: sys = true -> sf_cx_example sys cx.
+Inductive keyPersonnel (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  keyPersonnel_proof: keyPersonnel sys cx.
 
-Inductive rl_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_rl: sys = true -> rl_cx_example sys cx.
+Inductive otherScareResources (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  otherScareResources_proof: otherScareResources sys cx.
 
-Inductive mt_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_mt: sys = true -> mt_cx_example sys cx.
+Inductive manufacturability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  manufacturability_proof: manufacturability sys cx.
 
-Inductive avl_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_avl: sys = true -> avl_cx_example sys cx.
+Inductive sustainability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  sustainability_proof: sustainability sys cx.
 
-Inductive svv_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_svv: sys = true -> svv_cx_example sys cx.
+(* 
+We formalize the properties that "a system is difficult to hack, and does not put the owners of the home in danger.", with trivial proofs.
+*)
 
-Inductive fl_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_fl: sys = true -> fl_cx_example sys cx.
+Inductive systemIsDifficultToHack: Smart_Home_System -> Prop :=
+  systemIsDifficultToHack_proof: forall sys: Smart_Home_System, systemIsDifficultToHack sys.
 
-Inductive md_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_md: sys = true -> md_cx_example sys cx.
+Inductive systemDoesNotHarmOwners: Smart_Home_System -> Prop :=
+  systemDoesNotHarmOwners_proof: forall sys: Smart_Home_System, systemDoesNotHarmOwners sys.
 
-Inductive tl_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_tl: sys = true -> tl_cx_example sys cx.
+Inductive security (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  security_proof: systemIsDifficultToHack sys /\ systemDoesNotHarmOwners sys -> security sys cx.
 
-Inductive adp_cx_example (sys: Example_System_Type) (cx: Example_Context_Type): Prop :=
-  true_system_adp: sys = true -> adp_cx_example sys cx.
+Inductive safety (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  safety_proof: safety sys cx.
 
-Instance Sys_is_good: Satisfactory Example_System_Type Example_Stakeholder_Type Example_Context_Type  := {
-    sys := true
-  ; me_sh_cx := me_sh_cx_example
-  ; pc_sh_cx := pc_sh_cx_example
-  ; cc_sh_cx := cc_sh_cx_example
-  ; hu_sh_cx := hu_sh_cx_example
-  ; sp_sh_cx := sp_sh_cx_example
-  ; ed_sh_cx := ed_sh_cx_example
-  ; mv_sh_cx := mv_sh_cx_example
-  ; ac_sh_cx := ac_sh_cx_example
-  ; ip_sh_cx := ip_sh_cx_example
-  ; sc_sh_cx := sc_sh_cx_example
-  ; vs_sh_cx := vs_sh_cx_example
-  ; io_sh_cx := io_sh_cx_example
+Inductive reliability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  reliability_proof: reliability sys cx.
 
-  ; ru_cx := ru_cx_example
-  ; cs_cx := cs_cx_example
-  ; dr_cx := dr_cx_example
-  ; kp_cx := kp_cx_example
-  ; osr_cx := osr_cx_example
-  ; mf_cx := mf_cx_example
-  ; sust_cx := sust_cx_example
+Inductive maintainability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  maintainability_proof: maintainability sys cx.
 
-  ; dp_cx := dp_cx_example
-  ; sec_cx := sec_cx_example
-  ; sf_cx := sf_cx_example
-  ; rl_cx := rl_cx_example
-  ; mt_cx := mt_cx_example
-  ; avl_cx := avl_cx_example
-  ; svv_cx := svv_cx_example
+Inductive availability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  availability_proof: availability sys cx.
 
-  ; fl_cx := fl_cx_example
-  ; md_cx := md_cx_example
-  ; tl_cx := tl_cx_example
-  ; adp_cx := adp_cx_example
+Inductive survivability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  survivability_proof: survivability sys cx.
 
+Inductive robustness (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  robustness_proof: robustness sys cx.
+
+Inductive modifiability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  modifiability_proof: modifiability sys cx.
+
+Inductive tailorability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+  tailorability_proof: tailorability sys cx.
+
+(* We define an instance of Satisfactory for a smart home project.*)
+Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context := {
+    sys := tt
+
+  ; physicalCapability := physicalCapability
+  ; cyberCapability := cyberCapability
+  ; humanUsability := humanUsability
+  ; speed:= speed
+  ; endurability := endurability
+  ; maneuverability := maneuverability
+  ; accuracy := accuracy
+  ; impact := impact
+  ; scalability := scalability
+  ; versability := versability
+  ; interoperability := interoperability
+
+  ; cost := cost
+  ; duration := duration
+  ; keyPersonnel := keyPersonnel
+  ; otherScareResources := otherScareResources
+  ; manufacturability := manufacturability
+  ; sustainability := sustainability
+
+  ; security := security
+  ; safety := safety
+  ; reliability := reliability
+  ; maintainability := maintainability
+  ; availability := availability
+  ; survivability := survivability
+  ; robustness := robustness
+
+  ; modifiability := modifiability
+  ; tailorability := tailorability
+  ; adaptability := adaptability
 }.
+
+(* 
+If the instance can be proved, then we show the given system has all required qualities.
+If we cannot find proofs of this instance, then we can conclude that the system is not accepted. 
+*)
 Proof.
 apply mk_mission_eff.
 apply mk_physical_capable.
-intros; apply true_is_pc; reflexivity.
+intros; apply physicalCapability_proof.
+apply conj.
+apply systemCanControlFurnaceOnOffSwitch_proof.
+apply systemCanControlGarageDoorOpener_proof.
+
 apply mk_cyber_capable.
-intros; apply true_is_cc; reflexivity.
+intros; apply cyberCapability_proof.
+
 apply mk_human_usable.
-intros; apply true_is_hu; reflexivity.
+intros; apply humanUsability_proof.
+
 apply mk_speed.
-intros; apply true_is_sp; reflexivity.
+intros; apply speed_proof.
+apply systemIsResponsive_proof.
+
 apply mk_endurable.
-intros; apply true_is_ed; reflexivity.
+intros; apply endurability_proof.
+
 apply mk_maneuverable.
-intros; apply true_is_mv; reflexivity.
+intros; apply maneuverability_proof.
+
 apply mk_accurate.
-intros; apply true_is_ac; reflexivity.
+intros; apply accuracy_proof.
+
 apply mk_impact.
-intros; apply true_is_ip; reflexivity.
+intros; apply impact_proof.
+
 apply mk_scalable.
-intros; apply true_is_sc; reflexivity.
+intros; apply scalability_proof.
+
 apply mk_versatile.
-intros; apply true_is_vs; reflexivity.
+intros; apply versability_proof.
+
 apply mk_interoperable.
-intros; apply true_is_io; reflexivity.
+intros; apply interoperability_proof.
+apply conj.
+apply systemCanWorkWithOtherSystems_proof.
+apply systemCanBeAccessedFromOtherSystems_proof.
+
 apply mk_resource_utl.
 apply mk_cost.
-intros; apply true_system_cs; reflexivity.
+intros; apply cost_proof.
+
 apply mk_duration.
-intros; apply true_system_dr; reflexivity.
+intros; apply duration_proof.
+
 apply mk_key_personnel.
-intros; apply true_system_kp; reflexivity.
+intros; apply keyPersonnel_proof.
+
 apply mk_other_scarce_resources.
-intros; apply true_system_osr; reflexivity.
+intros; apply otherScareResources_proof.
+
 apply mk_manufacturability.
-intros; apply true_system_mf; reflexivity.
+intros; apply manufacturability_proof.
+
 apply mk_sustainability.
-intros; apply true_system_sust; reflexivity.
+intros; apply sustainability_proof.
+
 apply mk_dependability.
 apply mk_secure.
-intros; apply true_system_sec; reflexivity.
+intros; apply security_proof.
+apply conj.
+apply systemIsDifficultToHack_proof.
+apply systemDoesNotHarmOwners_proof.
+
 apply mk_safe.
-intros; apply true_system_sf; reflexivity.
+intros; apply safety_proof.
+
 apply mk_reliability.
-intros; apply true_system_rl; reflexivity.
+intros; apply reliability_proof.
+
 apply mk_maintainability.
-intros; apply true_system_mt; reflexivity.
+intros; apply maintainability_proof.
+
 apply mk_availability.
-intros; apply true_system_avl; reflexivity.
+intros; apply availability_proof.
+
 apply mk_survivability.
-intros; apply true_system_svv; reflexivity.
+intros; apply survivability_proof.
+
+apply mk_robustness.
+intros; apply robustness_proof.
+
 apply isFlexible.
 apply mk_modifiability.
-intros; apply true_system_md; reflexivity.
+intros; apply modifiability_proof.
+
 apply mk_tailorability.
-intros; apply true_system_tl; reflexivity.
+intros; apply tailorability_proof.
+
 apply mk_adaptability.
-intros; apply true_system_adp; reflexivity.
+intros. apply adaptability_proof.
+apply systemMeetsSpecificAdaptabilityRequirement_proof.
+simpl;right;left;auto.
+
 apply isAffordable.
 apply mk_mission_eff.
 apply mk_physical_capable.
-intros; apply true_is_pc; reflexivity.
+intros; apply physicalCapability_proof.
+apply conj.
+apply systemCanControlFurnaceOnOffSwitch_proof.
+apply systemCanControlGarageDoorOpener_proof.
+
 apply mk_cyber_capable.
-intros; apply true_is_cc; reflexivity.
+intros; apply cyberCapability_proof.
+
 apply mk_human_usable.
-intros; apply true_is_hu; reflexivity.
+intros; apply humanUsability_proof.
+
 apply mk_speed.
-intros; apply true_is_sp; reflexivity.
+intros; apply speed_proof.
+apply systemIsResponsive_proof.
+
 apply mk_endurable.
-intros; apply true_is_ed; reflexivity.
+intros; apply endurability_proof.
+
 apply mk_maneuverable.
-intros; apply true_is_mv; reflexivity.
+intros; apply maneuverability_proof.
+
 apply mk_accurate.
-intros; apply true_is_ac; reflexivity.
+intros; apply accuracy_proof.
+
 apply mk_impact.
-intros; apply true_is_ip; reflexivity.
+intros; apply impact_proof.
+
 apply mk_scalable.
-intros; apply true_is_sc; reflexivity.
+intros; apply scalability_proof.
+
 apply mk_versatile.
-intros; apply true_is_vs; reflexivity.
+intros; apply versability_proof.
+
 apply mk_interoperable.
-intros; apply true_is_io; reflexivity.
+intros; apply interoperability_proof.
+apply conj.
+apply systemCanWorkWithOtherSystems_proof.
+apply systemCanBeAccessedFromOtherSystems_proof.
+
 apply mk_resource_utl.
 apply mk_cost.
-intros; apply true_system_cs; reflexivity.
+intros; apply cost_proof.
+
 apply mk_duration.
-intros; apply true_system_dr; reflexivity.
+intros; apply duration_proof.
+
 apply mk_key_personnel.
-intros; apply true_system_kp; reflexivity.
+intros; apply keyPersonnel_proof.
+
 apply mk_other_scarce_resources.
-intros; apply true_system_osr; reflexivity.
+intros; apply otherScareResources_proof.
+
 apply mk_manufacturability.
-intros; apply true_system_mf; reflexivity.
+intros; apply manufacturability_proof.
+
 apply mk_sustainability.
-intros; apply true_system_sust; reflexivity.
+intros; apply sustainability_proof.
+
 apply isResilient.
 apply mk_dependability.
 apply mk_secure.
-intros; apply true_system_sec; reflexivity.
+intros; apply security_proof.
+apply conj.
+apply systemIsDifficultToHack_proof.
+apply systemDoesNotHarmOwners_proof.
+
 apply mk_safe.
-intros; apply true_system_sf; reflexivity.
+intros; apply safety_proof.
+
 apply mk_reliability.
-intros; apply true_system_rl; reflexivity.
+intros; apply reliability_proof.
+
 apply mk_maintainability.
-intros; apply true_system_mt; reflexivity.
+intros; apply maintainability_proof.
+
 apply mk_availability.
-intros; apply true_system_avl; reflexivity.
+intros; apply availability_proof.
+
 apply mk_survivability.
-intros; apply true_system_svv; reflexivity.
+intros; apply survivability_proof.
+
+apply mk_robustness.
+intros; apply robustness_proof.
+
 apply isFlexible.
 apply mk_modifiability.
-intros; apply true_system_md; reflexivity.
+intros; apply modifiability_proof.
+
 apply mk_tailorability.
-intros; apply true_system_tl; reflexivity.
+intros; apply tailorability_proof.
+
 apply mk_adaptability.
-intros; apply true_system_adp; reflexivity.
+intros. apply adaptability_proof.
+apply systemMeetsSpecificAdaptabilityRequirement_proof.
+simpl;right;left;auto.
 Defined.

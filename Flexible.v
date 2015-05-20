@@ -17,7 +17,7 @@ In the following definition, [Flexible] is parameterized by two typeclasses, [Sy
 and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
 
 Those binary relations are associated with its sub-attributes. For example, [Modifiable] is one of the sub-attributes, 
-and md_cx represents a tenary relation, which is to say, a set of pairs, (s, c), 
+and modifiability represents a tenary relation, which is to say, a set of pairs, (s, c), 
 between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable, 
 iff system s satisfies its [Modifiable] requirement (which isn't represented explicitly here) in context, c.)
 
@@ -26,13 +26,12 @@ flexible implicitly in those [Contexts], only if all the requirements of its sub
 *)
 
 Inductive Flexible (System: Set) (Context: Set) (sys: System) 
-                     (fl_cx: System -> Context -> Prop) 
-                     (md_cx: System -> Context -> Prop)
-                     (tl_cx: System -> Context -> Prop)
-                     (adp_cx: System -> Context -> Prop)
+                     (modifiability: System -> Context -> Prop)
+                     (tailorability: System -> Context -> Prop)
+                     (adaptivity: System -> Context -> Prop)
                      : Prop := 
   isFlexible:
-    Modifiable System Context sys md_cx ->
-    Tailorable System Context sys tl_cx ->
-    Adaptable System Context sys adp_cx ->
-    Flexible System Context sys fl_cx md_cx tl_cx adp_cx.
+    Modifiable System Context sys modifiability ->
+    Tailorable System Context sys tailorability ->
+    Adaptable System Context sys adaptivity ->
+    Flexible System Context sys modifiability tailorability adaptivity.

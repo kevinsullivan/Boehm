@@ -1,5 +1,5 @@
 Inductive Reliable (System: Set) (Context: Set) (sys: System) 
-                     (rl_cx: System -> Context -> Prop) : Prop := 
+                     (reliability: System -> Context -> Prop) : Prop := 
   mk_reliability:
-    (forall cx: Context, rl_cx sys cx) -> 
-      Reliable System Context sys rl_cx.
+    (forall cx: Context, reliability sys cx) -> 
+      Reliable System Context sys reliability.

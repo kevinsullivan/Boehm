@@ -2,7 +2,7 @@
 
 
 (*
-adp_cx represents a binary relation, which is to say, a set of
+adaptivity represents a binary relation, which is to say, a set of
 pairs, (s, c), between a system, s, and a context, c, that we 
 intend to hold (for the proposition to be provable, iff system 
 s satisfies its adaptability requirement (which isn't represented
@@ -10,11 +10,11 @@ explicitly here) in context, c.
  
 *)
 
-Inductive Adaptable (System: Set) (Context: Set) (system: System) 
-                     (adp_cx: System -> Context -> Prop) : Prop :=
+Inductive Adaptable (System: Set) (Context: Set) (sys: System) 
+                     (adaptability: System -> Context -> Prop) : Prop :=
   mk_adaptability:
-    (forall cx: Context, adp_cx sys cx) -> 
-      Adaptable System Context sys adp_cx.
+    (forall cx: Context, adaptability sys cx) -> 
+      Adaptable System Context sys adaptability.
 
 (** Ross version *)
 
@@ -47,10 +47,10 @@ Here's where we provide proofs that a system satsfies specific requirements, giv
 as changeStatements.
 *)
 
-Inductive satisfiesAdapabilityRequirement (System: Set) (sys: System) (Context: Set) (req: ChangeStatement) := .
+Inductive satisfiesAdapabilityRequirement (System: Set) (sys: System) (Context: Set) (req: changeStatement): Prop := .
 
 (** 
-What's left to do is to connect adp_cx to satisfiesAdapatabilityRequirment. 
+What's left to do is to connect adaptivity to satisfiesAdapatabilityRequirment. 
 
 A note: A real system will have multiple adapability requirements. We could conjoin them all together into one
 big one, or modified the theory so that what's required is a "forall."

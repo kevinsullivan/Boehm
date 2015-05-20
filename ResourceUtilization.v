@@ -21,7 +21,7 @@ In the following definition, [ResourceUtilization] is parameterized by two typec
 and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
 
 Those binary relations are associated with its sub-attributes. For example, [Cost] is one of the sub-attributes, 
-and cs_cx represents a tenary relation, which is to say, a set of pairs, (s, c), 
+and cost represents a tenary relation, which is to say, a set of pairs, (s, c), 
 between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable, 
 iff system s satisfies its [Cost] requirement (which isn't represented explicitly here) in context, c.)
 
@@ -31,19 +31,18 @@ sonly if all the requirements of its sub-attributes are satisfied.
 *)
 
 Inductive ResourceUtilization (System: Set) (Context: Set) (sys: System) 
-                              (ru_cx: System -> Context -> Prop)
-                              (cs_cx: System -> Context -> Prop)
-                              (dr_cx: System -> Context -> Prop)
-                              (kp_cx: System -> Context -> Prop)
-                              (osr_cx: System -> Context -> Prop)
-                              (mf_cx: System -> Context -> Prop)
-                              (sust_cx: System -> Context -> Prop)
+                              (cost: System -> Context -> Prop)
+                              (duration: System -> Context -> Prop)
+                              (keyPersonnel: System -> Context -> Prop)
+                              (otherScareResources: System -> Context -> Prop)
+                              (manufacturability: System -> Context -> Prop)
+                              (sustainability: System -> Context -> Prop)
                               : Prop := 
   mk_resource_utl:
-    Cost System Context sys cs_cx ->
-    Duration System Context sys dr_cx ->
-    KeyPersonnel System Context sys kp_cx ->
-    OtherScarceResources System Context sys osr_cx ->
-    Manufacturable System Context sys mf_cx ->
-    Sustainable System Context sys sust_cx ->
-    ResourceUtilization System Context sys ru_cx cs_cx dr_cx kp_cx osr_cx mf_cx sust_cx.
+    Cost System Context sys cost ->
+    Duration System Context sys duration ->
+    KeyPersonnel System Context sys keyPersonnel ->
+    OtherScarceResources System Context sys otherScareResources ->
+    Manufacturable System Context sys manufacturability ->
+    Sustainable System Context sys sustainability ->
+    ResourceUtilization System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability.
