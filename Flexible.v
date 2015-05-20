@@ -23,7 +23,7 @@ These binary relations represent the given system type's ability to satisfy
 the specified requirement in the given context.
 
 Informally, in English:
-A system [sys] belonging to set of systems [System] is [Flexible] in all contexts belonging to set [Context]
+A system [sys] belonging to the set of systems [System] is deemed [Flexible] given the set of contexts [Context]
 if and only if all the requirements of its sub-attributes ([Modifiability], [Tailorability], and [Adaptability])
 are satisfied given the same conditions.
 *)
