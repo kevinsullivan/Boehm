@@ -1,8 +1,8 @@
 (** * Dependable General Theory *)
 
 (**
-Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
-Barry Boehm, and Adam Ross 
+Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
+Barry Boehm, and Adam Ross
 
 March, 2015
 *)
@@ -21,16 +21,16 @@ Require Export Robustness.
 In the following definition, [Dependable] is parameterized by two typeclasses, [System],
 and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
 
-Those binary relations are associated with its sub-attributes. For example, [Secure] is one of the sub-attributes, 
-and security represents a tenary relation, which is to say, a set of pairs, (s, c), 
-between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable, 
+Those binary relations are associated with its sub-attributes. For example, [Secure] is one of the sub-attributes,
+and security represents a tenary relation, which is to say, a set of pairs, (s, c),
+between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable,
 iff system s satisfies its [Secure] requirement (which isn't represented explicitly here) in context, c.)
 
-Its definition indicates that the property of a [System] being [Dependable] for all [Contexts], the system is
-dependable implicitly in those [Contexts], only if all the requirements of its sub-attributes are satisfied.
+Its definition indicates that a [System] is [Dependable] for all [Contexts] if only if
+all the requirements of its sub-attributes are satisfied.
 *)
 
-Inductive Dependable (System: Set) (Context: Set) (sys: System) 
+Inductive Dependable (System: Set) (Context: Set) (sys: System)
                      (security: System -> Context -> Prop)
                      (safety: System -> Context -> Prop)
                      (reliability: System -> Context -> Prop)
@@ -38,7 +38,7 @@ Inductive Dependable (System: Set) (Context: Set) (sys: System)
                      (availability: System -> Context -> Prop)
                      (survivability: System -> Context -> Prop)
                      (robustness: System -> Context -> Prop)
-                     : Prop := 
+                     : Prop :=
   mk_dependability:
     Secure System Context sys security ->
     Safe System Context sys safety ->
