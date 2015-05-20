@@ -20,17 +20,16 @@ Require Export Scalable.
 Require Export Versatile.
 Require Export Interoperable.
 
+(** ** Mission Effective **)
 
-(** ** MISSIONEFFECTIVE**)
 (**
-In the following definition, [MissionEffective] is parameterized by three typeclasses, [System], [Stakerholder],
-and [Context], a system, sys, of type [System], and sevaral ternary relations
-over [System], [Context], and/or [Stakeholder].
-Those ternary are associated with its sub-attributes. For example, pc_sh_cx represents a tenary relation,
-which is to say, a set of tripples, (s, sh, c), between a system, s, a stakerholder, sh, and a context, c,
-that we  intend to hold (for the proposition to be provable,
-iff system s satisfies its mission effecitive requirement (which isn't represented
-explicitly here) in context, c.)
+In the following definition, [MissionEffective] is parameterized by three typeclasses,
+[System], [Stakerholder], and [Context], a system, sys, of type [System], and sevaral ternary
+relations over [System], [Context], and/or [Stakeholder].
+Those ternary relations are associated with its sub-attributes. For example, pc_sh_cx represents a ternary relation,
+which is to say, a set of triples, (s, sh, c), between a system, s, a stakerholder, sh, and a context, c,
+that we expect to hold (for the proposition to be provable, iff system s satisfies its mission effective
+requirement (which isn't represented explicitly here) in context, c.)
 
 Its definition indicates that the property of a [System] being [MissionEffective] for all [Contexts], the system is
 mission effective implicitly for all [Stakeholders] in those [Contexts], only if all the requirements of the subattributes

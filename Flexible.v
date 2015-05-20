@@ -28,10 +28,10 @@ all the requirements of its sub-attributes [Modifiability], [Tailorability], [Ad
 Inductive Flexible (System: Set) (Context: Set) (sys: System)
                      (modifiability: System -> Context -> Prop)
                      (tailorability: System -> Context -> Prop)
-                     (adaptivity: System -> Context -> Prop)
+                     (adaptability: System -> Context -> Prop)
                      : Prop :=
   isFlexible:
     Modifiable System Context sys modifiability ->
     Tailorable System Context sys tailorability ->
-    Adaptable System Context sys adaptivity ->
-    Flexible System Context sys modifiability tailorability adaptivity.
+    Adaptable System Context sys adaptability ->
+    Flexible System Context sys modifiability tailorability adaptability.
