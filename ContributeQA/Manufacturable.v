@@ -1,5 +1,5 @@
 Inductive Manufacturable (System: Set) (Context: Set) (sys: System) 
-                              (manufacturability: System -> Context -> Prop) : Prop := 
-  mk_manufacturability:
-    (forall cx: Context, manufacturability sys cx) -> 
-      Manufacturable System Context sys manufacturability.
+                              (manufacturable: System -> Context -> Prop) : Prop :=
+  satisfiesManufacturabilityRequirement:
+    (forall cx: Context, manufacturable sys cx) ->
+      Manufacturable System Context sys manufacturable.

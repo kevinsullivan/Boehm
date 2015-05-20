@@ -2,7 +2,7 @@
 
 
 (*
-adaptivity represents a binary relation, which is to say, a set of
+Adaptivity represents a binary relation, which is to say, a set of
 pairs, (s, c), between a system, s, and a context, c, that we 
 intend to hold (for the proposition to be provable, iff system 
 s satisfies its adaptability requirement (which isn't represented

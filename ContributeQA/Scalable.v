@@ -1,5 +1,5 @@
 Inductive Scalable (System: Set) (Stakeholder: Set) (Context: Set) (sys: System) 
-                     (scalability: System -> Stakeholder -> Context -> Prop) : Prop := 
-  mk_scalable:
-    (forall cx: Context, forall sh: Stakeholder, scalability sys sh cx) -> 
-      Scalable System Stakeholder Context sys scalability.
+                     (scalable: System -> Stakeholder -> Context -> Prop) : Prop :=
+  satisfiesScalabilityRequirement:
+    (forall cx: Context, forall sh: Stakeholder, scalable sys sh cx) ->
+      Scalable System Stakeholder Context sys scalable.
