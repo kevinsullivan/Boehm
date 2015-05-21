@@ -18,16 +18,19 @@ Require Export Robustness.
 
 (** ** DEPENDABLE**)
 (**
-In the following definition, [Dependable] is parameterized by two typeclasses, [System],
-and [Context], a system, sys, of type [System], and sevaral binary relations over [System], [Context].
+[Dependable] is parameterized by a [System] type, a [Context] type,
+an instance of type [System], and sevaral binary relations over [System] and [Context]
+representing the relationship between the given [System] set, [Context] set, and some
+constituent attribute. The constituent attributes of [Dependability] are
+[Security], [Safety], [Reliability], ..., and [Robustness].
 
-Those binary relations are associated with its sub-attributes. For example, [Secure] is one of the sub-attributes,
-and security represents a tenary relation, which is to say, a set of pairs, (s, c),
-between a system, s, and a context, c, that we  intend to hold (for the proposition to be provable,
-iff system s satisfies its [Secure] requirement (which isn't represented explicitly here) in context, c.)
+These binary relations represent the given system type's ability to satisfy
+the specified requirement in the given context.
 
-Its definition indicates that a [System] is [Dependable] for all [Contexts] if only if
-all the requirements of its sub-attributes are satisfied.
+Informally, in English:
+A system [sys] belonging to the set of systems [System] is deemed [Dependable] given the set of contexts [Context]
+if and only if all the requirements of its sub-attributes ([Security], [Safety], [Reliability], ..., and [Robustness])
+are satisfied given the same conditions.
 *)
 
 Inductive Dependable (System: Set) (Context: Set) (sys: System)

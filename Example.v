@@ -24,6 +24,8 @@ Inductive systemCanControlFurnaceOnOffSwitch: Smart_Home_System -> Prop :=
 Inductive systemCanControlGarageDoorOpener: Smart_Home_System -> Prop :=
   systemCanControlGarageDoorOpener_proof: forall s: Smart_Home_System, systemCanControlGarageDoorOpener s.
 
+Hint Constructors systemCanControlFurnaceOnOffSwitch systemCanControlGarageDoorOpener.
+
 Inductive physicalCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop := 
   physicalCapability_proof: systemCanControlFurnaceOnOffSwitch sys /\ systemCanControlGarageDoorOpener sys -> physicalCapability sys sh cx.
 
@@ -49,10 +51,15 @@ Inductive systemMeetsSpecificAdaptabilityRequirement: Smart_Home_System -> chang
     forall s: Smart_Home_System, forall c: changeStatement, 
       In adaptability (tipeAssignment c) -> systemMeetsSpecificAdaptabilityRequirement s c.
 
+Hint Constructors systemMeetsSpecificAdaptabilityRequirement.
+
 (* This is the relation that check a given system has adaptability quality.*)
 Inductive adaptability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
   adaptability_proof: systemMeetsSpecificAdaptabilityRequirement sys smart_home_system_adaptability_requirement -> 
       adaptability sys cx.
+
+(* Tell Coq how to prove changeability requirements *)
+Hint Extern 15 (In _ (tipeAssignment _)) => simpl; tauto.
 
 Inductive cyberCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
   cyberCapability_proof: cyberCapability sys sh cx.
@@ -64,6 +71,8 @@ Inductive humanUsability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (
 
 Inductive systemIsResponsive : Smart_Home_System -> Prop :=
   systemIsResponsive_proof: forall sys: Smart_Home_System, systemIsResponsive sys.
+
+Hint Constructors systemIsResponsive.
 
 Inductive speed (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
   speed_proof: systemIsResponsive sys -> speed sys sh cx.
@@ -94,6 +103,8 @@ Inductive systemCanWorkWithOtherSystems: Smart_Home_System -> Prop :=
 
 Inductive systemCanBeAccessedFromOtherSystems: Smart_Home_System -> Prop :=
   systemCanBeAccessedFromOtherSystems_proof: forall sys: Smart_Home_System, systemCanBeAccessedFromOtherSystems sys.
+
+Hint Constructors systemCanWorkWithOtherSystems systemCanBeAccessedFromOtherSystems.
 
 Inductive interoperability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
   interoperability_proof: systemCanWorkWithOtherSystems sys /\ systemCanBeAccessedFromOtherSystems sys -> interoperability sys sh cx.
@@ -126,6 +137,8 @@ Inductive systemIsDifficultToHack: Smart_Home_System -> Prop :=
 Inductive systemDoesNotHarmOwners: Smart_Home_System -> Prop :=
   systemDoesNotHarmOwners_proof: forall sys: Smart_Home_System, systemDoesNotHarmOwners sys.
 
+Hint Constructors systemIsDifficultToHack systemDoesNotHarmOwners.
+
 Inductive security (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
   security_proof: systemIsDifficultToHack sys /\ systemDoesNotHarmOwners sys -> security sys cx.
 
@@ -156,7 +169,6 @@ Inductive tailorability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop 
 (* We define an instance of Satisfactory for a smart home project.*)
 Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context := {
     sys := tt
-
   ; physicalCapability := physicalCapability
   ; cyberCapability := cyberCapability
   ; humanUsability := humanUsability
@@ -188,34 +200,34 @@ Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakehol
   ; tailorability := tailorability
   ; adaptability := adaptability
 }.
-Hint Constructors 
-
+Hint Constructors
   (** Composite **)
   MissionEffective Dependable Flexible ResourceUtilization Affordable Resilient
-
   (** Contributing **)
   Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
   Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
   Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robustness
   Modifiable Tailorable
-
   (** Smart Home Specific **)
   adaptability physicalCapability cyberCapability humanUsability speed endurability maneuverability
   accuracy impact scalability versatility interoperability cost duration keyPersonnel otherScarceResources
   manufacturability sustainability security safety reliability maintainability
   availability survivability robustness modifiability tailorability.
-
 (* 
 If the instance can be proved, then we show the given system has all required qualities.
 If we cannot find proofs of this instance, then we can conclude that the system is not accepted. 
 *)
 Proof.
-
-repeat constructor.
-repeat constructor.
-repeat constructor.
-
-repeat (simpl; auto; constructor).
-repeat (simpl; auto; constructor).
-repeat (simpl; auto; constructor).
-Defined.
+(* mission_effective *)
+auto.
+(* resource_utilization *)
+auto.
+(* dependable *)
+auto.
+(* flexible *)
+auto.
+(* affordable *)
+auto 6.
+(* resilient *)
+auto 6.
+Qed.

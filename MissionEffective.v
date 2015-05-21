@@ -26,8 +26,8 @@ Require Export Interoperable.
 In the following definition, [MissionEffective] is parameterized by three typeclasses,
 [System], [Stakerholder], and [Context], a system, sys, of type [System], and sevaral ternary
 relations over [System], [Context], and/or [Stakeholder].
-Those ternary relations are associated with its sub-attributes. For example, pc_sh_cx represents a ternary relation,
-which is to say, a set of triples, (s, sh, c), between a system, s, a stakerholder, sh, and a context, c,
+Those ternary relations are associated with its sub-attributes. For example, physicalCapability is a ternary relation,
+which is to say, a set of triples, (s, sh, c), between a system, s, a stakeholder, sh, and a context, c,
 that we expect to hold (for the proposition to be provable, iff system s satisfies its mission effective
 requirement (which isn't represented explicitly here) in context, c.)
 
