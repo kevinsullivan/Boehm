@@ -1,7 +1,7 @@
 Add Rec LoadPath "./ContributeQA".
 
 Require Import MissionEffective.
-Require Import ResourceUtilization.
+Require Import Efficient.
 
 (** ** AFFORDABLE**)
 (**
@@ -44,7 +44,7 @@ Inductive Affordable
              MissionEffective System Stakeholder Context sys 
                  physicalCapability cyberCapability humanUsability speed 
                  endurability maneuverability accuracy impact scalability versability interoperability->
-             ResourceUtilization System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability ->
+             Efficient System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability ->
              Affordable System Stakeholder Context sys 
                  physicalCapability cyberCapability humanUsability speed 
                  endurability maneuverability accuracy impact scalability versability interoperability

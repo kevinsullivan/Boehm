@@ -8,7 +8,7 @@ March, 2015
 Add Rec LoadPath "./ContributeQA".
 
 Require Export MissionEffective.
-Require Export ResourceUtilization.
+Require Export Efficient.
 Require Export Dependable.
 Require Export Flexible.
 Require Export Affordable.
@@ -50,10 +50,10 @@ Class Satisfactory (System: Set) (Stakeholder: Set) (Context: Set) := {
 
     ; mission_effective: MissionEffective System Stakeholder Context sys physicalCapability cyberCapability humanUsability speed
               endurability maneuverability accuracy impact scalability versability interoperability
-    ; resource_utilization: ResourceUtilization System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability
+    ; efficient: Efficient System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability
     ; dependable: Dependable System Context sys security safety reliability maintainability availability survivability robustness
     ; flexible: Flexible System Context sys modifiability tailorability adaptability
-    (* affordable is a composite property of "MissionEffective" and "ResourceUtilization"*)
+    (* affordable is a composite property of MissionEffective and Efficient*)
     ; affordable: Affordable System Stakeholder Context sys
               physicalCapability cyberCapability humanUsability speed
               endurability maneuverability accuracy impact scalability versability interoperability

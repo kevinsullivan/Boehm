@@ -202,7 +202,7 @@ Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakehol
 }.
 Hint Constructors
   (** Composite **)
-  MissionEffective Dependable Flexible ResourceUtilization Affordable Resilient
+  MissionEffective Dependable Flexible Efficient Affordable Resilient
   (** Contributing **)
   Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
   Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
@@ -220,7 +220,7 @@ If we cannot find proofs of this instance, then we can conclude that the system 
 Proof.
 (* mission_effective *)
 auto.
-(* resource_utilization *)
+(* efficient *)
 auto.
 (* dependable *)
 auto.
