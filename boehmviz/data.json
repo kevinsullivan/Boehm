@@ -1,0 +1,67 @@
+{"name": "Satisfactory",
+ "children": [
+     {"name": "Resilient",
+      "children": [
+	  {"name": "Flexible",
+	   "children": [
+	       {"name": "Modifiable", "size": 1},
+	       {"name": "Tailorable", "size": 1},
+	       {"name": "Adaptable", "size": 1}]},
+	  {"name": "Ross",
+	   "children": [
+	       {"name": "Changeable",
+		"children": [
+		    {"name": "Value-Robust"},
+		    {"name": "Value-Survivable"},
+		    {"name": "Ross_Robustness"},
+		    {"name": "Classical-Passive Robustness"},
+		    {"name": "Ross_Survivable"},
+		    {"name": "Evolvable"},
+		    {"name": "Ross_Adaptable"},
+		    {"name": "Ross_Flexible"},
+		    {"name": "Ross_Scalable"},
+		    {"name": "Ross_Modifiable"},
+		    {"name": "Extensible"},
+		    {"name": "Agile"},
+		    {"name": "Reactive"},
+		    {"name": "Form-Reconfigurable"},
+		    {"name": "Operational-Reconfigurable"},
+		    {"name": "Functionally Versatile"},
+		    {"name": "Operationally Versatile"},
+		    {"name": "Exchangeable"}
+		]}]},
+	   {"name": "Dependable",
+	    "children": [
+		{"name": "Secure", "size": 1},
+		{"name": "Safe", "size": 1},
+		{"name": "Reliable", "size": 1},
+		{"name": "Maintainable", "size": 1},
+		{"name": "Available", "size": 1},
+		{"name": "Survivable", "size": 1},
+		{"name": "Robust", "size": 1}]}]},
+      {"name": "Affordable",
+       "children": [
+	   {"name": "Efficient",
+	    "children": [
+		{"name": "Cost", "size": 1},
+		{"name": "Duration", "size": 1},
+		{"name": "Key Personnel", "size": 1},
+		{"name": "Scarce Resources", "size": 1},
+		{"name": "Manufacturable", "size": 1},
+		{"name": "Sustainable", "size": 1}]},
+	   {"name": "Mission Effective",
+	    "children": [
+		{"name": "Physically-Capable", "size": 1},
+		{"name": "Cyber-Capable", "size": 1},
+		{"name": "Human Usable", "size": 1},
+		{"name": "Speed :(", "size": 1},
+		{"name": "Endurable :(", "size": 1},
+		{"name": "Maneuverable", "size": 1},
+		{"name": "Accurate", "size": 1},
+		{"name": "Impact :(", "size": 1},
+		{"name": "Scalable", "size": 1},
+		{"name": "Versatile", "size": 1},
+		{"name": "Interoperable", "size": 1}]}]}
+     ]
+ }
+
