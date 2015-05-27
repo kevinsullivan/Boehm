@@ -1,5 +1,5 @@
-Inductive Safe (System: Set) (Context: Set) (sys: System) 
-                     (safety: System -> Context -> Prop) : Prop := 
+Inductive Safe (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+               (safe: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesSafetyRequirement:
-    (forall cx: Context, safety sys cx) -> 
-      Safe System Context sys safety.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, safe sys sh cx ps) ->
+      Safe System Stakeholder Context Phase sys safe.

@@ -32,19 +32,19 @@ A system [sys] belonging to the set of systems [System] is deemed [Efficient] gi
 if and only if all the requirements of its sub-attributes are satisfied given the same conditions.
 *)
 
-Inductive Efficient (System: Set) (Context: Set) (sys: System) 
-                              (cost: System -> Context -> Prop)
-                              (duration: System -> Context -> Prop)
-                              (keyPersonnel: System -> Context -> Prop)
-                              (otherScareResources: System -> Context -> Prop)
-                              (manufacturability: System -> Context -> Prop)
-                              (sustainability: System -> Context -> Prop)
+Inductive Efficient (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)  
+                              (cost: System -> Stakeholder -> Context -> Phase -> Prop)
+                              (duration: System -> Stakeholder -> Context -> Phase -> Prop)
+                              (keyPersonnel: System -> Stakeholder -> Context -> Phase -> Prop)
+                              (otherScareResources: System -> Stakeholder -> Context -> Phase -> Prop)
+                              (manufacturability: System -> Stakeholder -> Context -> Phase -> Prop)
+                              (sustainability: System -> Stakeholder -> Context -> Phase -> Prop)
                               : Prop := 
   mk_efficient:
-    Cost System Context sys cost ->
-    Duration System Context sys duration ->
-    KeyPersonnel System Context sys keyPersonnel ->
-    OtherScarceResources System Context sys otherScareResources ->
-    Manufacturable System Context sys manufacturability ->
-    Sustainable System Context sys sustainability ->
-    Efficient System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability.
+    Cost System Stakeholder Context Phase sys cost ->
+    Duration System Stakeholder Context Phase sys duration ->
+    KeyPersonnel System Stakeholder Context Phase sys keyPersonnel ->
+    OtherScarceResources System Stakeholder Context Phase sys otherScareResources ->
+    Manufacturable System Stakeholder Context Phase sys manufacturability ->
+    Sustainable System Stakeholder Context Phase sys sustainability ->
+    Efficient System Stakeholder Context Phase sys cost duration keyPersonnel otherScareResources manufacturability sustainability.

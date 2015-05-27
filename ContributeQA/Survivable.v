@@ -1,5 +1,5 @@
-Inductive Survivable (System: Set) (Context: Set) (sys: System) 
-                     (survivable: System -> Context -> Prop) : Prop :=
+Inductive Survivable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (survivable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesSurvivabilityRequirement:
-    (forall cx: Context, survivable sys cx) ->
-      Survivable System Context sys survivable.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, survivable sys sh cx ps) ->
+      Survivable System Stakeholder Context Phase sys survivable.

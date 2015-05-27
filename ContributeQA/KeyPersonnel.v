@@ -1,5 +1,5 @@
-Inductive KeyPersonnel (System: Set) (Context: Set) (sys: System) 
-                     (keyPersonnel: System -> Context -> Prop) : Prop := 
+Inductive KeyPersonnel (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (keyPersonnel: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesKeyPersonnelRequirement:
-    (forall cx: Context, keyPersonnel sys cx) -> 
-      KeyPersonnel System Context sys keyPersonnel.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, keyPersonnel sys sh cx ps) ->
+      KeyPersonnel System Stakeholder Context Phase sys keyPersonnel.

@@ -36,30 +36,30 @@ mission effective implicitly for all [Stakeholders] in those [Contexts], only if
 are satisfied.
 *)
 
-Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (sys: System)
-                           (physicalCapability: System -> Stakeholder -> Context -> Prop)
-                           (cyberCapability: System -> Stakeholder -> Context -> Prop)
-                           (humanUsability: System -> Stakeholder -> Context -> Prop)
-                           (speed: System -> Stakeholder -> Context -> Prop)
-                           (endurability: System -> Stakeholder -> Context -> Prop)
-                           (maneuverability: System -> Stakeholder -> Context -> Prop)
-                           (accuracy: System -> Stakeholder -> Context -> Prop)
-                           (impact: System -> Stakeholder -> Context -> Prop)
-                           (scalability: System -> Stakeholder -> Context -> Prop)
-                           (versatility: System -> Stakeholder -> Context -> Prop)
-                           (interoperability: System -> Stakeholder -> Context -> Prop)
+Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                           (physicalCapability: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (cyberCapability: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (humanUsability: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (speed: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (endurability: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (maneuverability: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (accuracy: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (impact: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (scalability: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (versatility: System -> Stakeholder -> Context -> Phase -> Prop) 
+                           (interoperability: System -> Stakeholder -> Context -> Phase -> Prop) 
                            : Prop :=
   isMissionEffective:
-    PhysicalCapable System Stakeholder Context sys physicalCapability ->
-    CyberCapable System Stakeholder Context sys cyberCapability ->
-    HumanUsable System Stakeholder Context sys humanUsability ->
-    Speed System Stakeholder Context sys speed ->
-    Endurable System Stakeholder Context sys endurability ->
-    Maneuverable System Stakeholder Context sys maneuverability ->
-    Accurate System Stakeholder Context sys accuracy ->
-    Impact System Stakeholder Context sys impact ->
-    Scalable System Stakeholder Context sys scalability ->
-    Versatile System Stakeholder Context sys versatility ->
-    Interoperable System Stakeholder Context sys interoperability ->
-    MissionEffective System Stakeholder Context sys physicalCapability cyberCapability
+    PhysicalCapable System Stakeholder Context Phase sys physicalCapability ->
+    CyberCapable System Stakeholder Context Phase sys cyberCapability ->
+    HumanUsable System Stakeholder Context Phase sys humanUsability ->
+    Speed System Stakeholder Context Phase sys speed ->
+    Endurable System Stakeholder Context Phase sys endurability ->
+    Maneuverable System Stakeholder Context Phase sys maneuverability ->
+    Accurate System Stakeholder Context Phase sys accuracy ->
+    Impact System Stakeholder Context Phase sys impact ->
+    Scalable System Stakeholder Context Phase sys scalability ->
+    Versatile System Stakeholder Context Phase sys versatility ->
+    Interoperable System Stakeholder Context Phase sys interoperability ->
+    MissionEffective System Stakeholder Context Phase sys physicalCapability cyberCapability
         humanUsability speed endurability maneuverability accuracy impact scalability versatility interoperability.

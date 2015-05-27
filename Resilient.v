@@ -22,20 +22,20 @@ That is, all the requirements of the subattributes of both [Dependable] and [Fle
 *)
 
 Inductive Resilient
-            (System: Set) (Context: Set) (sys: System)
-            (security: System -> Context -> Prop)
-            (safety: System -> Context -> Prop)
-            (reliability: System -> Context -> Prop)
-            (maintainability: System -> Context -> Prop)
-            (availability: System -> Context -> Prop)
-            (survivability: System -> Context -> Prop)
-            (robustness: System -> Context -> Prop)
-            (manufacturability: System -> Context -> Prop)
-            (tailorability: System -> Context -> Prop)
-            (adaptivity: System -> Context -> Prop) : Prop :=
+            (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+            (security: System -> Stakeholder -> Context -> Phase -> Prop)
+            (safety: System -> Stakeholder -> Context -> Phase -> Prop)
+            (reliability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (maintainability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (availability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (survivability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (robustness: System -> Stakeholder -> Context -> Phase -> Prop)
+            (manufacturability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (tailorability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (adaptivity: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
             isResilient:
-                 Dependable System Context sys security safety reliability maintainability availability survivability robustness ->
-                 Flexible System Context sys manufacturability tailorability adaptivity ->
-                 Resilient System Context sys
+                 Dependable System Stakeholder Context Phase sys security safety reliability maintainability availability survivability robustness ->
+                 Flexible System Stakeholder Context Phase sys manufacturability tailorability adaptivity ->
+                 Resilient System Stakeholder Context Phase sys
                      security safety reliability maintainability availability survivability robustness
                      manufacturability tailorability adaptivity.

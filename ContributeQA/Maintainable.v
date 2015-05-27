@@ -1,5 +1,5 @@
-Inductive Maintainable (System: Set) (Context: Set) (sys: System) 
-                     (maintainable: System -> Context -> Prop) : Prop :=
+Inductive Maintainable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (maintainable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesMaintainabilityRequirement:
-    (forall cx: Context, maintainable sys cx) ->
-      Maintainable System Context sys maintainable.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, maintainable sys sh cx ps) ->
+      Maintainable System Stakeholder Context Phase sys maintainable.

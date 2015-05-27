@@ -13,6 +13,7 @@ Require Import Changeable.
 Definition Smart_Home_System := Datatypes.unit.
 Inductive Smart_Home_Stakeholder := investor | end_user | developer | maintainer | public.
 Inductive Smart_Home_Context := normal.
+Inductive Smart_Home_Phase := phase1 | phase2.
 
 (* 
 Define relations (callback functions for Satisfactory class) to check a given system has corresponding quality.
@@ -26,8 +27,8 @@ Inductive systemCanControlGarageDoorOpener: Smart_Home_System -> Prop :=
 
 Hint Constructors systemCanControlFurnaceOnOffSwitch systemCanControlGarageDoorOpener.
 
-Inductive physicalCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop := 
-  physicalCapability_proof: systemCanControlFurnaceOnOffSwitch sys /\ systemCanControlGarageDoorOpener sys -> physicalCapability sys sh cx.
+Inductive physicalCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop := 
+  physicalCapability_proof: systemCanControlFurnaceOnOffSwitch sys /\ systemCanControlGarageDoorOpener sys -> physicalCapability sys sh cx ps.
 
 (* An adaptivity change statement.*)
 Definition smart_home_system_adaptability_requirement : changeStatement := 
@@ -54,18 +55,18 @@ Inductive systemMeetsSpecificAdaptabilityRequirement: Smart_Home_System -> chang
 Hint Constructors systemMeetsSpecificAdaptabilityRequirement.
 
 (* This is the relation that check a given system has adaptability quality.*)
-Inductive adaptability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
+Inductive adaptability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
   adaptability_proof: systemMeetsSpecificAdaptabilityRequirement sys smart_home_system_adaptability_requirement -> 
-      adaptability sys cx.
+      adaptability sys sh cx ps.
 
 (* Tell Coq how to prove changeability requirements *)
 Hint Extern 15 (In _ (tipeAssignment _)) => simpl; tauto.
 
-Inductive cyberCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  cyberCapability_proof: cyberCapability sys sh cx.
+Inductive cyberCapability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  cyberCapability_proof: cyberCapability sys sh cx ps.
 
-Inductive humanUsability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  humanUsability_proof: humanUsability sys sh cx.
+Inductive humanUsability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  humanUsability_proof: humanUsability sys sh cx ps.
 
 (* We formalize the property that "a system is responsive", with a trivial proof. *)
 
@@ -74,26 +75,26 @@ Inductive systemIsResponsive : Smart_Home_System -> Prop :=
 
 Hint Constructors systemIsResponsive.
 
-Inductive speed (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  speed_proof: systemIsResponsive sys -> speed sys sh cx.
+Inductive speed (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  speed_proof: systemIsResponsive sys -> speed sys sh cx ps.
 
-Inductive endurability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  endurability_proof: endurability sys sh cx.
+Inductive endurability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  endurability_proof: endurability sys sh cx ps.
 
-Inductive maneuverability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  maneuverability_proof: maneuverability sys sh cx.
+Inductive maneuverability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  maneuverability_proof: maneuverability sys sh cx ps.
 
-Inductive accuracy (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  accuracy_proof: accuracy sys sh cx.
+Inductive accuracy (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  accuracy_proof: accuracy sys sh cx ps.
 
-Inductive impact (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  impact_proof: impact sys sh cx.
+Inductive impact (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  impact_proof: impact sys sh cx ps.
 
-Inductive scalability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  scalability_proof: scalability sys sh cx.
+Inductive scalability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  scalability_proof: scalability sys sh cx ps.
 
-Inductive versatility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  versatility_proof: versatility sys sh cx.
+Inductive versatility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  versatility_proof: versatility sys sh cx ps.
 
 (* We formalize the properties that "a system can Works well with other systems (i.e. HVAC systems), 
    and can be accessed from other systems (pc, car, phone)", with trivial proofs.*)
@@ -106,26 +107,26 @@ Inductive systemCanBeAccessedFromOtherSystems: Smart_Home_System -> Prop :=
 
 Hint Constructors systemCanWorkWithOtherSystems systemCanBeAccessedFromOtherSystems.
 
-Inductive interoperability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context): Prop :=
-  interoperability_proof: systemCanWorkWithOtherSystems sys /\ systemCanBeAccessedFromOtherSystems sys -> interoperability sys sh cx.
+Inductive interoperability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  interoperability_proof: systemCanWorkWithOtherSystems sys /\ systemCanBeAccessedFromOtherSystems sys -> interoperability sys sh cx ps.
 
-Inductive cost (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  cost_proof: cost sys cx.
+Inductive cost (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  cost_proof: cost sys sh cx ps.
 
-Inductive duration (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  duration_proof: duration sys cx.
+Inductive duration (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  duration_proof: duration sys sh cx ps.
 
-Inductive keyPersonnel (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  keyPersonnel_proof: keyPersonnel sys cx.
+Inductive keyPersonnel (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  keyPersonnel_proof: keyPersonnel sys sh cx ps.
 
-Inductive otherScarceResources (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  otherScareResources_proof: otherScarceResources sys cx.
+Inductive otherScarceResources (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  otherScareResources_proof: otherScarceResources sys sh cx ps.
 
-Inductive manufacturability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  manufacturability_proof: manufacturability sys cx.
+Inductive manufacturability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  manufacturability_proof: manufacturability sys sh cx ps.
 
-Inductive sustainability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  sustainability_proof: sustainability sys cx.
+Inductive sustainability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  sustainability_proof: sustainability sys sh cx ps.
 
 (* 
 We formalize the properties that "a system is difficult to hack, and does not put the owners of the home in danger.", with trivial proofs.
@@ -139,35 +140,35 @@ Inductive systemDoesNotHarmOwners: Smart_Home_System -> Prop :=
 
 Hint Constructors systemIsDifficultToHack systemDoesNotHarmOwners.
 
-Inductive security (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  security_proof: systemIsDifficultToHack sys /\ systemDoesNotHarmOwners sys -> security sys cx.
+Inductive security (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  security_proof: systemIsDifficultToHack sys /\ systemDoesNotHarmOwners sys -> security sys sh cx ps.
 
-Inductive safety (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  safety_proof: safety sys cx.
+Inductive safety (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  safety_proof: safety sys sh cx ps.
 
-Inductive reliability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  reliability_proof: reliability sys cx.
+Inductive reliability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  reliability_proof: reliability sys sh cx ps.
 
-Inductive maintainability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  maintainability_proof: maintainability sys cx.
+Inductive maintainability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  maintainability_proof: maintainability sys sh cx ps.
 
-Inductive availability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  availability_proof: availability sys cx.
+Inductive availability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  availability_proof: availability sys sh cx ps.
 
-Inductive survivability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  survivability_proof: survivability sys cx.
+Inductive survivability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  survivability_proof: survivability sys sh cx ps.
 
-Inductive robustness (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  robustness_proof: robustness sys cx.
+Inductive robustness (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  robustness_proof: robustness sys sh cx ps.
 
-Inductive modifiability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  modifiability_proof: modifiability sys cx.
+Inductive modifiability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  modifiability_proof: modifiability sys sh cx ps.
 
-Inductive tailorability (sys: Smart_Home_System) (cx: Smart_Home_Context): Prop :=
-  tailorability_proof: tailorability sys cx.
+Inductive tailorability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  tailorability_proof: tailorability sys sh cx ps.
 
 (* We define an instance of Satisfactory for a smart home project.*)
-Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context := {
+Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context Smart_Home_Phase := {
     sys := tt
   ; physicalCapability := physicalCapability
   ; cyberCapability := cyberCapability
@@ -202,7 +203,7 @@ Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakehol
 }.
 Hint Constructors
   (** Composite **)
-  MissionEffective Dependable Flexible Efficient Affordable Resilient
+  MissionEffective Dependable Flexible ResourceUtilization Affordable Resilient
   (** Contributing **)
   Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
   Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
@@ -220,7 +221,7 @@ If we cannot find proofs of this instance, then we can conclude that the system 
 Proof.
 (* mission_effective *)
 auto.
-(* efficient *)
+(* resource_utilization *)
 auto.
 (* dependable *)
 auto.

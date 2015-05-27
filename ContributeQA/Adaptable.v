@@ -10,11 +10,11 @@ explicitly here) in context, c.
  
 *)
 
-Inductive Adaptable (System: Set) (Context: Set) (sys: System) 
-                     (adaptability: System -> Context -> Prop) : Prop :=
+Inductive Adaptable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                     (adaptable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   mk_adaptability:
-    (forall cx: Context, adaptability sys cx) -> 
-      Adaptable System Context sys adaptability.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, adaptable sys sh cx ps) ->
+      Adaptable System Stakeholder Context Phase sys adaptable.
 
 (** Ross version *)
 

@@ -1,5 +1,5 @@
-Inductive Modifiable (System: Set) (Context: Set) (sys: System) 
-                     (modifiable: System -> Context -> Prop) : Prop :=
+Inductive Modifiable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (modifiable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesModifiabilityRequirement:
-    (forall cx: Context, modifiable sys cx) ->
-      Modifiable System Context sys modifiable.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, modifiable sys sh cx ps) ->
+      Modifiable System Stakeholder Context Phase sys modifiable.

@@ -1,5 +1,5 @@
-Inductive Robustness (System: Set) (Context: Set) (sys: System) 
-                     (robust: System -> Context -> Prop) : Prop :=
+Inductive Robustness (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (robust: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesRobustnessRequirement:
-    (forall cx: Context, robust sys cx) ->
-      Robustness System Context sys robust.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, robust sys sh cx ps) ->
+      Robustness System Stakeholder Context Phase sys robust.

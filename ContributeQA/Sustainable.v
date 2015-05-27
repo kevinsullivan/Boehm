@@ -1,5 +1,5 @@
-Inductive Sustainable (System: Set) (Context: Set) (sys: System) 
-                              (sustainable: System -> Context -> Prop) : Prop :=
+Inductive Sustainable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (sustainable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesSustainabilityRequirement:
-    (forall cx: Context, sustainable sys cx) ->
-      Sustainable System Context sys sustainable.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, sustainable sys sh cx ps) ->
+      Sustainable System Stakeholder Context Phase sys sustainable.

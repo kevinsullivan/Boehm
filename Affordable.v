@@ -1,7 +1,7 @@
 Add Rec LoadPath "./ContributeQA".
 
 Require Import MissionEffective.
-Require Import Efficient.
+Require Import ResourceUtilization.
 
 (** ** AFFORDABLE**)
 (**
@@ -21,31 +21,32 @@ are satisfied given the same conditions, i.e., the same [System], [Stakeholder],
 *)
 
 Inductive Affordable 
-            (System: Set) (Stakeholder: Set) (Context: Set) (sys: System) 
-            (physicalCapability: System -> Stakeholder -> Context -> Prop)
-            (cyberCapability: System -> Stakeholder -> Context -> Prop)
-            (humanUsability: System -> Stakeholder -> Context -> Prop)
-            (speed: System -> Stakeholder -> Context -> Prop)
-            (endurability: System -> Stakeholder -> Context -> Prop)
-            (maneuverability: System -> Stakeholder -> Context -> Prop)
-            (accuracy: System -> Stakeholder -> Context -> Prop)
-            (impact: System -> Stakeholder -> Context -> Prop)
-            (scalability: System -> Stakeholder -> Context -> Prop)
-            (versability: System -> Stakeholder -> Context -> Prop)
-            (interoperability: System -> Stakeholder -> Context -> Prop)
-            (cost: System -> Context -> Prop)
-            (duration: System -> Context -> Prop)
-            (keyPersonnel: System -> Context -> Prop)
-            (otherScareResources: System -> Context -> Prop)
-            (manufacturability: System -> Context -> Prop)
-            (sustainability: System -> Context -> Prop):=
+            (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+            (physicalCapability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (cyberCapability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (humanUsability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (speed: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (endurability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (maneuverability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (accuracy: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (impact: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (scalability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (versability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (interoperability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (cost: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (duration: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (keyPersonnel: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (otherScareResources: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (manufacturability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            (sustainability: System -> Stakeholder -> Context -> Phase -> Prop) 
+            : Prop :=
 
           isAffordable: 
-             MissionEffective System Stakeholder Context sys 
+             MissionEffective System Stakeholder Context Phase sys 
                  physicalCapability cyberCapability humanUsability speed 
                  endurability maneuverability accuracy impact scalability versability interoperability->
-             Efficient System Context sys cost duration keyPersonnel otherScareResources manufacturability sustainability ->
-             Affordable System Stakeholder Context sys 
+             ResourceUtilization System Stakeholder Context Phase sys cost duration keyPersonnel otherScareResources manufacturability sustainability ->
+             Affordable System Stakeholder Context Phase sys
                  physicalCapability cyberCapability humanUsability speed 
                  endurability maneuverability accuracy impact scalability versability interoperability
                  cost duration keyPersonnel otherScareResources manufacturability sustainability.

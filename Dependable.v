@@ -33,21 +33,21 @@ if and only if all the requirements of its sub-attributes ([Security], [Safety],
 are satisfied given the same conditions.
 *)
 
-Inductive Dependable (System: Set) (Context: Set) (sys: System)
-                     (security: System -> Context -> Prop)
-                     (safety: System -> Context -> Prop)
-                     (reliability: System -> Context -> Prop)
-                     (maintainability: System -> Context -> Prop)
-                     (availability: System -> Context -> Prop)
-                     (survivability: System -> Context -> Prop)
-                     (robustness: System -> Context -> Prop)
+Inductive Dependable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                     (security: System -> Stakeholder -> Context -> Phase -> Prop)
+                     (safety: System -> Stakeholder -> Context -> Phase -> Prop)
+                     (reliability: System -> Stakeholder -> Context -> Phase -> Prop)
+                     (maintainability: System -> Stakeholder -> Context -> Phase -> Prop)
+                     (availability: System -> Stakeholder -> Context -> Phase -> Prop)
+                     (survivability: System -> Stakeholder -> Context -> Phase -> Prop)
+                     (robustness: System -> Stakeholder -> Context -> Phase -> Prop)
                      : Prop :=
   mk_dependability:
-    Secure System Context sys security ->
-    Safe System Context sys safety ->
-    Reliable System Context sys reliability ->
-    Maintainable System Context sys maintainability ->
-    Available System Context sys availability ->
-    Survivable System Context sys survivability ->
-    Robustness System Context sys robustness ->
-    Dependable System Context sys security safety reliability maintainability availability survivability robustness.
+    Secure System Stakeholder Context Phase sys security ->
+    Safe System Stakeholder Context Phase sys safety ->
+    Reliable System Stakeholder Context Phase sys reliability ->
+    Maintainable System Stakeholder Context Phase sys maintainability ->
+    Available System Stakeholder Context Phase sys availability ->
+    Survivable System Stakeholder Context Phase sys survivability ->
+    Robustness System Stakeholder Context Phase sys robustness ->
+    Dependable System Stakeholder Context Phase sys security safety reliability maintainability availability survivability robustness.

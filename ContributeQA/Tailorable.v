@@ -1,5 +1,5 @@
-Inductive Tailorable (System: Set) (Context: Set) (sys: System) 
-                     (tailorable: System -> Context -> Prop) : Prop :=
+Inductive Tailorable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (tailorable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesTailorabilityRequirement:
-    (forall cx: Context, tailorable sys cx) ->
-      Tailorable System Context sys tailorable.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, tailorable sys sh cx ps) ->
+      Tailorable System Stakeholder Context Phase sys tailorable.

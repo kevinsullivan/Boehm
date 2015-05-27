@@ -1,5 +1,5 @@
-Inductive Versatile (System: Set) (Stakeholder: Set) (Context: Set) (sys: System) 
-                     (versatile: System -> Stakeholder -> Context -> Prop) : Prop :=
+Inductive Versatile (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (versatile: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesVersatilityRequirement:
-    (forall cx: Context, forall sh: Stakeholder, versatile sys sh cx) ->
-      Versatile System Stakeholder Context sys versatile.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, versatile sys sh cx ps) ->
+      Versatile System Stakeholder Context Phase sys versatile.

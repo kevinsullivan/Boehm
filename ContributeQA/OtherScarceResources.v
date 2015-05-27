@@ -1,5 +1,5 @@
-Inductive OtherScarceResources (System: Set) (Context: Set) (sys: System) 
-                     (otherScareResources: System -> Context -> Prop) : Prop := 
+Inductive OtherScarceResources (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (otherScareResources: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesOtherResoucesRequirement:
-    (forall cx: Context, otherScareResources sys cx) -> 
-      OtherScarceResources System Context sys otherScareResources.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, otherScareResources sys sh cx ps) ->
+      OtherScarceResources System Stakeholder Context Phase sys otherScareResources.

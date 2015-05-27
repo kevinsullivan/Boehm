@@ -1,5 +1,6 @@
-Inductive Duration (System: Set) (Context: Set) (sys: System) 
-                     (duration: System -> Context -> Prop) : Prop := 
+
+Inductive Duration (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
+                   (duration: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
   satisfiesDurationRequirement:
-    (forall cx: Context, duration sys cx) -> 
-      Duration System Context sys duration.
+    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, duration sys sh cx ps) ->
+      Duration System Stakeholder Context Phase sys duration.
