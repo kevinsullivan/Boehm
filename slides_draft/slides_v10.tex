@@ -82,7 +82,7 @@ Chong Tang,  Kevin Sullivan, Ke Dou, Koleman Nix\\
 \begin{frame}{Problems}
 \begin{itemize}
 \item The space of system properties is not flat
-\item Stakeholders have conflicting property preferences 
+\item Stakeholders have conflicting property preferences
 \item Properties can be coupled in complex ways
 \item Lacking foundations for rigorous engineering of properties
 \end{itemize}
@@ -549,6 +549,63 @@ To provide an approach for:
 \coqdocindent{2.00em}
 ; \coqdef{Satisfactory.fl}{fl}{\coqdocprojection{fl}}: \coqdocinductive{Flexible} \coqdocvariable{System} \coqdocvariable{Context} \coqref{Satisfactory.sys}{\coqdocmethod{sys}} \coqref{Satisfactory.modifiability}{\coqdocmethod{modifiability}} \coqref{Satisfactory.tailorability}{\coqdocmethod{tailorability}} \coqref{Satisfactory.adaptability}{\coqdocmethod{adaptability}}\coqdoceol
 \coqdocindent{2.00em}
+\end{coqdoccode}
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{\scshape formalized taxonomy}
+\begin{frame}{Top-Most System Value -- \small{Satisfactory}}
+\tiny{
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Class} \coqdocrecord{Satisfactory} (\coqdocvar{System}: \coqdockw{Set}) (\coqdocvar{Stakeholder}: \coqdockw{Set}) (\coqdocvar{Context}: \coqdockw{Set}) (\coqdocvar{Phase}: \coqdockw{Set}):= \{\coqdoceol
+\coqdocindent{3.00em}
+\coqdocvar{sys}: \coqdocvar{System}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{2.00em}
+; \coqdocprojection{physicalCapability} : \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdocvar{Phase} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+\coqdocindent{2.00em}
+; \coqdocprojection{cyberCapability} : \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdocvar{Phase} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+\coqdocindent{2.00em}
+; \coqdocprojection{humanUsability} : \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdocvar{Phase} \ensuremath{\rightarrow} \coqdockw{Prop}\coqdoceol
+\coqdocnoindent
+\coqdocindent{2.00em}
+\coqdockw{......}\coqdoceol
+\coqdocindent{2.00em}
+; \coqdocprojection{exchangeability}: \coqdocvar{System} \ensuremath{\rightarrow} \coqdocvar{Stakeholder} \ensuremath{\rightarrow} \coqdocvar{Context} \ensuremath{\rightarrow} \coqdocvar{Phase} \ensuremath{\rightarrow} \coqdockw{Prop} \coqdoceol
+\coqdocindent{2.00em}
+\coqdockw{......}\coqdoceol
+\coqdocindent{2.00em}
+; \coqdocprojection{affordable}: \coqdocinductive{Affordable} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{Phase} \coqdocvar{sys}\coqdoceol
+\coqdocindent{11.00em}
+\coqdocmethod{physicalCapability} \coqdocmethod{cyberCapability} \coqdocmethod{humanUsability} \coqdocmethod{speed} \coqdocmethod{endurability}\coqdoceol
+\coqdocindent{11.00em}
+ \coqdocmethod{maneuverability} \coqdocmethod{accuracy} \coqdocmethod{impact} \coqdocmethod{scalability} \coqdocmethod{versability} \coqdocmethod{interoperability}\coqdocmethod{cost}                           \coqdoceol
+\coqdocindent{11.00em}
+ \coqdocmethod{duration} \coqdocmethod{keyPersonnel} \coqdocmethod{otherScareResources} \coqdocmethod{manufacturability} \coqdocmethod{sustainability}\coqdoceol
+\coqdocindent{2.00em}
+; \coqdocprojection{resilient}: \coqdocinductive{Resilient} \coqdocvar{System} \coqdocvar{Stakeholder} \coqdocvar{Context} \coqdocvar{Phase} \coqdocvar{sys}\coqdoceol
+\coqdocindent{9.70em}
+\coqdocmethod{security} \coqdocmethod{safety} \coqdocmethod{reliability} \coqdocmethod{maintainability} \coqdocvar{availability} \coqdocmethod{survivability} \coqdocmethod{robustness}\coqdoceol
+\coqdocindent{9.70em}
+\coqdocmethod{modifiability} \coqdocmethod{tailorability} \coqdocmethod{adaptability} \coqdocmethod{valueRobustness} \coqdocmethod{valueSurvivability} \coqdoceol
+\coqdocindent{9.70em}
+\coqdocmethod{ross\_robustness} \coqdocmethod{classicalPassiveRobustness} \coqdocmethod{ross\_survivability} \coqdocmethod{evolvability}  \coqdoceol
+\coqdocindent{9.70em}
+\coqdocmethod{ross\_adaptability} \coqdocmethod{ross\_flexibility} \coqdocmethod{ross\_scalability} \coqdocmethod{ross\_modifiability} \coqdocmethod{extensibility} \coqdoceol
+\coqdocindent{9.70em}
+\coqdocmethod{agility} \coqdocmethod{reactivity} \coqdocmethod{formReconfigurability} \coqdocmethod{operationalReconfigurability}  \coqdoceol
+\coqdocindent{9.70em}
+\coqdocmethod{functionalVersatility} \coqdocmethod{operationalVersatility} \coqdocmethod{exchangeability} \coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocnoindent
+\}.\coqdoceol
 \end{coqdoccode}
 }
 \end{frame}
