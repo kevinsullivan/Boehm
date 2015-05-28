@@ -6,11 +6,13 @@ Barry Boehm, and Adam Ross
 March, 2015
 *)
 Add Rec LoadPath "./ContributeQA".
+Add Rec LoadPath "./Changeability".
 
 Require Export MissionEffective.
 Require Export ResourceUtilization.
 Require Export Dependable.
 Require Export Flexible.
+Require Export Changeable.
 Require Export Affordable.
 Require Export Resilient.
 
@@ -48,17 +50,46 @@ Class Satisfactory (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set):
     ; tailorability : System -> Stakeholder -> Context -> Phase -> Prop
     ; adaptability : System -> Stakeholder -> Context -> Phase -> Prop
 
+    ; valueRobustness: System -> Stakeholder -> Context -> Phase -> Prop
+    ; valueSurvivability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; ross_robustness: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; classicalPassiveRobustness: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; ross_survivability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; evolvability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; ross_adaptability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; ross_flexibility: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; ross_scalability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; ross_modifiability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; extensibility: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; agility: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; reactivity: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; formReconfigurability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; operationalReconfigurability: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; functionalVersatility: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; operationalVersatility: System -> Stakeholder -> Context -> Phase -> Prop 
+    ; exchangeability: System -> Stakeholder -> Context -> Phase -> Prop 
+
     ; mission_effective: MissionEffective System Stakeholder Context Phase sys physicalCapability cyberCapability humanUsability speed
               endurability maneuverability accuracy impact scalability versability interoperability
     ; resource_utilization: ResourceUtilization System Stakeholder Context Phase sys cost duration keyPersonnel otherScareResources manufacturability sustainability
     ; dependable: Dependable System Stakeholder Context Phase sys security safety reliability maintainability availability survivability robustness
     ; flexible: Flexible System Stakeholder Context Phase sys modifiability tailorability adaptability
+    ; changeable: Changeable System Stakeholder Context Phase sys valueRobustness valueSurvivability ross_robustness
+               classicalPassiveRobustness ross_survivability evolvability ross_adaptability ross_flexibility
+               ross_scalability ross_modifiability extensibility agility reactivity formReconfigurability
+               operationalReconfigurability functionalVersatility operationalVersatility exchangeability
+
     (* affordable is a composite property of "MissionEffective" and "ResourceUtilization"*)
     ; affordable: Affordable System Stakeholder Context Phase sys
-              physicalCapability cyberCapability humanUsability speed
-              endurability maneuverability accuracy impact scalability versability interoperability
-              cost duration keyPersonnel otherScareResources manufacturability sustainability
-    (* Resilient is a composite property of "Dependable" and "Flexible" *)
-    ; resilient: Resilient System Stakeholder Context Phase sys security safety reliability maintainability availability survivability robustness
-              modifiability tailorability adaptability
+                             physicalCapability cyberCapability humanUsability speed
+                             endurability maneuverability accuracy impact scalability versability interoperability
+                             cost duration keyPersonnel otherScareResources manufacturability sustainability
+    (* Resilient is a composite property of "Dependable", "Flexible" and "Changeable" *)
+    ; resilient: Resilient System Stakeholder Context Phase sys
+                           security safety reliability maintainability availability survivability robustness
+                           modifiability tailorability adaptability valueRobustness valueSurvivability ross_robustness
+                           classicalPassiveRobustness ross_survivability evolvability ross_adaptability ross_flexibility
+                           ross_scalability ross_modifiability extensibility agility reactivity formReconfigurability
+                           operationalReconfigurability functionalVersatility operationalVersatility exchangeability
+
 }.

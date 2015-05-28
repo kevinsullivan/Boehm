@@ -1,7 +1,9 @@
 Add Rec LoadPath "./ContributeQA".
+Add Rec LoadPath "./Changeability".
 
 Require Import Dependable.
 Require Import Flexible.
+Require Import Changeable.
 
 (** ** RESILIENT**)
 (**
@@ -30,12 +32,38 @@ Inductive Resilient
             (availability: System -> Stakeholder -> Context -> Phase -> Prop)
             (survivability: System -> Stakeholder -> Context -> Phase -> Prop)
             (robustness: System -> Stakeholder -> Context -> Phase -> Prop)
-            (manufacturability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (modifiability: System -> Stakeholder -> Context -> Phase -> Prop)
             (tailorability: System -> Stakeholder -> Context -> Phase -> Prop)
-            (adaptivity: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
+            (adaptivity: System -> Stakeholder -> Context -> Phase -> Prop)
+            (valueRobustness: System -> Stakeholder -> Context -> Phase -> Prop)
+            (valueSurvivability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (ross_robustness: System -> Stakeholder -> Context -> Phase -> Prop)
+            (classicalPassiveRobustness: System -> Stakeholder -> Context -> Phase -> Prop)
+            (ross_survivability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (evolvability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (ross_adaptability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (ross_flexibility: System -> Stakeholder -> Context -> Phase -> Prop)
+            (ross_scalability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (ross_modifiability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (extensibility: System -> Stakeholder -> Context -> Phase -> Prop)
+            (agility: System -> Stakeholder -> Context -> Phase -> Prop)
+            (reactivity: System -> Stakeholder -> Context -> Phase -> Prop)
+            (formReconfigurability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (operationalReconfigurability: System -> Stakeholder -> Context -> Phase -> Prop)
+            (functionalVersatility: System -> Stakeholder -> Context -> Phase -> Prop)
+            (operationalVersatility: System -> Stakeholder -> Context -> Phase -> Prop)
+            (exchangeability: System -> Stakeholder -> Context -> Phase -> Prop)
+            : Prop :=
             isResilient:
                  Dependable System Stakeholder Context Phase sys security safety reliability maintainability availability survivability robustness ->
-                 Flexible System Stakeholder Context Phase sys manufacturability tailorability adaptivity ->
+                 Flexible System Stakeholder Context Phase sys modifiability tailorability adaptivity ->
+                 Changeable System Stakeholder Context Phase sys valueRobustness valueSurvivability ross_robustness
+                            classicalPassiveRobustness ross_survivability evolvability ross_adaptability ross_flexibility
+                            ross_scalability ross_modifiability extensibility agility reactivity formReconfigurability
+                            operationalReconfigurability functionalVersatility operationalVersatility exchangeability ->
                  Resilient System Stakeholder Context Phase sys
-                     security safety reliability maintainability availability survivability robustness
-                     manufacturability tailorability adaptivity.
+                           security safety reliability maintainability availability survivability robustness
+                           modifiability tailorability adaptivity valueRobustness valueSurvivability ross_robustness
+                           classicalPassiveRobustness ross_survivability evolvability ross_adaptability ross_flexibility
+                           ross_scalability ross_modifiability extensibility agility reactivity formReconfigurability
+                           operationalReconfigurability functionalVersatility operationalVersatility exchangeability.
