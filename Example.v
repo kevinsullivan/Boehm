@@ -7,9 +7,13 @@ Barry Boehm, and Adam Ross
 May, 2015
 *)
 Add Rec LoadPath "./ContributeQA".
-Add Rec LoadPath "./Changeability".
 
 Require Import Satisfactory.
+Require Import MissionEffective Dependable Flexible Changeable Efficient Affordable Resilient
+        Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
+        Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
+        Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robust
+        Modifiable Tailorable.
 
 Definition Smart_Home_System := Datatypes.unit.
 Inductive Smart_Home_Stakeholder := investor | end_user | developer | maintainer | public.
@@ -19,7 +23,7 @@ Inductive Smart_Home_Phase := phase1 | phase2.
 (* 
 Define relations (callback functions for Satisfactory class) to check a given system has corresponding quality.
 We formalize the property that "a system can control the furnace on/off switch", with a trivial proof.
-*)
+ *)
 Inductive systemCanControlFurnaceOnOffSwitch: Smart_Home_System -> Prop := 
   systemCanControlFurnaceOnOffSwitch_proof: forall s: Smart_Home_System, systemCanControlFurnaceOnOffSwitch s.
 
@@ -102,7 +106,7 @@ Inductive sustainability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (
 
 (* 
 We formalize the properties that "a system is difficult to hack, and does not put the owners of the home in danger.", with trivial proofs.
-*)
+ *)
 
 Inductive systemIsDifficultToHack: Smart_Home_System -> Prop :=
   systemIsDifficultToHack_proof: forall sys: Smart_Home_System, systemIsDifficultToHack sys.
@@ -139,150 +143,70 @@ Inductive modifiability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (c
 Inductive tailorability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
   tailorability_proof: tailorability sys sh cx ps.
 
-Inductive valueRobustness (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  valueRobustness_proof: valueRobustness sys sh cx ps.
-
-Inductive valueSurvivability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  valueSurvivability_proof: valueSurvivability sys sh cx ps.
-
-Inductive ross_robustness (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  ross_robustness_proof: ross_robustness sys sh cx ps.
-
-Inductive classicalPassiveRobustness (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  classicalPassiveRobustness_proof: classicalPassiveRobustness sys sh cx ps.
-
-Inductive ross_survivability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  ross_survivability_proof: ross_survivability sys sh cx ps.
-
-Inductive evolvability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  evolvability_proof: evolvability sys sh cx ps.
-
-Inductive ross_adaptability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  ross_adaptability_proof: ross_adaptability sys sh cx ps.
-
-Inductive ross_flexibility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  ross_flexibility_proof: ross_flexibility sys sh cx ps.
-
-Inductive ross_scalability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  ross_scalability_proof: ross_scalability sys sh cx ps.
-
-Inductive ross_modifiability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  ross_modifiability_proof: ross_modifiability sys sh cx ps.
-
-Inductive extensibility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  extensibility_proof: extensibility sys sh cx ps.
-
-Inductive agility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  agility_proof: agility sys sh cx ps.
-
-Inductive reactivity (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  reactivity_proof: reactivity sys sh cx ps.
-
-Inductive formReconfigurability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  formReconfigurability_proof: formReconfigurability sys sh cx ps.
-
-Inductive operationalReconfigurability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  operationalReconfigurability_proof: operationalReconfigurability sys sh cx ps.
-
-Inductive functionalVersatility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  functionalVersatility_proof: functionalVersatility sys sh cx ps.
-
-Inductive operationalVersatility (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  operationalVersatility_proof: operationalVersatility sys sh cx ps.
-
-Inductive exchangeability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
-  exchangeability_proof: exchangeability sys sh cx ps.
-
+Inductive changeability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop :=
+  changeability_proof: changeability sys sh cx ps.
 
 (* We define an instance of Satisfactory for a smart home project.*)
-Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context Smart_Home_Phase := {
-    sys := tt
-  ; physicalCapability := physicalCapability
-  ; cyberCapability := cyberCapability
-  ; humanUsability := humanUsability
-  ; speed:= speed
-  ; endurability := endurability
-  ; maneuverability := maneuverability
-  ; accuracy := accuracy
-  ; impact := impact
-  ; scalability := scalability
-  ; versability := versatility
-  ; interoperability := interoperability
+Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context Smart_Home_Phase tt := {
 
-  ; cost := cost
-  ; duration := duration
-  ; keyPersonnel := keyPersonnel
-  ; otherScareResources := otherScarceResources
-  ; manufacturability := manufacturability
-  ; sustainability := sustainability
-
-  ; security := security
-  ; safety := safety
-  ; reliability := reliability
-  ; maintainability := maintainability
-  ; availability := availability
-  ; survivability := survivability
-  ; robustness := robustness
-
-  ; modifiability := modifiability
-  ; tailorability := tailorability
-  ; adaptability := adaptability
-
-  ; valueRobustness := valueRobustness
-  ; valueSurvivability := valueSurvivability
-  ; ross_robustness := ross_robustness
-  ; classicalPassiveRobustness := classicalPassiveRobustness
-  ; ross_survivability := ross_survivability
-  ; evolvability := evolvability
-  ; ross_adaptability := ross_adaptability
-  ; ross_flexibility := ross_flexibility
-  ; ross_scalability := ross_scalability
-  ; ross_modifiability := ross_modifiability 
-  ; extensibility := extensibility 
-  ; agility := agility 
-  ; reactivity := reactivity 
-  ; formReconfigurability := formReconfigurability 
-  ; operationalReconfigurability := operationalReconfigurability 
-  ; functionalVersatility := functionalVersatility 
-  ; operationalVersatility := operationalVersatility 
-  ; exchangeability := exchangeability 
-}.
+                                                                                                                             }.
 Hint Constructors
-  (** Composite **)
-  MissionEffective Dependable Flexible Changeable ResourceUtilization Affordable Resilient
-  (** Contributing **)
-  Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
-  Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
-  Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robustness
-  Modifiable Tailorable Agile ClassicalPassiveRobust Evolvable Exchangeable Extensible FormReconfigurable
-  FunctionalVersatile OperationalReconfigurable OperationalVersatile Reactive Ross_Adaptable Ross_Flexible
-  Ross_Modifiable Ross_Robust Ross_Scalable Ross_Survivable ValueRobust ValueSurvivable
-  (** Smart Home Specific **)
-  adaptability physicalCapability cyberCapability humanUsability speed endurability maneuverability
-  accuracy impact scalability versatility interoperability cost duration keyPersonnel otherScarceResources
-  manufacturability sustainability security safety reliability maintainability
-  availability survivability robustness modifiability tailorability valueRobustness valueSurvivability ross_robustness
-  classicalPassiveRobustness ross_survivability evolvability ross_adaptability ross_flexibility
-  ross_scalability ross_modifiability extensibility agility reactivity formReconfigurability
-  operationalReconfigurability functionalVersatility operationalVersatility exchangeability.
+     (** Composite **)
+     MissionEffective Dependable Flexible Changeable Efficient Affordable Resilient
+     (** Contributing **)
+     Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
+     Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
+     Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robust
+     Modifiable Tailorable
+     adaptability physicalCapability cyberCapability humanUsability speed endurability maneuverability
+     accuracy impact scalability versatility interoperability cost duration keyPersonnel otherScarceResources
+     manufacturability sustainability security safety reliability maintainability
+     availability survivability robustness modifiability tailorability changeability.
 
 (* 
 If the instance can be proved, then we show the given system has all required qualities.
 If we cannot find proofs of this instance, then we can conclude that the system is not accepted. 
-*)
+ *)
 Proof.
-(* mission_effective *)
-auto.
-(* resource_utilization *)
-auto.
-(* dependable *)
-auto.
-(* flexible *)
-auto.
-(* changeable*)
-auto.
-(* affordable *)
-auto 6.
-(* resilient *)
-auto 6.
+  (* affordable *)
+  constructor.
+    (* mission effective *)
+    constructor.
+        constructor. exists physicalCapability. auto. 
+        constructor. exists cyberCapability. auto.
+        constructor. exists humanUsability. auto.
+        constructor. exists speed. auto.
+        constructor. exists endurability. auto.
+        constructor. exists maneuverability. auto.
+        constructor. exists accuracy. auto.
+        constructor. exists impact. auto.
+        constructor. exists scalability. auto.
+        constructor. exists versatility. auto.
+        constructor. exists interoperability. auto.
+    (* efficient *)
+    constructor.
+        constructor. exists cost. auto.
+        constructor. exists duration. auto.
+        constructor. exists keyPersonnel. auto.
+        constructor. exists otherScarceResources. auto.
+        constructor. exists manufacturability. auto.
+        constructor. exists sustainability. auto.
+  (* resilient *)
+  constructor.
+    (* dependable *)
+    constructor.
+      constructor. exists security. auto.
+      constructor. exists safety. auto.
+      constructor. exists reliability. auto.
+      constructor. exists maintainability. auto.
+      constructor. exists availability. auto.
+      constructor. exists survivability. auto.
+      constructor. exists robustness. auto.
+    (* flexible *)
+    constructor.
+      constructor. exists modifiability. auto.
+      constructor. exists tailorability. auto.
+      constructor. exists adaptability. auto.
+    (* changeable *)
+    constructor. exists changeability. auto. 
 Qed.

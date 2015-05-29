@@ -86,7 +86,7 @@ VFILES:=Affordable.v\
   Flexible.v\
   MissionEffective.v\
   Resilient.v\
-  ResourceUtilization.v\
+  Efficient.v\
   Satisfactory.v
 
 -include $(addsuffix .d,$(VFILES))

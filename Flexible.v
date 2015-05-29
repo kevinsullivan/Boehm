@@ -28,13 +28,10 @@ if and only if all the requirements of its sub-attributes ([Modifiability], [Tai
 are satisfied given the same conditions.
 *)
 
-Inductive Flexible (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-                     (modifiability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (tailorability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (adaptability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     : Prop :=
-  isFlexible:
-    Modifiable System Stakeholder Context Phase sys modifiability ->
-    Tailorable System Stakeholder Context Phase sys tailorability ->
-    Adaptable System Stakeholder Context Phase sys adaptability ->
-    Flexible System Stakeholder Context Phase sys modifiability tailorability adaptability.
+Inductive Flexible (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
+: Prop :=
+  satisfiesFlexibilityPrerequisites:
+    Modifiable System Stakeholder Context Phase sys ->
+    Tailorable System Stakeholder Context Phase sys ->
+    Adaptable System Stakeholder Context Phase sys ->
+    Flexible System Stakeholder Context Phase sys.

@@ -25,7 +25,7 @@ Require Export Interoperable.
 
 (**
 In the following definition, [MissionEffective] is parameterized by three typeclasses,
-[System], [Stakerholder], and [Context], a system, sys, of type [System], and sevaral ternary
+[System], [Stakeholder], and [Context], a system, sys, of type [System], and sevaral ternary
 relations over [System], [Context], and/or [Stakeholder].
 Those ternary relations are associated with its sub-attributes. For example, physicalCapability is a ternary relation,
 which is to say, a set of triples, (s, sh, c), between a system, s, a stakeholder, sh, and a context, c,
@@ -37,30 +37,17 @@ mission effective implicitly for all [Stakeholders] in those [Contexts], only if
 are satisfied.
 *)
 
-Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-                           (physicalCapability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (cyberCapability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (humanUsability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (speed: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (endurability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (maneuverability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (accuracy: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (impact: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (scalability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (versatility: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           (interoperability: System -> Stakeholder -> Context -> Phase -> Prop) 
-                           : Prop :=
+Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System): Prop :=
   isMissionEffective:
-    PhysicalCapable System Stakeholder Context Phase sys physicalCapability ->
-    CyberCapable System Stakeholder Context Phase sys cyberCapability ->
-    HumanUsable System Stakeholder Context Phase sys humanUsability ->
-    Speed System Stakeholder Context Phase sys speed ->
-    Endurable System Stakeholder Context Phase sys endurability ->
-    Maneuverable System Stakeholder Context Phase sys maneuverability ->
-    Accurate System Stakeholder Context Phase sys accuracy ->
-    Impact System Stakeholder Context Phase sys impact ->
-    Scalable System Stakeholder Context Phase sys scalability ->
-    Versatile System Stakeholder Context Phase sys versatility ->
-    Interoperable System Stakeholder Context Phase sys interoperability ->
-    MissionEffective System Stakeholder Context Phase sys physicalCapability cyberCapability
-        humanUsability speed endurability maneuverability accuracy impact scalability versatility interoperability.
+    PhysicalCapable System Stakeholder Context Phase sys ->
+    CyberCapable System Stakeholder Context Phase sys ->
+    HumanUsable System Stakeholder Context Phase sys ->
+    Speed System Stakeholder Context Phase sys ->
+    Endurable System Stakeholder Context Phase sys ->
+    Maneuverable System Stakeholder Context Phase sys ->
+    Accurate System Stakeholder Context Phase sys ->
+    Impact System Stakeholder Context Phase sys ->
+    Scalable System Stakeholder Context Phase sys ->
+    Versatile System Stakeholder Context Phase sys ->
+    Interoperable System Stakeholder Context Phase sys ->
+    MissionEffective System Stakeholder Context Phase sys.

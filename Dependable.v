@@ -14,7 +14,7 @@ Require Export Reliable.
 Require Export Maintainable.
 Require Export Available.
 Require Export Survivable.
-Require Export Robustness.
+Require Export Robust.
 
 (** ** DEPENDABLE**)
 (**
@@ -33,21 +33,13 @@ if and only if all the requirements of its sub-attributes ([Security], [Safety],
 are satisfied given the same conditions.
 *)
 
-Inductive Dependable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-                     (security: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (safety: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (reliability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (maintainability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (availability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (survivability: System -> Stakeholder -> Context -> Phase -> Prop)
-                     (robustness: System -> Stakeholder -> Context -> Phase -> Prop)
-                     : Prop :=
-  mk_dependability:
-    Secure System Stakeholder Context Phase sys security ->
-    Safe System Stakeholder Context Phase sys safety ->
-    Reliable System Stakeholder Context Phase sys reliability ->
-    Maintainable System Stakeholder Context Phase sys maintainability ->
-    Available System Stakeholder Context Phase sys availability ->
-    Survivable System Stakeholder Context Phase sys survivability ->
-    Robustness System Stakeholder Context Phase sys robustness ->
-    Dependable System Stakeholder Context Phase sys security safety reliability maintainability availability survivability robustness.
+Inductive Dependable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) : Prop :=
+  satisfiesDependabilityPrerequisites:
+    Secure System Stakeholder Context Phase sys ->
+    Safe System Stakeholder Context Phase sys ->
+    Reliable System Stakeholder Context Phase sys ->
+    Maintainable System Stakeholder Context Phase sys ->
+    Available System Stakeholder Context Phase sys ->
+    Survivable System Stakeholder Context Phase sys ->
+    Robust System Stakeholder Context Phase sys ->
+    Dependable System Stakeholder Context Phase sys.

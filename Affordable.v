@@ -1,7 +1,7 @@
 Add Rec LoadPath "./ContributeQA".
 
 Require Import MissionEffective.
-Require Import ResourceUtilization.
+Require Import Efficient.
 
 (** ** AFFORDABLE**)
 (**
@@ -21,32 +21,8 @@ are satisfied given the same conditions, i.e., the same [System], [Stakeholder],
 *)
 
 Inductive Affordable 
-            (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-            (physicalCapability: System -> Stakeholder -> Context -> Phase -> Prop)
-            (cyberCapability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (humanUsability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (speed: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (endurability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (maneuverability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (accuracy: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (impact: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (scalability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (versability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (interoperability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (cost: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (duration: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (keyPersonnel: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (otherScareResources: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (manufacturability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            (sustainability: System -> Stakeholder -> Context -> Phase -> Prop) 
-            : Prop :=
-
-          isAffordable: 
-             MissionEffective System Stakeholder Context Phase sys 
-                 physicalCapability cyberCapability humanUsability speed 
-                 endurability maneuverability accuracy impact scalability versability interoperability->
-             ResourceUtilization System Stakeholder Context Phase sys cost duration keyPersonnel otherScareResources manufacturability sustainability ->
-             Affordable System Stakeholder Context Phase sys
-                 physicalCapability cyberCapability humanUsability speed 
-                 endurability maneuverability accuracy impact scalability versability interoperability
-                 cost duration keyPersonnel otherScareResources manufacturability sustainability.
+            (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System): Prop :=
+          satisfiesAffordabilityPrerequisites: 
+             MissionEffective System Stakeholder Context Phase sys ->
+             Efficient System Stakeholder Context Phase sys ->
+             Affordable System Stakeholder Context Phase sys.

@@ -1,5 +1,8 @@
+(** Sustainability General Theory *)
+
 Inductive Sustainable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-                   (sustainable: System -> Stakeholder -> Context -> Phase -> Prop) : Prop :=
+: Prop :=
   satisfiesSustainabilityRequirement:
-    (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, sustainable sys sh cx ps) ->
-      Sustainable System Stakeholder Context Phase sys sustainable.
+    (exists sustainable: System -> Stakeholder -> Context -> Phase -> Prop,
+       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, sustainable sys sh cx ps)) ->
+    Sustainable System Stakeholder Context Phase sys.

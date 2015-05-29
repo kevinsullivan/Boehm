@@ -25,6 +25,15 @@ amounts to a context-free language for change
 related requirements, following Ross et al.
 *)
 
+(** Changeable General Theory *)
+
+Inductive Changeable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
+: Prop :=
+  satisfiesChangeableRequirement:
+    (exists changeable: System -> Stakeholder -> Context -> Phase -> Prop,
+       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, changeable sys sh cx ps)) ->
+       Changeable System Stakeholder Context Phase sys.
+
 (** * Import basic types from Coq libraries *)
 
 Require Export Coq.Lists.List.

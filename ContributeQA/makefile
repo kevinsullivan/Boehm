@@ -83,6 +83,7 @@ endif
 VFILES:=Accurate.v\
   Adaptable.v\
   Available.v\
+  Changeable.v\
   Cost.v\
   CyberCapable.v\
   Duration.v\
@@ -98,7 +99,7 @@ VFILES:=Accurate.v\
   OtherScarceResources.v\
   PhysicalCapable.v\
   Reliable.v\
-  Robustness.v\
+  Robust.v\
   Safe.v\
   Scalable.v\
   Secure.v\
