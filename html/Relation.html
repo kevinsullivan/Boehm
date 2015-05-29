@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Relation</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Relation</h1>
+
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Relation"><span class="id" title="record">Relation</span></a> (<span class="id" title="var">Quality</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Strategy</span>: <span class="id" title="keyword">Set</span>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="q"><span class="id" title="projection">q</span></a>: <a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a><br/>
+&nbsp;&nbsp;; <a name="s"><span class="id" title="projection">s</span></a>: <a class="idref" href="Relation.html#Strategy"><span class="id" title="variable">Strategy</span></a><br/>
+&nbsp;&nbsp;; <a name="helps"><span class="id" title="projection">helps</span></a>: <a class="idref" href="Relation.html#Strategy"><span class="id" title="variable">Strategy</span></a> → <a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a> → <span class="id" title="keyword">Prop</span><br/>
+&nbsp;&nbsp;; <a name="harms"><span class="id" title="projection">harms</span></a>: <a class="idref" href="Relation.html#Strategy"><span class="id" title="variable">Strategy</span></a> → <a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a> → <span class="id" title="keyword">Prop</span><br/>
+&nbsp;&nbsp;; <a name="synergy"><span class="id" title="projection">synergy</span></a>: <span class="id" title="keyword">∀</span> <span class="id" title="var">q1</span>:<a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a>, <span class="id" title="keyword">∀</span> <span class="id" title="var">q2</span>: <a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <span class="id" title="var">s</span>:<a class="idref" href="Relation.html#Strategy"><span class="id" title="variable">Strategy</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">,</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Relation.html#q1"><span class="id" title="variable">q1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#32263a1c8b01baecdff9deb038955bc9"><span class="id" title="notation">≠</span></a> <a class="idref" href="Relation.html#q2"><span class="id" title="variable">q2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">(</span></a><a class="idref" href="Relation.html#helps"><span class="id" title="method">helps</span></a> <a class="idref" href="Relation.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="Relation.html#q1"><span class="id" title="variable">q1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a> <a class="idref" href="Relation.html#helps"><span class="id" title="method">helps</span></a> <a class="idref" href="Relation.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="Relation.html#q2"><span class="id" title="variable">q2</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;; <a name="conflicts"><span class="id" title="projection">conflicts</span></a>: <span class="id" title="keyword">∀</span> <span class="id" title="var">q1</span>:<a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a>, <span class="id" title="keyword">∀</span> <span class="id" title="var">q2</span>: <a class="idref" href="Relation.html#Quality"><span class="id" title="variable">Quality</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <span class="id" title="var">s</span>:<a class="idref" href="Relation.html#Strategy"><span class="id" title="variable">Strategy</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">,</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Relation.html#q1"><span class="id" title="variable">q1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#32263a1c8b01baecdff9deb038955bc9"><span class="id" title="notation">≠</span></a> <a class="idref" href="Relation.html#q2"><span class="id" title="variable">q2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">(</span></a><a class="idref" href="Relation.html#helps"><span class="id" title="method">helps</span></a> <a class="idref" href="Relation.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="Relation.html#q1"><span class="id" title="variable">q1</span></a> → <a class="idref" href="Relation.html#harms"><span class="id" title="method">harms</span></a> <a class="idref" href="Relation.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="Relation.html#q2"><span class="id" title="variable">q2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#7a45dffb109c3069e5c675be68643e60"><span class="id" title="notation">∨</span></a> <a class="idref" href="Relation.html#harms"><span class="id" title="method">harms</span></a> <a class="idref" href="Relation.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="Relation.html#q2"><span class="id" title="variable">q2</span></a> → <a class="idref" href="Relation.html#helps"><span class="id" title="method">helps</span></a> <a class="idref" href="Relation.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="Relation.html#q1"><span class="id" title="variable">q1</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.4pl6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">)</span></a><br/>
+}.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

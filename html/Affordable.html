@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Affordable</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Affordable</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab1"></a><h2 class="section">Affordable General Theory</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="MissionEffective.html#"><span class="id" title="library">MissionEffective</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="Efficient.html#"><span class="id" title="library">Efficient</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="var">Affordability</span></span> is a composite attribute of <span class="inlinecode"><a class="idref" href="MissionEffective.html#MissionEffective"><span class="id" title="inductive">MissionEffective</span></a></span> and <span class="inlinecode"><a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a></span>.
+A system is <span class="inlinecode"><a class="idref" href="Affordable.html#Affordable"><span class="id" title="inductive">Affordable</span></a></span> only if it meets the requirements of both <span class="inlinecode"><a class="idref" href="MissionEffective.html#MissionEffective"><span class="id" title="inductive">MissionEffective</span></a></span> and <span class="inlinecode"><a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a></span>.
+
+<div class="paragraph"> </div>
+
+In the following definition, <span class="inlinecode"><a class="idref" href="Affordable.html#Affordable"><span class="id" title="inductive">Affordable</span></a></span> is parameterized by three types (<span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span>, <span class="inlinecode"><a class="idref" href="Satisfactory.html#Stakeholder"><span class="id" title="variable">Stakeholder</span></a></span>,
+and <span class="inlinecode"><span class="id" title="keyword">Context</span></span>), and a system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" title="variable">sys</span></a></span> of type <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span>. 
+
+<div class="paragraph"> </div>
+
+Informally, in English:
+A system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" title="variable">sys</span></a></span> belonging to the set of systems <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> is deemed <span class="inlinecode"><a class="idref" href="Affordable.html#Affordable"><span class="id" title="inductive">Affordable</span></a></span> for all stakeholders
+in set <span class="inlinecode"><a class="idref" href="Satisfactory.html#Stakeholder"><span class="id" title="variable">Stakeholder</span></a></span> given the set of phases and contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span> and <span class="inlinecode"><a class="idref" href="Satisfactory.html#Phase"><span class="id" title="variable">Phase</span></a></span> if and only if all the
+requirements of its sub-attributes (<span class="inlinecode"><a class="idref" href="MissionEffective.html#MissionEffective"><span class="id" title="inductive">MissionEffective</span></a></span>, and <span class="inlinecode"><a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a></span>) are satisfied given
+the same conditions. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="Affordable"><span class="id" title="inductive">Affordable</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">System</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Stakeholder</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="keyword">Context</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Phase</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">sys</span>: <a class="idref" href="Affordable.html#System"><span class="id" title="variable">System</span></a>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="satisfiesAffordabilityPrerequisites"><span class="id" title="constructor">satisfiesAffordabilityPrerequisites</span></a>: <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="MissionEffective.html#MissionEffective"><span class="id" title="inductive">MissionEffective</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Affordable.html#Affordable"><span class="id" title="inductive">Affordable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

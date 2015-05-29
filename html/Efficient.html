@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Efficient</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Efficient</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab11"></a><h1 class="section">Efficiency General Theory</h1>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes, 
+Barry Boehm, and Adam Ross 
+
+<div class="paragraph"> </div>
+
+March, 2015
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Cost.html#"><span class="id" title="library">Cost</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Duration.html#"><span class="id" title="library">Duration</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="KeyPersonnel.html#"><span class="id" title="library">KeyPersonnel</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="OtherScarceResources.html#"><span class="id" title="library">OtherScarceResources</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Manufacturable.html#"><span class="id" title="library">Manufacturable</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Sustainable.html#"><span class="id" title="library">Sustainable</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab12"></a><h2 class="section">Efficiency</h2>
+
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a></span> is parameterized by a <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> type, a <span class="inlinecode"><span class="id" title="keyword">Context</span></span> type,
+an instance of type <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span>, and sevaral binary relations over <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> and <span class="inlinecode"><span class="id" title="keyword">Context</span></span>
+representing the relationship between the given <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> set, <span class="inlinecode"><span class="id" title="keyword">Context</span></span> set, and some
+constituent attribute. The constituent attributes of <span class="inlinecode"><span class="id" title="var">Efficiency</span></span> are
+the things it uses efficiently and whether it can be produced and maintained efficiently.
+(Note: We have soon see cause to split these up - they aren't really very similar)
+
+<div class="paragraph"> </div>
+
+The constituent attributes are given by binary relations represent the given system type's ability to satisfy
+the specified requirement in the given context.
+
+<div class="paragraph"> </div>
+
+Informally, in English:
+A system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" title="variable">sys</span></a></span> belonging to the set of systems <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> is deemed <span class="inlinecode"><a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a></span> given the set of contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span>
+if and only if all the requirements of its sub-attributes are satisfied given the same conditions.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="Efficient"><span class="id" title="inductive">Efficient</span></a> (<span class="id" title="var">System</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Stakeholder</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="keyword">Context</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Phase</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">sys</span>: <a class="idref" href="Efficient.html#System"><span class="id" title="variable">System</span></a>) : <span class="id" title="keyword">Prop</span> := <br/>
+&nbsp;&nbsp;<a name="satisfiesEfficiencyPrerequisites"><span class="id" title="constructor">satisfiesEfficiencyPrerequisites</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Cost.html#Cost"><span class="id" title="inductive">Cost</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Duration.html#Duration"><span class="id" title="inductive">Duration</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="KeyPersonnel.html#KeyPersonnel"><span class="id" title="inductive">KeyPersonnel</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="OtherScarceResources.html#OtherScarceResources"><span class="id" title="inductive">OtherScarceResources</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Manufacturable.html#Manufacturable"><span class="id" title="inductive">Manufacturable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Sustainable.html#Sustainable"><span class="id" title="inductive">Sustainable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Efficient.html#Efficient"><span class="id" title="inductive">Efficient</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

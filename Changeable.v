@@ -405,9 +405,9 @@ Here's how to compute its change types in Coq. The result:
 changeability, adaptability, agility, and reactivity. 
 *)
 
-Compute tipeAssignment changeStatement1.
+(*Compute tipeAssignment changeStatement1.*)
 
 (** * Extract Haskell code implementing this specification *)
 
-Extraction Language Haskell.
-Recursive Extraction tipeAssignment.
+(*Extraction Language Haskell.
+Recursive Extraction tipeAssignment.*)

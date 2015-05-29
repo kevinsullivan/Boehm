@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Flexible</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Flexible</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab14"></a><h1 class="section">Flexibility General Theory</h1>
+
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Modifiable.html#"><span class="id" title="library">Modifiable</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Tailorable.html#"><span class="id" title="library">Tailorable</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Adaptable.html#"><span class="id" title="library">Adaptable</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab15"></a><h2 class="section">Flexible</h2>
+
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><a class="idref" href="Flexible.html#Flexible"><span class="id" title="inductive">Flexible</span></a></span> is parameterized by a <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> type, a <span class="inlinecode"><span class="id" title="keyword">Context</span></span> type, an instance of type <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span>,
+and set of phases <span class="inlinecode"><a class="idref" href="Satisfactory.html#Phase"><span class="id" title="variable">Phase</span></a></span>. The constituent attributes of <span class="inlinecode"><span class="id" title="var">Flexibility</span></span> are <span class="inlinecode"><span class="id" title="var">Modifiability</span></span>,
+<span class="inlinecode"><span class="id" title="var">Tailorability</span></span>, and <span class="inlinecode"><span class="id" title="var">Adaptability</span></span>.
+
+<div class="paragraph"> </div>
+
+Informally,
+A system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" title="variable">sys</span></a></span> belonging to the set of systems <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> is deemed <span class="inlinecode"><a class="idref" href="Flexible.html#Flexible"><span class="id" title="inductive">Flexible</span></a></span> given the set of contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span>
+if and only if all the requirements of its sub-attributes (<span class="inlinecode"><span class="id" title="var">Modifiability</span></span>, <span class="inlinecode"><span class="id" title="var">Tailorability</span></span>, and <span class="inlinecode"><span class="id" title="var">Adaptability</span></span>)
+are satisfied given the same conditions.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="Flexible"><span class="id" title="inductive">Flexible</span></a> (<span class="id" title="var">System</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Stakeholder</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="keyword">Context</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Phase</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">sys</span>: <a class="idref" href="Flexible.html#System"><span class="id" title="variable">System</span></a>)<br/>
+: <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="satisfiesFlexibilityPrerequisites"><span class="id" title="constructor">satisfiesFlexibilityPrerequisites</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Modifiable.html#Modifiable"><span class="id" title="inductive">Modifiable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Tailorable.html#Tailorable"><span class="id" title="inductive">Tailorable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Adaptable.html#Adaptable"><span class="id" title="inductive">Adaptable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Flexible.html#Flexible"><span class="id" title="inductive">Flexible</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

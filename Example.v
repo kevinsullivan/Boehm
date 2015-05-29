@@ -6,12 +6,11 @@ Barry Boehm, and Adam Ross
 
 May, 2015
 *)
-Add Rec LoadPath "./ContributeQA".
 
 Require Import Satisfactory.
 Require Import MissionEffective Dependable Flexible Changeable Efficient Affordable Resilient
         Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
-        Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
+        Accurate Impactful Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
         Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robust
         Modifiable Tailorable.
 
@@ -147,15 +146,13 @@ Inductive changeability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) (c
   changeability_proof: changeability sys sh cx ps.
 
 (* We define an instance of Satisfactory for a smart home project.*)
-Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context Smart_Home_Phase tt := {
-
-                                                                                                                             }.
+Instance Smart_Home_Instance: Satisfactory Smart_Home_System Smart_Home_Stakeholder Smart_Home_Context Smart_Home_Phase tt := {}.
 Hint Constructors
      (** Composite **)
      MissionEffective Dependable Flexible Changeable Efficient Affordable Resilient
      (** Contributing **)
      Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
-     Accurate Impact Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
+     Accurate Impactful Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources
      Manufacturable Sustainable Secure Safe Reliable Maintainable Available Survivable Robust
      Modifiable Tailorable
      adaptability physicalCapability cyberCapability humanUsability speed endurability maneuverability

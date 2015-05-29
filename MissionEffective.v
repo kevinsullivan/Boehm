@@ -7,8 +7,6 @@ Barry Boehm, and Adam Ross
 March, 2015
 *)
 
-Add Rec LoadPath "./ContributeQA".
-
 Require Export PhysicalCapable.
 Require Export CyberCapable.
 Require Export HumanUsable.
@@ -16,7 +14,7 @@ Require Export Speed.
 Require Export Endurable.
 Require Export Maneuverable.
 Require Export Accurate.
-Require Export Impact.
+Require Export Impactful.
 Require Export Scalable.
 Require Export Versatile.
 Require Export Interoperable.
@@ -46,7 +44,7 @@ Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (Phas
     Endurable System Stakeholder Context Phase sys ->
     Maneuverable System Stakeholder Context Phase sys ->
     Accurate System Stakeholder Context Phase sys ->
-    Impact System Stakeholder Context Phase sys ->
+    Impactful System Stakeholder Context Phase sys ->
     Scalable System Stakeholder Context Phase sys ->
     Versatile System Stakeholder Context Phase sys ->
     Interoperable System Stakeholder Context Phase sys ->

@@ -7,7 +7,6 @@ Barry Boehm, and Adam Ross
 March, 2015
 *)
 
-Add Rec LoadPath "./ContributeQA".
 Require Export Cost.
 Require Export Duration.
 Require Export KeyPersonnel.

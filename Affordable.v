@@ -1,24 +1,23 @@
-Add Rec LoadPath "./ContributeQA".
+(** ** Affordable General Theory **)
+(* begin hide *)
+(* hidden things here *)
+(* end hide *)
 
 Require Import MissionEffective.
 Require Import Efficient.
 
-(** ** AFFORDABLE**)
 (**
-[Affordability] is a composite attribute of [MissionEffective] and [ResourceUtilization].
-A system is [Affordable] only if it meets the requirements of both [MissionEffective] and [ResourceUtilization].
+[Affordability] is a composite attribute of [MissionEffective] and [Efficient].
+A system is [Affordable] only if it meets the requirements of both [MissionEffective] and [Efficient].
 
-In the following definition, [Affordable] is parameterized by three typeclasses, [System], [Stakeholder],
-and [Context], a system, sys, of type [System], and sevaral ternary relations and binary relations
-over [System], [Context], and/or [Stakeholder].
-Those ternary and binary relations are associated with its two sub-attributes, [MissionEffective] and [ResourceUtilization],
-and their sub-attributes.
+In the following definition, [Affordable] is parameterized by three types ([System], [Stakeholder],
+and [Context]), and a system [sys] of type [System]. 
 
 Informally, in English:
-A system [sys] belonging to the set of systems [System] is deemed [Affordable] for all stakeholders in set [Stakeholder] given
-the set of contexts [Context] if and only if all the requirements of its sub-attributes ([MissionEffectiveness], and [Affordability])
-are satisfied given the same conditions, i.e., the same [System], [Stakeholder], [Context], and relevant attribute relations over them.
-*)
+A system [sys] belonging to the set of systems [System] is deemed [Affordable] for all stakeholders
+in set [Stakeholder] given the set of phases and contexts [Context] and [Phase] if and only if all the
+requirements of its sub-attributes ([MissionEffective], and [Efficient]) are satisfied given
+the same conditions. *) 
 
 Inductive Affordable 
             (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System): Prop :=
