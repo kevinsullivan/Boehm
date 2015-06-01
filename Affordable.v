@@ -10,10 +10,7 @@ Require Import Efficient.
 [Affordability] is a composite attribute of [MissionEffective] and [Efficient].
 A system is [Affordable] only if it meets the requirements of both [MissionEffective] and [Efficient].
 
-In the following definition, [Affordable] is parameterized by three types ([System], [Stakeholder],
-and [Context]), and a system [sys] of type [System]. 
-
-Informally, in English:
+Informally,
 A system [sys] belonging to the set of systems [System] is deemed [Affordable] for all stakeholders
 in set [Stakeholder] given the set of phases and contexts [Context] and [Phase] if and only if all the
 requirements of its sub-attributes ([MissionEffective], and [Efficient]) are satisfied given
