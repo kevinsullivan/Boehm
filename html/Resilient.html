@@ -19,15 +19,6 @@
 <h1 class="libtitle">Library Resilient</h1>
 
 <div class="code">
-</div>
-
-<div class="doc">
-<a name="lab18"></a><h2 class="section">Resilient General Theory</h2>
-
-</div>
-<div class="code">
-
-<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="Dependable.html#"><span class="id" type="library">Dependable</span></a>.<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="Flexible.html#"><span class="id" type="library">Flexible</span></a>.<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <a class="idref" href="Changeable.html#"><span class="id" type="library">Changeable</span></a>.<br/>
@@ -36,15 +27,24 @@
 </div>
 
 <div class="doc">
-<span class="inlinecode"><span class="id" type="var">Resiliency</span></span> is a composite attribute of <span class="inlinecode"><span class="id" type="var">Dependability</span></span>, <span class="inlinecode"><span class="id" type="var">Flexibility</span></span>, and <span class="inlinecode"><span class="id" type="var">Changeability</span></span>.
-A system is <span class="inlinecode"><a name="Affordable"><span class="id" type="inductive">Affordable</span></a></span> only if it meets the requirements of these constient attributes.
 
 <div class="paragraph"> </div>
 
-Informally,
-A system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" type="variable">sys</span></a></span> belonging to the set of systems <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" type="variable">System</span></a></span> is deemed <span class="inlinecode"><a name="Resilient"><span class="id" type="inductive">Resilient</span></a></span> for all stakeholders
-in set <span class="inlinecode"><a class="idref" href="Satisfactory.html#Stakeholder"><span class="id" type="variable">Stakeholder</span></a></span> given the set of phases and contexts <span class="inlinecode"><span class="id" type="keyword">Context</span></span> and <span class="inlinecode"><a class="idref" href="Satisfactory.html#Phase"><span class="id" type="variable">Phase</span></a></span> if and only if all the
-requirements of its sub-attributes are satisfied given the same conditions. 
+Boehm stipulates that <span class="inlinecode"><span class="id" type="var">Resiliency</span></span> is a composite quality comprising <span class="inlinecode"><span class="id" type="var">Dependability</span></span> 
+and <span class="inlinecode"><span class="id" type="var">Flexibility</span></span>. That is, a system can be deemed to be resilient across stakeholders,
+operational contexts, and lifecycle phases if it is deemed to be dependable and flexible in
+all these dimensions.
+
+<div class="paragraph"> </div>
+
+The definition we give here includes <span class="inlinecode"><a name="Changeable"><span class="id" type="inductive">Changeable</span></a></span> as a sub-quality of resiliency, as
+well. We have inserted this node to illustrate how we can begin to combine Boehm's
+top-level taxonomy with quality-specific formal theories developed by others. 
+
+<div class="paragraph"> </div>
+
+<a name="lab18"></a><h2 class="section">Resilient</h2>
+
 </div>
 <div class="code">
 
@@ -56,6 +56,29 @@ requirements of its sub-attributes are satisfied given the same conditions.
 &nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Flexible.html#Flexible"><span class="id" type="inductive">Flexible</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span>  -&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Changeable.html#Changeable"><span class="id" type="inductive">Changeable</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span> -&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Resilient.html#Resilient"><span class="id" type="inductive">Resilient</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this case, the <span class="inlinecode"><a name="Changeable"><span class="id" type="inductive">Changeable</span></a></span> concept embodies a theory from Ross et al. at MIT.
+They have developed a somewhat elaborate theory of change-related qualities. We
+have formalized, cleaned up, and extended their concepts and have integrated them
+here into Boehm's taxonomy in the form of a formal little language for expressing and
+for classifying change-related requirements.
+
+<div class="paragraph"> </div>
+
+More generally, we see the need and opportunity to develop an evolving suite of 
+quality-specific, formal little languages for a broad range of system qualities. Some 
+of them could be based on already excellent but still informal work, e.g., of Laprie 
+et al. on dependability qualities. In some areas the science is so under-developed
+that de novo research may be needed.
+
+</div>
+<div class="code">
+
+<br/>
 </div>
 </div>
 

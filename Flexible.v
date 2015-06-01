@@ -1,28 +1,22 @@
 (** * Flexibility General Theory *)
 
-(*
-Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
-Barry Boehm, and Adam Ross
-March, 2015
+(**
+Boehm stipulates that, " ...The three means for achieving the end parent class of 
+Flexibility are Modifiability, Tailorability, and Adaptability."
 *)
 
-(* begin hide *)
-(* end hide *)
+(**
+Informally, a system [sys] of type [System] is deemed to be [Flexible] (i.e., to satisfy
+its flexibility requirements) for all stakeholders, contexts, and phases, if it satisfies its
+lower-level modifiability, tailorability, and adaptability requirements across this set of
+parameters. 
+*)
+
 Require Export Modifiable.
 Require Export Tailorable.
 Require Export Adaptable.
 
 (** ** Flexible **)
-(**
-[Flexible] is parameterized by a [System] type, a [Context] type, an instance of type [System],
-and set of phases [Phase]. The constituent attributes of [Flexibility] are [Modifiability],
-[Tailorability], and [Adaptability].
-
-Informally,
-A system [sys] belonging to the set of systems [System] is deemed [Flexible] given the set of contexts [Context]
-if and only if all the requirements of its sub-attributes ([Modifiability], [Tailorability], and [Adaptability])
-are satisfied given the same conditions.
-*)
 
 Inductive Flexible (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
 : Prop :=

@@ -7,9 +7,9 @@
 	       {"name": "Modifiable", "size": 1},
 	       {"name": "Tailorable", "size": 1},
 	       {"name": "Adaptable", "size": 1}]},
-	  {"name": "Ross",
+	  {"name": "Changeable",
 	   "children": [
-	       {"name": "Changeable",
+	       {"name": "Ross",
 		"children": [
 		    {"name": "Value-Robust"},
 		    {"name": "Value-Survivable"},
