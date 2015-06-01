@@ -3,8 +3,8 @@
 (* hidden things here *)
 (* end hide *)
 
-Require Import MissionEffective.
-Require Import Efficient.
+Require Export MissionEffective.
+Require Export Efficient.
 
 (**
 [Affordability] is a composite attribute of [MissionEffective] and [Efficient].

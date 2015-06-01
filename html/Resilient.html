@@ -2,8 +2,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
 <title>Resilient</title>
 </head>
 
@@ -28,34 +28,34 @@
 <div class="code">
 
 <br/>
-<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="Dependable.html#"><span class="id" title="library">Dependable</span></a>.<br/>
-<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="Flexible.html#"><span class="id" title="library">Flexible</span></a>.<br/>
-<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="Changeable.html#"><span class="id" title="library">Changeable</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="Dependable.html#"><span class="id" type="library">Dependable</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="Flexible.html#"><span class="id" type="library">Flexible</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="Changeable.html#"><span class="id" type="library">Changeable</span></a>.<br/>
 
 <br/>
 </div>
 
 <div class="doc">
-<span class="inlinecode"><span class="id" title="var">Resiliency</span></span> is a composite attribute of <span class="inlinecode"><span class="id" title="var">Dependability</span></span>, <span class="inlinecode"><span class="id" title="var">Flexibility</span></span>, and <span class="inlinecode"><span class="id" title="var">Changeability</span></span>.
-A system is <span class="inlinecode"><a class="idref" href="Affordable.html#Affordable"><span class="id" title="inductive">Affordable</span></a></span> only if it meets the requirements of these constient attributes.
+<span class="inlinecode"><span class="id" type="var">Resiliency</span></span> is a composite attribute of <span class="inlinecode"><span class="id" type="var">Dependability</span></span>, <span class="inlinecode"><span class="id" type="var">Flexibility</span></span>, and <span class="inlinecode"><span class="id" type="var">Changeability</span></span>.
+A system is <span class="inlinecode"><a name="Affordable"><span class="id" type="inductive">Affordable</span></a></span> only if it meets the requirements of these constient attributes.
 
 <div class="paragraph"> </div>
 
 Informally,
-A system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" title="variable">sys</span></a></span> belonging to the set of systems <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" title="variable">System</span></a></span> is deemed <span class="inlinecode"><a class="idref" href="Resilient.html#Resilient"><span class="id" title="inductive">Resilient</span></a></span> for all stakeholders
-in set <span class="inlinecode"><a class="idref" href="Satisfactory.html#Stakeholder"><span class="id" title="variable">Stakeholder</span></a></span> given the set of phases and contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span> and <span class="inlinecode"><a class="idref" href="Satisfactory.html#Phase"><span class="id" title="variable">Phase</span></a></span> if and only if all the
+A system <span class="inlinecode"><a class="idref" href="Example.html#sys"><span class="id" type="variable">sys</span></a></span> belonging to the set of systems <span class="inlinecode"><a class="idref" href="Accurate.html#System"><span class="id" type="variable">System</span></a></span> is deemed <span class="inlinecode"><a name="Resilient"><span class="id" type="inductive">Resilient</span></a></span> for all stakeholders
+in set <span class="inlinecode"><a class="idref" href="Satisfactory.html#Stakeholder"><span class="id" type="variable">Stakeholder</span></a></span> given the set of phases and contexts <span class="inlinecode"><span class="id" type="keyword">Context</span></span> and <span class="inlinecode"><a class="idref" href="Satisfactory.html#Phase"><span class="id" type="variable">Phase</span></a></span> if and only if all the
 requirements of its sub-attributes are satisfied given the same conditions. 
 </div>
 <div class="code">
 
 <br/>
-<span class="id" title="keyword">Inductive</span> <a name="Resilient"><span class="id" title="inductive">Resilient</span></a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">System</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Stakeholder</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="keyword">Context</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">Phase</span>: <span class="id" title="keyword">Set</span>) (<span class="id" title="var">sys</span>: <a class="idref" href="Resilient.html#System"><span class="id" title="variable">System</span></a>): <span class="id" title="keyword">Prop</span> :=<br/>
-&nbsp;&nbsp;<a name="isResilient"><span class="id" title="constructor">isResilient</span></a>:<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Dependable.html#Dependable"><span class="id" title="inductive">Dependable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span>  →<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Flexible.html#Flexible"><span class="id" title="inductive">Flexible</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span>  →<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Changeable.html#Changeable"><span class="id" title="inductive">Changeable</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span> →<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Resilient.html#Resilient"><span class="id" title="inductive">Resilient</span></a> <span class="id" title="var">System</span> <span class="id" title="var">Stakeholder</span> <span class="id" title="keyword">Context</span> <span class="id" title="var">Phase</span> <span class="id" title="var">sys</span>.<br/>
+<span class="id" type="keyword">Inductive</span> <a name="Resilient"><span class="id" type="inductive">Resilient</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">System</span>: <span class="id" type="keyword">Set</span>) (<span class="id" type="var">Stakeholder</span>: <span class="id" type="keyword">Set</span>) (<span class="id" type="keyword">Context</span>: <span class="id" type="keyword">Set</span>) (<span class="id" type="var">Phase</span>: <span class="id" type="keyword">Set</span>) (<span class="id" type="var">sys</span>: <a class="idref" href="Resilient.html#System"><span class="id" type="variable">System</span></a>): <span class="id" type="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="isResilient"><span class="id" type="constructor">isResilient</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Dependable.html#Dependable"><span class="id" type="inductive">Dependable</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span>  -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Flexible.html#Flexible"><span class="id" type="inductive">Flexible</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span>  -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Changeable.html#Changeable"><span class="id" type="inductive">Changeable</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Resilient.html#Resilient"><span class="id" type="inductive">Resilient</span></a> <span class="id" type="var">System</span> <span class="id" type="var">Stakeholder</span> <span class="id" type="keyword">Context</span> <span class="id" type="var">Phase</span> <span class="id" type="var">sys</span>.<br/>
 </div>
 </div>
 

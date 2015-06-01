@@ -2,9 +2,9 @@
 (* begin hide *)
 (* end hide *)
 
-Require Import Dependable.
-Require Import Flexible.
-Require Import Changeable.
+Require Export Dependable.
+Require Export Flexible.
+Require Export Changeable.
 
 (**
 [Resiliency] is a composite attribute of [Dependability], [Flexibility], and [Changeability].
