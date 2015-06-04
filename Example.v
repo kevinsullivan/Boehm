@@ -294,6 +294,10 @@ Inductive changeability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder)
   (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop := 
     changeability_proof: changeability sys sh cx ps.
 
+Inductive changeability_usc (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) 
+  (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop := 
+    changeability_usc_proof: changeability_usc sys sh cx ps.
+
 (**
 We inform Coq about the new constructors that we will permit it to use in trying 
 to automatically construct required proofs/certificates.
@@ -309,7 +313,7 @@ Hint Constructors
      maneuverability accuracy impact scalability versatility interoperability cost duration 
      keyPersonnel otherScarceResources manufacturability sustainability security safety 
      reliability maintainability availability survivability robustness modifiability tailorability 
-     changeability.
+     changeability changeability_usc.
 
 (**
 Now we reach a critical juncture. We assert that our [Smart_Home_System] is an
@@ -384,6 +388,7 @@ Proof.
       constructor. exists adaptability. auto.
     (* changeable *)
     constructor. exists changeability. auto. 
+    constructor. exists changeability_usc. auto.
 Qed.
 
 Print Smart_Home_Instance.

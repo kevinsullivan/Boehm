@@ -1,6 +1,7 @@
 Require Export Dependable.
 Require Export Flexible.
 Require Export Changeable.
+Require Export Changeable_USC.
 
 (** 
 Boehm stipulates that [Resiliency] is a composite quality comprising [Dependability] 
@@ -15,13 +16,15 @@ top-level taxonomy with quality-specific formal theories developed by others.
 
 (** ** Resilient  **)
 
-Inductive Resilient
-          (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System): Prop :=
-  isResilient:
-    Dependable System Stakeholder Context Phase sys  ->
-    Flexible System Stakeholder Context Phase sys  ->
+Inductive Resilient (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
+: Prop :=
+  satisfiesResiliencyPrerequisites:
+    Dependable System Stakeholder Context Phase sys ->
+    Flexible System Stakeholder Context Phase sys ->
     Changeable System Stakeholder Context Phase sys ->
+    Changeable_USC System Stakeholder Context Phase sys ->
     Resilient System Stakeholder Context Phase sys.
+
 
 (**
 In this case, the [Changeable] concept embodies a theory from Ross et al. at MIT.
@@ -35,5 +38,5 @@ quality-specific, formal little languages for a broad range of system qualities.
 of them could be based on already excellent but still informal work, e.g., of Laprie 
 et al. on dependability qualities. In some areas the science is so under-developed
 that de novo research may be needed.
-*) 
+ *) 
 

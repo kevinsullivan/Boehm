@@ -85,6 +85,7 @@ VFILES:=Accurate.v\
   Affordable.v\
   Available.v\
   Changeable.v\
+  Changeable_USC.v\
   Cost.v\
   CyberCapable.v\
   Dependable.v\
@@ -117,6 +118,8 @@ VFILES:=Accurate.v\
   Survivable.v\
   Sustainable.v\
   Tailorable.v\
+  Car_USC.v\
+  Changeable_Car_USC.v\
   Versatile.v
 
 -include $(addsuffix .d,$(VFILES))
