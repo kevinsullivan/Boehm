@@ -1,11 +1,4 @@
-{"name": "Satisfactory",
- "children": [
-     {"name": "Resilient",
-      "children": [
-	  {"name": "Flexible",
-	   "children": [
-	       {"name": "Modifiable", "size": 1},
-	       {"name": "End-User Reconfigurable", "size": 1},
+", "size": 1},
 	       {"name": "Adaptable", "size": 1}]},
 	  {"name": "Changeable",
 	   "children": [
