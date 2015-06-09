@@ -287,8 +287,7 @@ Inductive modifiability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder)
 
 Inductive tailorability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) 
   (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop := 
-    tailorability_proof: tailorability sys sh cx ps.
-
+     tailorability_proof: tailorability sys sh cx ps.
 
 Inductive changeability (sys: Smart_Home_System) (sh: Smart_Home_Stakeholder) 
   (cx: Smart_Home_Context) (ps: Smart_Home_Phase): Prop := 
