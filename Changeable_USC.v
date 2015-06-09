@@ -25,18 +25,14 @@ Inductive Change (State: Set) := mkChange {
   changePostcondition: Assertion State
 }.
 
-Inductive ChangeRequirement {State Who Resources: Set} : Type := 
+Require Export System.
+
+Inductive ChangeRequirement {Stakeholder Resources State: Set} : Type := 
   mkChangeRequirement {
       trigger: Assertion State
-    ;  who: Who 
+    ;  sh: Stakeholder 
     ; change: Change State
     ; value: Value Resources -> Prop
  }.
 
-Arguments mkChangeRequirement {State Who Resources} trigger who change value.
-
-(*
-We eliminate perturbation/trigger as its own state, replacing it with a "Change State" object.
-Inductive CarTrigger := oilDirty | tireFlat | engineBlown | customerSelectsOptions.
-*)
-
+Arguments mkChangeRequirement {Stakeholder Resources State} trigger sh change value.

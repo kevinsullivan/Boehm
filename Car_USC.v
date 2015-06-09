@@ -1,4 +1,4 @@
-(** * Car System Model *)
+(** * Car System  *)
 
 (**
 We factor a car system model into this separate file, so that in principle 
@@ -62,15 +62,15 @@ Inductive OilCondition := mkOilCondition {
 
 Inductive TireInflation := tireFull | tireLow | tireEmpty | tirePunctured.
 
-Inductive Model := mkModel { 
+Inductive StateModel := mkModel { 
   oilState: OilCondition ;
-  tireState: TireInflation;
+  tireState: TireInflation
 }.
 
 (** *** Car System *)
 
 Require Export System.
 
-Instance CarSystem: System Stakeholder Resource Phase Context Model := {}.
+Instance CarSystem: System Stakeholder Resource Phase Context StateModel := {}.
 
 
