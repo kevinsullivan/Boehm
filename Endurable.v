@@ -1,8 +1,6 @@
 (** Endurable General Theory *)
+Require Export System.
 
-Inductive Endurable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Endurable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesEndurabilityRequirement:
-    (exists endurable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, endurable sys sh cx ps)) ->
-    Endurable System Stakeholder Context Phase sys.
+    (exists endurable: System msys -> Prop, endurable sys) -> Endurable sys.

@@ -1,8 +1,6 @@
 (* CyberCapable General Theory *)
+Require Export System.
 
-Inductive CyberCapable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive CyberCapable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesCyberCapabilityRequirement:
-    (exists cyberCapable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, cyberCapable sys sh cx ps)) ->
-    CyberCapable System Stakeholder Context Phase sys.
+    (exists cyberCapable: System msys -> Prop, cyberCapable sys) -> CyberCapable sys.

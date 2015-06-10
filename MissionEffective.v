@@ -1,8 +1,8 @@
 (** * MissionEffective General Theory *)
 
 (**
-Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
-Barry Boehm, and Adam Ross
+Kevin Sullivan, Koleman Nix, Chong Tang, Ke Dou
+with Donna Rhodes, Barry Boehm, and Adam Ross
 
 March, 2015
 *)
@@ -35,17 +35,17 @@ mission effective implicitly for all [Stakeholders] in those [Contexts], only if
 are satisfied.
 *)
 
-Inductive MissionEffective (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System): Prop :=
+Inductive MissionEffective {msys: MetaSystem} (sys: System msys): Prop :=
   isMissionEffective:
-    PhysicalCapable System Stakeholder Context Phase sys ->
-    CyberCapable System Stakeholder Context Phase sys ->
-    HumanUsable System Stakeholder Context Phase sys ->
-    Speed System Stakeholder Context Phase sys ->
-    Endurable System Stakeholder Context Phase sys ->
-    Maneuverable System Stakeholder Context Phase sys ->
-    Accurate System Stakeholder Context Phase sys ->
-    Impactful System Stakeholder Context Phase sys ->
-    Scalable System Stakeholder Context Phase sys ->
-    Versatile System Stakeholder Context Phase sys ->
-    Interoperable System Stakeholder Context Phase sys ->
-    MissionEffective System Stakeholder Context Phase sys.
+    PhysicalCapable sys ->
+    CyberCapable sys ->
+    HumanUsable sys ->
+    Speed sys ->
+    Endurable sys ->
+    Maneuverable sys ->
+    Accurate sys ->
+    Impactful sys ->
+    Scalable sys ->
+    Versatile sys ->
+    Interoperable sys ->
+    MissionEffective sys.

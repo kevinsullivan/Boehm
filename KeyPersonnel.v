@@ -1,8 +1,6 @@
 (** Key Personnel General Theory *)
+Require Export System.
 
-Inductive KeyPersonnel (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
-   satisfiesKeyPersonnelRequirement:
-     (exists keyPersonnel: System -> Stakeholder -> Context -> Phase -> Prop,
-        (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, keyPersonnel sys sh cx ps)) ->
-     KeyPersonnel System Stakeholder Context Phase sys.
+Inductive KeyPersonnel {msys: MetaSystem} (sys: System msys) : Prop :=
+  satisfiesKeyPersonnelRequirement:
+    (exists key_personnel: System msys -> Prop, key_personnel sys) -> KeyPersonnel sys.

@@ -1,8 +1,7 @@
 (** Security General Theory *)
+Require Export System.
 
-Inductive Secure (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Secure {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesSecurityRequirement:
-    (exists secure: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, secure sys sh cx ps)) ->
-    Secure System Stakeholder Context Phase sys.
+    (exists secure: System msys -> Prop, secure sys) ->
+    Secure sys.

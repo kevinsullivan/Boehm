@@ -16,9 +16,8 @@ in set [Stakeholder] given the set of phases and contexts [Context] and [Phase] 
 requirements of its sub-attributes ([MissionEffective], and [Efficient]) are satisfied given
 the same conditions. *) 
 
-Inductive Affordable 
-            (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System): Prop :=
-          satisfiesAffordabilityPrerequisites: 
-             MissionEffective System Stakeholder Context Phase sys ->
-             Efficient System Stakeholder Context Phase sys ->
-             Affordable System Stakeholder Context Phase sys.
+Inductive Affordable {msys: MetaSystem} (sys: System msys): Prop :=
+  satisfiesAffordabilityPrerequisites: 
+    MissionEffective sys ->
+    Efficient sys ->
+    Affordable sys.

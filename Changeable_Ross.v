@@ -26,13 +26,11 @@ related requirements, following Ross et al.
 *)
 
 (** Changeable General Theory *)
+Require Export System.
 
-Inductive Changeable_Ross (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
-: Prop :=
+Inductive Changeable_Ross {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesChangeableRequirement:
-    (exists changeable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, changeable sys sh cx ps)) ->
-       Changeable_Ross System Stakeholder Context Phase sys.
+    (exists changeable: System msys -> Prop, changeable sys) -> Changeable_Ross sys.
 
 (** * Import basic types from Coq libraries *)
 

@@ -1,8 +1,6 @@
 (** Maintainable General Theory *)
+Require Export System.
 
-Inductive Maintainable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Maintainable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesMaintainabilityRequirement:
-    (exists maintainable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, maintainable sys sh cx ps)) ->
-    Maintainable System Stakeholder Context  Phase sys.
+    (exists maintainable: System msys -> Prop, maintainable sys) -> Maintainable sys.

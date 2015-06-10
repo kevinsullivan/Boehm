@@ -1,8 +1,6 @@
 (** Duration General Theory *)
+Require Export System.
 
-Inductive Duration (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Duration {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesDurationRequirement:
-    (exists duration: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, duration sys sh cx ps)) ->
-    Duration System Stakeholder Context Phase sys.
+    (exists duration: System msys -> Prop, duration sys) -> Duration sys.

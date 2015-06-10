@@ -31,12 +31,12 @@ A system [sys] belonging to the set of systems [System] is deemed [Efficient] gi
 if and only if all the requirements of its sub-attributes are satisfied given the same conditions.
 *)
 
-Inductive Efficient (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) : Prop := 
+Inductive Efficient {msys: MetaSystem} (sys: System msys) : Prop := 
   satisfiesEfficiencyPrerequisites:
-    Cost System Stakeholder Context Phase sys ->
-    Duration System Stakeholder Context Phase sys ->
-    KeyPersonnel System Stakeholder Context Phase sys ->
-    OtherScarceResources System Stakeholder Context Phase sys ->
-    Manufacturable System Stakeholder Context Phase sys ->
-    Sustainable System Stakeholder Context Phase sys ->
-    Efficient System Stakeholder Context Phase sys.
+    Cost sys ->
+    Duration sys ->
+    KeyPersonnel sys ->
+    OtherScarceResources sys ->
+    Manufacturable sys ->
+    Sustainable sys ->
+    Efficient sys.

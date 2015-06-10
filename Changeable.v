@@ -5,7 +5,8 @@ Require Export System.
 
 Section Changeable.
 
-  Variable msys : MetaSystem.
+
+  Context {msys : MetaSystem}.
 
   (** Convenience Aliasing *)
   Definition stakeholders := (stakeholders msys).
@@ -21,11 +22,22 @@ Section Changeable.
   Inductive Benefit :=
     | benefit_simple: resources -> Benefit.
 
+  Definition get_cost (c: Cost): resources :=
+    match c with
+        | cost_simple r => r
+    end.
+  
+  Definition get_benefit (b: Benefit): resources :=
+    match b with
+        | benefit_simple r => r
+    end.
+
   Record Value := mk_value {
     cost: Cost;
     benefit: Benefit 
   }.
 
+  (** Note: Hoare logic over system_type could evolve to a Hoare logic over values of Metasystem type [msys] *)
   Definition Assertion := system_type -> Prop.
 
   Definition Action := system_type -> system_type.
@@ -39,6 +51,8 @@ Section Changeable.
   Record ChangeRequirement : Type := mkChangeRequirement {
     trigger: Assertion;
     sh: stakeholders;
+    ctxt: contexts;
+    ph: phases;
     change: Change;
     value: Value -> Prop
   }.

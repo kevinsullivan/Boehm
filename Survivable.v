@@ -1,8 +1,6 @@
 (** Survivability General Theory *)
+Require Export System.
 
-Inductive Survivable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Survivable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesSurvivabilityRequirement:
-    (exists survivable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, survivable sys sh cx ps)) ->
-    Survivable System Stakeholder Context Phase sys.
+    (exists survivable: System msys -> Prop, survivable sys) -> Survivable sys.

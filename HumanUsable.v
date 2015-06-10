@@ -1,9 +1,7 @@
 (** HumanUsable General Theory *)
+Require Export System.
 
-Inductive HumanUsable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive HumanUsable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesHumanUsabilityRequirement:
-    (exists humanUsable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, humanUsable sys sh cx ps)) ->
-    HumanUsable System Stakeholder Context Phase sys.
+    (exists humanUsable: System msys -> Prop, humanUsable sys) -> HumanUsable sys.
 

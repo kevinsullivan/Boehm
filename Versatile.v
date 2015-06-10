@@ -1,8 +1,6 @@
 (** Versatility General Theory *)
+Require Export System.
 
-Inductive Versatile (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Versatile {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesVersatilityRequirement:
-    (exists versatile: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, versatile sys sh cx ps)) ->
-    Versatile System Stakeholder Context Phase sys.
+    (exists versatile: System msys -> Prop, versatile sys) -> Versatile sys.

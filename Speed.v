@@ -1,8 +1,6 @@
 (** Speed General Theory *)
+Require Export System.
 
-Inductive Speed (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Speed {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesSpeedRequirement:
-    (exists speed: System -> Stakeholder -> Context -> Phase -> Prop, 
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, speed sys sh cx ps)) ->
-       Speed System Stakeholder Context Phase sys.
+    (exists speed: System msys -> Prop, speed sys) -> Speed sys.

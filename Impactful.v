@@ -1,8 +1,6 @@
 (** Impact General Theory *)
+Require Export System.
 
-Inductive Impactful (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Impactful {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesImpactRequirement:
-    (exists impactful: System -> Stakeholder -> Context -> Phase -> Prop, 
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, impactful sys sh cx ps)) ->
-    Impactful System Stakeholder Context Phase sys.
+    (exists impactful: System msys -> Prop, impactful sys) -> Impactful sys.

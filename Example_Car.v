@@ -1,3 +1,5 @@
+Require Export System.
+
 (** * Car System  *)
 
 (**
@@ -26,6 +28,7 @@ elements of value that can be gained or lost as a result of a change.
 Inductive Resource := mkResources {
   timeMinutes: nat;
   moneyDollars: nat;
+  gasolineGallons: nat;
   wearRate: nat
 }.
 
@@ -35,7 +38,7 @@ Inductive Resource := mkResources {
 [Phase] represents the lifecycle phases of a physical car product.
 *)
 
-Inductive Phase := manufacturing | customization | operation | repair.
+Inductive Phase := manufacturing | sale | ownership.
 
 (** *** Place *)
 
@@ -60,35 +63,16 @@ Inductive OilCondition := mk_oil_condition {
   oilFullness: OilFullness
 }.
 
+Inductive Location := l_home | l_away.
+
 (** *** Tires *)
 
 Inductive TireInflation := tire_full | tire_low | tire_empty | tire_punctured.
 
 Inductive Car := mk_car { 
   oilState: OilCondition;
-  tireState: TireInflation
+  tireState: TireInflation;
+  location: Location 
 }.
 
-(** *** Car System *)
-
-Require Export System.
-
-Definition CarEnvironment := mk_environment Stakeholder Resource Phase Context. 
-
-Definition CarModel := mk_model CarEnvironment Car.
-
-Definition my_car: Car := mk_car (mk_oil_condition oil_clean oil_full) tire_full.
-
-Definition CarSystem := System CarModel.
-
-Inductive car_changeable: CarSystem -> Prop :=
-  trust_me: forall sys: CarSystem, (oilState (getState sys)) = oil_full -> car_changeable sys.
-
-Definition car_instance : CarSystem := mk_system CarModel my_car.
-
-Definition my_car_changeable: Changeable car_instance.
-Proof.
-  constructor.
-  exists car_changeable.
-  apply trust_me.
-Qed.
+Definition CarMetaSystem : MetaSystem := mk_msys Stakeholder Resource Phase Context Car.

@@ -1,9 +1,7 @@
 (** Reliability General Theory *)
+Require Export System.
 
-Inductive Reliable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Reliable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesReliabilityRequirement:
-    (exists reliable: System -> Stakeholder -> Context -> Phase -> Prop, 
-      (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, reliable sys sh cx ps)) ->
-    Reliable System Stakeholder Context Phase sys.
+    (exists reliable: System msys -> Prop, reliable sys) -> Reliable sys.
 

@@ -2,7 +2,6 @@ Require Export Dependable.
 Require Export Flexible.
 Require Export Changeable.
 Require Export Changeable_Ross.
-Require Export System.
 
 (** 
 Boehm stipulates that [Resiliency] is a composite quality comprising [Dependability] 
@@ -17,7 +16,7 @@ top-level taxonomy with quality-specific formal theories developed by others.
 
 (** ** Resilient  **)
 
-Inductive Resilient {model: Model} (sys: System model)
+Inductive Resilient {msys: MetaSystem} (sys: System msys)
 : Prop :=
   satisfiesResiliencyPrerequisites:
     Dependable sys ->

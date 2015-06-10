@@ -1,8 +1,6 @@
 (** Maneuverable General Theory *)
+Require Export System.
 
-Inductive Maneuverable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Maneuverable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesManeuverabilityRequirement:
-    (exists maneuverable: System -> Stakeholder -> Context -> Phase -> Prop,
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, maneuverable sys sh cx ps)) ->
-    Maneuverable System Stakeholder Context Phase sys.
+    (exists maneuverable: System msys -> Prop, maneuverable sys) -> Maneuverable sys.

@@ -1,8 +1,6 @@
 (** Safety General Theory *)
+Require Export System.
 
-Inductive Safe (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) 
-: Prop :=
+Inductive Safe {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesSafetyRequirement:
-    (exists safe: System -> Stakeholder -> Context -> Phase -> Prop, 
-       (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, safe sys sh cx ps)) ->
-    Safe System Stakeholder Context Phase sys.
+    (exists safe: System msys -> Prop, safe sys) -> Safe sys.

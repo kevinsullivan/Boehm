@@ -18,10 +18,10 @@ Require Export Adaptable.
 
 (** ** Flexible **)
 
-Inductive Flexible (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
+Inductive Flexible {msys: MetaSystem} (sys: System msys)
 : Prop :=
   satisfiesFlexibilityPrerequisites:
-    Modifiable System Stakeholder Context Phase sys ->
-    Tailorable System Stakeholder Context Phase sys ->
-    Adaptable System Stakeholder Context Phase sys ->
-    Flexible System Stakeholder Context Phase sys.
+    Modifiable sys ->
+    Tailorable sys ->
+    Adaptable sys ->
+    Flexible sys.

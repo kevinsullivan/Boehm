@@ -1,8 +1,8 @@
 (** ** Dependable General Theory *)
 
 (**
-Kevin Sullivan, Chong Tang, Ke Dou, with Donna Rhodes,
-Barry Boehm, and Adam Ross
+Kevin Sullivan, Koleman Nix, Chong Tang, Ke Dou
+with Donna Rhodes, Barry Boehm, and Adam Ross
 
 March, 2015
 *)
@@ -27,13 +27,13 @@ and phases [Phase] if and only if all the requirements of its sub-attributes ([S
 ..., and [Robustness]) are satisfied given the same conditions.
 *)
 
-Inductive Dependable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) : Prop :=
+Inductive Dependable {msys: MetaSystem} (sys: System msys) : Prop :=
   satisfiesDependabilityPrerequisites:
-    Secure System Stakeholder Context Phase sys ->
-    Safe System Stakeholder Context Phase sys ->
-    Reliable System Stakeholder Context Phase sys ->
-    Maintainable System Stakeholder Context Phase sys ->
-    Available System Stakeholder Context Phase sys ->
-    Survivable System Stakeholder Context Phase sys ->
-    Robust System Stakeholder Context Phase sys ->
-    Dependable System Stakeholder Context Phase sys.
+    Secure sys ->
+    Safe sys ->
+    Reliable sys ->
+    Maintainable sys ->
+    Available sys ->
+    Survivable sys ->
+    Robust sys ->
+    Dependable sys.

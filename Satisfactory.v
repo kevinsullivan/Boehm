@@ -17,7 +17,5 @@ system qualities are themselves composites of lower-level system
 qualities, as detailed in their respective files.
 *)
 
-Class Satisfactory (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System) := {
-    affordable: Affordable System Stakeholder Context Phase sys ;
-    resilient: Resilient System Stakeholder Context Phase sys
-}.
+Inductive Satisfactory {msys: MetaSystem} (sys: System msys): Prop := 
+  meetsSatisfactoryRequirements: Affordable sys -> Resilient sys -> Satisfactory sys.
