@@ -25,7 +25,6 @@ Inductive Change (State: Set) := mkChange {
   changePostcondition: Assertion State
 }.
 
-Require Export System.
 
 Inductive ChangeRequirement {Stakeholder Resources State: Set} : Type := 
   mkChangeRequirement {
@@ -36,3 +35,10 @@ Inductive ChangeRequirement {Stakeholder Resources State: Set} : Type :=
  }.
 
 Arguments mkChangeRequirement {Stakeholder Resources State} trigger sh change value.
+
+Require Export System.
+
+Inductive Changeable {model: Model} (sys: System model) : Prop :=
+  satisfiesChangeabilityRequirement:
+    (exists changeable: System model -> Prop, changeable sys) ->
+    Changeable sys.

@@ -1,35 +1,35 @@
 (** * System Model *)
 
-(**
-We factor system models into separate modules. This file provides
-a template for system models, capturing common elements of all such
-models, as needed by our overall framework.
-*)
-
-(** An instance of SystemType is a collection of 5 sets, where each
-    is a representation of a different aspect of a System in our model *)
-Record SystemType := mk_system_type { 
+(** The [Environment] is the set of conditions surrounding the system. *)
+Record Environment := mk_environment {
   stakeholders: Set;
   resources: Set;
   phases: Set;
-  contexts: Set;
-  SystemModel: Set
+  contexts: Set
+}.
+
+(** A Model is an Environment and a state model *)
+Record Model := mk_model {
+  environment: Environment;
+  state: Set
 }.
 
 (** Begin the running example: A SystemType whose stakeholders, resources, phases,
-    and contexts are all simply unit, and whose SystemModel is bool *)
-Definition UnitBoolType: SystemType := mk_system_type unit unit unit unit bool.
+    and contexts are all simply unit, and whose State model is bool *)
+Definition unit_environment: Environment := mk_environment unit unit unit unit.
+
+Definition unit_bool_model: Model := mk_model unit_environment bool.
 
 (** In order to actually build a System, we need to supply an
     instance of the SystemType's SystemModel. This will be a bool in our example.
     This constructor basically fetches the Type information from the SystemType record
     and requires an instance of whatever the SystemModel is for that SystemType to construct
     an instance of [System sysType] *)
-Inductive System (a: SystemType): Type :=
-  mk_system: (SystemModel a) -> System a.
+Inductive System (a: Model): Type :=
+  mk_system: (state a) -> System a.
 
 (** And here's our System  *)
-Definition UnitBoolSystem := System UnitBoolType.
+Definition UnitBoolSystem := System unit_bool_model. 
 
 (** It lives in [Set] *)
 Check UnitBoolSystem.
@@ -38,9 +38,9 @@ Check UnitBoolSystem.
     by like 7 types, and its return type depends on those types as well!
     We'll use this to reason about the state of our system in our example
     to determine if we want to deem it Changeable. *)
-Definition getState {a: SystemType} (s: System a) : (SystemModel a) :=
+Definition getState {a: Model} (s: System a) : (state a) :=
   match s with
-      mk_system state => state
+      mk_system st => st
   end.
 
 (** This is how the "capital-letter"-ility relations will look now for
@@ -48,11 +48,12 @@ Definition getState {a: SystemType} (s: System a) : (SystemModel a) :=
     but this can be inferred from the instance given).
     Basically, we're saying
     "If you can give me a callback that takes a [System sysType] and
-     shows that its changeable, I'll agree that it's changeable.
+     shows that its changeable, I'll agree that it's changeable."
     This simply serves as a generic interface to plug in to. *)
-Inductive Changeable {sysType: SystemType} (sys: System sysType) : Prop :=
+
+Inductive Changeable {model: Model} (sys: System model) : Prop :=
   satisfiesChangeabilityRequirement:
-    (exists changeable: System sysType -> Prop, changeable sys) ->
+    (exists changeable: System model -> Prop, changeable sys) ->
     Changeable sys.
 
 (** Model-specific logic here, this is our callback!
@@ -66,7 +67,7 @@ Inductive true_system: UnitBoolSystem -> Prop :=
 Inductive unit_bool_changeable: UnitBoolSystem -> Prop :=
   truth_is_changeable: forall sys: UnitBoolSystem, true_system sys -> unit_bool_changeable sys.
 
-Example system_instance: UnitBoolSystem := mk_system UnitBoolType true.
+Example system_instance: UnitBoolSystem := mk_system unit_bool_model true.
 
 Theorem instance_is_changeable: Changeable system_instance.
 Proof.

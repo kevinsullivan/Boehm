@@ -1,7 +1,8 @@
 Require Export Dependable.
 Require Export Flexible.
 Require Export Changeable.
-Require Export Changeable_USC.
+Require Export Changeable_Ross.
+Require Export System.
 
 (** 
 Boehm stipulates that [Resiliency] is a composite quality comprising [Dependability] 
@@ -16,14 +17,14 @@ top-level taxonomy with quality-specific formal theories developed by others.
 
 (** ** Resilient  **)
 
-Inductive Resilient (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
+Inductive Resilient {model: Model} (sys: System model)
 : Prop :=
   satisfiesResiliencyPrerequisites:
-    Dependable System Stakeholder Context Phase sys ->
-    Flexible System Stakeholder Context Phase sys ->
-    Changeable System Stakeholder Context Phase sys ->
-    Changeable_USC System Stakeholder Context Phase sys ->
-    Resilient System Stakeholder Context Phase sys.
+    Dependable sys ->
+    Flexible sys ->
+    Changeable sys ->
+    Changeable_Ross sys ->
+    Resilient sys.
 
 
 (**

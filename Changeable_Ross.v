@@ -27,12 +27,12 @@ related requirements, following Ross et al.
 
 (** Changeable General Theory *)
 
-Inductive Changeable (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
+Inductive Changeable_Ross (System: Set) (Stakeholder: Set) (Context: Set) (Phase: Set) (sys: System)
 : Prop :=
   satisfiesChangeableRequirement:
     (exists changeable: System -> Stakeholder -> Context -> Phase -> Prop,
        (forall cx: Context, forall sh: Stakeholder, forall ps: Phase, changeable sys sh cx ps)) ->
-       Changeable System Stakeholder Context Phase sys.
+       Changeable_Ross System Stakeholder Context Phase sys.
 
 (** * Import basic types from Coq libraries *)
 

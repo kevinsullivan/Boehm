@@ -8,6 +8,7 @@
 ./Safe.v
 ./Maintainable.v
 ./Changeable.v
+./Changeable_Ross.v
 ./Survivable.v
 ./Secure.v
 ./Tailorable.v
@@ -35,4 +36,7 @@
 ./Relation.v
 ./Strategy.v
 ./Satisfactory.v
+./System.v
 ./Example.v
+./Example_Car.v
+

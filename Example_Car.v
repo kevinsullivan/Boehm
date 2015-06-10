@@ -52,18 +52,20 @@ parameters.
 
 (** *** Oil *)
 
-Inductive OilCleanliness := oilClean | oilDirty.
-Inductive OilFullness := oilFull | oilLow | oilEmpty.
-Inductive OilCondition := mkOilCondition { 
+Inductive OilCleanliness := oil_clean | oil_dirty.
+Inductive OilFullness := oil_full | oil_low | oil_empty.
+
+Inductive OilCondition := mk_oil_condition { 
   oilCleanliness : OilCleanliness; 
-  oilFullness: OilFullness }.
+  oilFullness: OilFullness
+}.
 
 (** *** Tires *)
 
-Inductive TireInflation := tireFull | tireLow | tireEmpty | tirePunctured.
+Inductive TireInflation := tire_full | tire_low | tire_empty | tire_punctured.
 
-Inductive StateModel := mkModel { 
-  oilState: OilCondition ;
+Inductive Car := mk_car { 
+  oilState: OilCondition;
   tireState: TireInflation
 }.
 
@@ -71,6 +73,22 @@ Inductive StateModel := mkModel {
 
 Require Export System.
 
-Instance CarSystem: System Stakeholder Resource Phase Context StateModel := {}.
+Definition CarEnvironment := mk_environment Stakeholder Resource Phase Context. 
 
+Definition CarModel := mk_model CarEnvironment Car.
 
+Definition my_car: Car := mk_car (mk_oil_condition oil_clean oil_full) tire_full.
+
+Definition CarSystem := System CarModel.
+
+Inductive car_changeable: CarSystem -> Prop :=
+  trust_me: forall sys: CarSystem, (oilState (getState sys)) = oil_full -> car_changeable sys.
+
+Definition car_instance : CarSystem := mk_system CarModel my_car.
+
+Definition my_car_changeable: Changeable car_instance.
+Proof.
+  constructor.
+  exists car_changeable.
+  apply trust_me.
+Qed.
