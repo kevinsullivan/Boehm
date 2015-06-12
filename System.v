@@ -1,11 +1,16 @@
 (** * System Model *)
 
 Record MetaSystem := mk_msys {
-  stakeholders: Set;
-  resources: Set;
-  phases: Set;
-  contexts: Set;
-  system_type: Set
+  Stakeholders: Set;
+  Resources: Set;
+  Phases: Set;
+  Contexts: Set;
+  Artifacts: Set;
+  stakeholders: Stakeholders;
+  resources: Resources;
+  phases: Phases;
+  contexts: Contexts;
+  artifacts: Artifacts
 }.
 
 (** Begin the running example: A model whose stakeholders, resources, phases,

@@ -1,85 +1,105 @@
 Require Export Changeable.
 Require Export Example_Parnas.
 
-(** * Software Changeability Properties *)
+(** * KWIC Changeability Properties *)
 
-Definition inputSizeSmallProp (s: Software): Prop := (inputSize (input s)) = input_size_small.
-Definition inputSizeLargeProp (s: Software): Prop := (inputSize (input s)) = input_size_large.
-Definition masterControlEfficiencyLowProp (s: Software): Prop := (masterControlEfficiency (masterControl s)) = master_control_efficiency_low.
-Definition masterControlEfficiencyHighProp (s: Software): Prop := (masterControlEfficiency (masterControl s)) = master_control_efficiency_high.
+Definition inputFormatOneProp (k: KWIC): Prop := (inputFormat k) = input_format_one.
+Definition inputFormatAnotherProp (k: KWIC): Prop := (inputFormat k) = input_format_another.
+Definition LineStorageAllInCoreProp (k: KWIC): Prop := (lineStorage k) = line_storage_all_in_core.
+Definition LineStoragePartialInCoreProp (k: KWIC): Prop := (lineStorage k) = line_storage_partial_in_core.
+Definition WordPackFourProp (k: KWIC): Prop := (wordPack k) = word_pack_four.
+Definition WordPackNoneProp (k: KWIC): Prop := (wordPack k) = word_pack_none.
+Definition WordPackDiffFormatProp (k: KWIC): Prop := (wordPack k) = word_pack_diff_format.
+Definition CircularShifterWithIndexProp (k: KWIC): Prop := (circularShifter k) = circular_shift_with_index.
+Definition CircularShifterWithoutIndexProp (k: KWIC): Prop := (circularShifter k) = circular_shift_without_index.
+Definition AlphabetizeOnceProp (k: KWIC): Prop := (alphabetizer k) = alphabetize_once.
+Definition SearchWhenNeededProp (k: KWIC): Prop := (alphabetizer k) = search_when_needed.
+Definition AlphabetizePartiallyProp (k: KWIC): Prop := (alphabetizer k) =  alphabetize_partially.
 
 (** *** Useful assertions *)
 
-Definition SoftwareAssertion := @Assertion SoftwareMetaSystem.
-Definition SoftwareAction := @Action SoftwareMetaSystem.
-Definition SoftwareChange := @Change SoftwareMetaSystem.
-Definition SoftwareValue := @Value SoftwareMetaSystem.
-Definition SoftwareChangeRequirement := @ChangeRequirement SoftwareMetaSystem.
+Definition KWICAssertion := @Assertion KWICMetaSystem.
+Definition KWICAction := @Action KWICMetaSystem.
+Definition KWICChange := @Change KWICMetaSystem.
+Definition KWICValue := @Value KWICMetaSystem.
+Definition KWICChangeRequirement := @ChangeRequirement KWICMetaSystem.
 
-Definition inputSizeSmallState: SoftwareAssertion   := fun s: Software=> inputSizeSmallProp s.
-Definition inputSizeLargeState: SoftwareAssertion  := fun s: Software=> inputSizeLargeProp s.
-Definition masterControlEfficiencyLowState: SoftwareAssertion := fun s: Software=> masterControlEfficiencyLowProp s.
-Definition masterControlEfficiencyHighState: SoftwareAssertion := fun s: Software=> masterControlEfficiencyHighProp s.
+(** *** States *)
+Definition inputFormatOneState: KWICAssertion   := fun k: KWIC=> inputFormatOneProp k.
+Definition inputFormatAnotherState: KWICAssertion  := fun k: KWIC=> inputFormatAnotherProp k.
+Definition LineStorageAllInCoreState: KWICAssertion := fun k: KWIC=> LineStorageAllInCoreProp k.
+Definition LineStoragePartialInCoreState: KWICAssertion := fun k: KWIC=> LineStoragePartialInCoreProp k.
+Definition WordPackFourState: KWICAssertion   := fun k: KWIC=> WordPackFourProp k.
+Definition WordPackNoneState: KWICAssertion  := fun k: KWIC=> WordPackNoneProp k.
+Definition WordPackDiffFormatState: KWICAssertion := fun k: KWIC=> WordPackDiffFormatProp k.
+Definition CircularShifterWithIndexState: KWICAssertion := fun k: KWIC=> CircularShifterWithIndexProp k.
+Definition CircularShifterWithoutIndexState: KWICAssertion   := fun k: KWIC=> CircularShifterWithoutIndexProp k.
+Definition AlphabetizeOnceState: KWICAssertion  := fun k: KWIC=> AlphabetizeOnceProp k.
+Definition SearchWhenNeededState: KWICAssertion := fun k: KWIC=> SearchWhenNeededProp k.
+Definition AlphabetizePartiallyState: KWICAssertion := fun k: KWIC=> AlphabetizePartiallyProp k.
 
 (** *** Changes *)
 
-(** Input Change*)
-Definition changeInput: SoftwareAction := 
-  fun s: Software=>
-    mk_software (mk_input input_format_csv input_size_large) (masterControl s).
+(** Input  Format Change*)
+Definition changeInputFormat: KWICAction := 
+  fun k: KWIC=>
+    mk_kwic input_format_another (lineStorage k) (wordPack k) (circularShifter k) (alphabetizer k).
 
-Definition inputChange: SoftwareChange := mk_change inputSizeSmallState changeInput inputSizeLargeState.
+Definition inputFormatChange: KWICChange := mk_change inputFormatOneState changeInputFormat inputFormatAnotherState.
 
-Definition inputChangeValue (v: SoftwareValue): Prop := 
-    (changedModules (get_cost (cost v))) = 1 /\ 
-    (involvedDevelopers (get_cost (cost v))) < 4 /\
-    (usedAPIs (get_cost (cost v))) < 5 /\
-    (timeDays (get_cost (cost v))) < 7 /\
-    (moneyDollars (get_benefit (benefit v))) > 100.
+Definition inputFormatChangeValue (v: KWICValue): Prop := 
+    (modules (get_cost (cost v))) = 1 /\ 
+    (developers (get_cost (cost v))) < 4 /\
+    (interfaces (get_cost (cost v))) < 5 /\
+    (developmentTime (get_cost (cost v))) < 7 /\
+    (satisfaction (get_benefit (benefit v))) > 3 /\
+    (dollars (get_benefit (benefit v))) > 100.
 
-Example input_changeable_by_user: SoftwareChangeRequirement := mkChangeRequirement 
-    inputSizeSmallState user general implementation  inputChange inputChangeValue.
+Example input_format_changeable_by_customer: KWICChangeRequirement := mkChangeRequirement 
+    inputFormatOneState customer nominal maintenance  inputFormatChange inputFormatChangeValue.
 
-(** Master Control Change*)
-Definition changeMasterControl: SoftwareAction := 
-  fun s: Software=>
-    mk_software (input s) (mk_master_control master_control_efficiency_low master_control_errors_few).
+(** Line Storage Change*)
+Definition changeLineStorage: KWICAction := 
+  fun k: KWIC=>
+    mk_kwic (inputFormat k) (line_storage_all_in_core) (wordPack k) (circularShifter k) (alphabetizer k).
 
-Definition masterControlChange: SoftwareChange := mk_change masterControlEfficiencyLowState changeMasterControl masterControlEfficiencyHighState.
+Definition lineStorageChange: KWICChange := mk_change LineStorageAllInCoreState changeLineStorage LineStoragePartialInCoreState.
 
-Definition masterControlChangeValue (v: SoftwareValue): Prop := 
-    (changedModules (get_cost (cost v))) = 1 /\ 
-    (involvedDevelopers (get_cost (cost v))) < 5 /\
-    (usedAPIs (get_cost (cost v))) < 5 /\
-    (timeDays (get_cost (cost v))) < 14 /\
-    (improvedEfficiency (get_benefit (benefit v))) > 15.
+Definition lineStorageChangeValue (v: KWICValue): Prop := 
+    (modules (get_cost (cost v))) = 1 /\ 
+    (developers (get_cost (cost v))) < 4 /\
+    (interfaces (get_cost (cost v))) < 5 /\
+    (developmentTime (get_cost (cost v))) < 14 /\
+    (runtime (get_cost (cost v))) < 100 /\
+    (memory (get_cost (cost v))) < 100 /\
+    (satisfaction (get_benefit (benefit v))) > 3 /\
+    (dollars (get_benefit (benefit v))) > 100.
 
-Example master_control_changeable_by_developer: SoftwareChangeRequirement := mkChangeRequirement 
-    masterControlEfficiencyLowState developer general implementation  masterControlChange masterControlChangeValue.
+Example line_storage_changeable_by_developer: KWICChangeRequirement := mkChangeRequirement 
+    LineStorageAllInCoreState developer nominal testing  lineStorageChange lineStorageChangeValue.
 
-Definition SoftwareSystem := System SoftwareMetaSystem.
+Definition KWICSystem := System KWICMetaSystem.
 
 (** Requirement-Specific Logic goes here *)
-Inductive meets_requirement: SoftwareSystem -> SoftwareChangeRequirement -> Prop :=
-  always: forall sys: SoftwareSystem, forall req: ChangeRequirement, meets_requirement sys req.
+Inductive meets_requirement: KWICSystem -> KWICChangeRequirement -> Prop :=
+  always: forall sys: KWICSystem, forall req: ChangeRequirement, meets_requirement sys req.
 
-(** *** Software System *)
+(** *** KWIC System *)
 
-Definition my_software: Software := mk_software (mk_input input_format_csv input_size_small) 
-                                                                               (mk_master_control master_control_efficiency_low master_control_errors_few).
+Definition my_kwic: KWIC := mk_kwic input_format_one line_storage_all_in_core word_pack_four circular_shift_with_index alphabetize_once.
 
-Definition my_software_system := mk_system SoftwareMetaSystem my_software.
+Definition my_kwic_system := mk_system KWICMetaSystem my_kwic.
 
 
-Inductive software_changeable: SoftwareSystem -> Prop := 
-| meets_all_requirements: forall sys: SoftwareSystem, meets_requirement sys input_changeable_by_user /\ 
-                                                                                      meets_requirement sys master_control_changeable_by_developer ->
-                                                                                      software_changeable sys.
+Inductive kwic_changeable: KWICSystem -> Prop := 
+| meets_all_requirements: forall sys: KWICSystem, meets_requirement sys input_format_changeable_by_customer /\ 
+                                                                                  meets_requirement sys line_storage_changeable_by_developer ->
+                                                                                  kwic_changeable sys.
 
-Definition my_software_changeable: Changeable my_software_system.
+Definition my_kwic_changeable: Changeable my_kwic_system.
 Proof.
   constructor.
-  exists software_changeable.
+  exists kwic_changeable.
   apply meets_all_requirements.
   split.
   apply always.

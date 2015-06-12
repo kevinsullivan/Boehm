@@ -38,9 +38,9 @@ Section Changeable.
   }.
 
   (** Note: Hoare logic over system_type could evolve to a Hoare logic over values of Metasystem type [msys] *)
-  Definition Assertion := system_type -> Prop.
+  Definition Assertion := msys -> Prop.
 
-  Definition Action := system_type -> system_type.
+  Definition Action := msys -> msys.
 
   Record Change := mk_change {
     changePrecondition: Assertion;

@@ -1,4 +1,4 @@
-(** * Software System  *)
+(** * KWIC System  *)
 
 Require Export System.
 
@@ -8,7 +8,7 @@ Require Export System.
 [Stakeholder] represents the set of potential system change agents
 *)
 
-Inductive Stakeholder :=  investor | manager | developer | maintainer | tester | user.
+Inductive Stakeholder :=  developer | customer.
 
 (** ** Resources for measuring cost-benefit *)
 
@@ -18,13 +18,16 @@ elements of value that can be gained or lost as a result of a change.
 *)
 
 Inductive Resource := mkResources {
-  codeLines: nat;
-  changedModules: nat;
-  usedAPIs: nat;
-  involvedDevelopers: nat;
-  moneyDollars: nat;
-  improvedEfficiency: nat;
-  timeDays: nat
+  linesOfCode: nat;
+  modules: nat;
+  interfaces: nat;
+  developers: nat;
+  dollars: nat;
+  memory: nat;
+  space: nat;
+  runtime: nat;
+  satisfaction: nat;
+  developmentTime: nat
 }.
 
 (** ** Phase *)
@@ -33,43 +36,66 @@ Inductive Resource := mkResources {
 [Phase] represents the lifecycle phases of a software system.
 *)
 
+(** design, implementation and maintenance are talked about in the paper*)
 Inductive Phase := requirements | design | implementation | testing | deployment | maintenance.
 
-(** *** Context *)
+(** ** Context *)
 
-Inductive Context := circumstantial | general.
+Inductive Context := nominal.
 
 
-(** ** Model: Product state space *)
+(** ** Likely changes *)
 
 (**
-We now present a model of the state space of a software system as a
-product of state spaces of component subsystems and situational
-parameters..
+There are a number of design decisions which are questionable and likely to change under many circumstances.
+This a partial list.
 *)
 
-(** *** Input *)
-Inductive InputFormat := input_format_txt | input_format_csv | input_format_binary_code.
-Inductive InputSize := input_size_large | input_size_small.
+(** Input format *)
 
-Inductive Input:= mk_input { 
+Inductive InputFormat := input_format_one | input_format_another.
+
+(** 
+The decision to have all lines stored in core. For large jobs it may prove inconvenient or imppractical to keep
+all of the lines in core at any one time.
+*)
+
+Inductive LineStorage := line_storage_all_in_core | line_storage_partial_in_core.
+
+(**
+The desicion to pack the characters four to a word. In cases where we are working with small amounts of data 
+it may prove undesirable to pack the characters; time will be saved by a character per word layout. In other cases,
+we may pack, but in different formats.
+*)
+
+Inductive WordPack := word_pack_four | word_pack_none | word_pack_diff_format.
+
+(**
+The decision to make an index for the circular shifts rather that actually store them as such. Again for a small index 
+or a large core, writing them out may be the preferable approach.
+*)
+
+Inductive CircularShifter := circular_shift_with_index | circular_shift_without_index.
+
+
+(**
+The desicion to alphabetize the list once, rather than either(a) search for each item when needed, or (b) partially alphabetize
+as is done in Hoare's FIND. In a number of circumstance it would be advantageous to distribute the computation involved in 
+alphabetization over the time required to produce the index.
+*)
+
+Inductive Alphabetizer := alphabetize_once | search_when_needed | alphabetize_partially.
+
+(** Let us revisit the issue of design decisions VS changes of customer requirements*)
+Inductive KWIC := mk_kwic { 
+(* requirements *)
+  interactivePerformance: bool;
   inputFormat: InputFormat;
-  inputSize: InputSize
+(* design *)
+  lineStorage: LineStorage;
+  wordPack: WordPack;
+  circularShifter: CircularShifter;
+  alphabetizer: Alphabetizer
 }.
 
-(** *** Master Control *)
-
-Inductive MasterControlEfficiency := master_control_efficiency_high | master_control_efficiency_medium | master_control_efficiency_low.
-Inductive MasterControlErrors := master_control_errors_many | master_control_errors_few | master_control_errors_none.
-
-Inductive MasterControl := mk_master_control {
-  masterControlEfficiency: MasterControlEfficiency;
-  masterControlErrors: MasterControlErrors
-}.
-
-Inductive Software := mk_software { 
-  input: Input;
-  masterControl: MasterControl
-}.
-
-Definition SoftwareMetaSystem: MetaSystem := mk_msys Stakeholder Resource Phase Context Software.
+Definition KWICMetaSystem: MetaSystem := mk_msys Stakeholder Resource Phase Context KWIC.
