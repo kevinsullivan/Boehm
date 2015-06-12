@@ -1,6 +1,6 @@
 (** * System Model *)
 
-Record MetaSystem := mk_msys {
+Record System := mk_sys {
   Stakeholders: Set;
   Resources: Set;
   Phases: Set;
@@ -12,6 +12,8 @@ Record MetaSystem := mk_msys {
   contexts: Contexts;
   artifacts: Artifacts
 }.
+
+(**
 
 (** Begin the running example: A model whose stakeholders, resources, phases,
     and contexts are all simply unit, and whose state type is bool *)
@@ -74,3 +76,5 @@ Proof.
   apply is_true.
   simpl. reflexivity.
 Qed.
+
+*)
