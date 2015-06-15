@@ -2,6 +2,19 @@
 
 Require Export System.
 
+(** ** Context *)
+
+Inductive Context := nominal.
+
+(** ** Phase *)
+
+(**
+[Phase] represents the lifecycle phases of a software system.
+*)
+
+(** design, implementation and maintenance are talked about in the paper*)
+Inductive Phase := requirements | design | implementation | testing | deployment | maintenance.
+
 (** ** Stakeholder *)
 
 (**
@@ -17,7 +30,7 @@ Inductive Stakeholder :=  developer | customer.
 elements of value that can be gained or lost as a result of a change.
 *)
 
-Inductive Resource := mkResources {
+Inductive Value := mkValue {
   linesOfCode: nat;
   modules: nat;
   interfaces: nat;
@@ -29,20 +42,6 @@ Inductive Resource := mkResources {
   satisfaction: nat;
   developmentTime: nat
 }.
-
-(** ** Phase *)
-
-(**
-[Phase] represents the lifecycle phases of a software system.
-*)
-
-(** design, implementation and maintenance are talked about in the paper*)
-Inductive Phase := requirements | design | implementation | testing | deployment | maintenance.
-
-(** ** Context *)
-
-Inductive Context := nominal.
-
 
 (** ** Likely changes *)
 
@@ -98,4 +97,4 @@ Inductive KWIC := mk_kwic {
   alphabetizer: Alphabetizer
 }.
 
-Definition KWICMetaSystem: MetaSystem := mk_msys Stakeholder Resource Phase Context KWIC.
+Definition KWICSystem (kwic: KWIC) (val: Value): System := mk_sys Context Stakeholder Phase KWIC Value kwic val.

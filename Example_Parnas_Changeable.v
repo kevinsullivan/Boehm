@@ -18,7 +18,8 @@ Definition AlphabetizePartiallyProp (k: KWIC): Prop := (alphabetizer k) =  alpha
 
 (** *** Useful assertions *)
 
-Definition KWICAssertion := @Assertion KWICMetaSystem.
+
+Definition KWICAssertion := @Assertion KWIC.
 Definition KWICAction := @Action KWICMetaSystem.
 Definition KWICChange := @Change KWICMetaSystem.
 Definition KWICValue := @Value KWICMetaSystem.
