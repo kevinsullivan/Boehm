@@ -18,12 +18,11 @@ Definition AlphabetizePartiallyProp (k: KWIC): Prop := (alphabetizer k) =  alpha
 
 (** *** Useful assertions *)
 
-
-Definition KWICAssertion := @Assertion KWIC.
-Definition KWICAction := @Action KWICMetaSystem.
-Definition KWICChange := @Change KWICMetaSystem.
-Definition KWICValue := @Value KWICMetaSystem.
-Definition KWICChangeRequirement := @ChangeRequirement KWICMetaSystem.
+Definition KWICAssertion := @Assertion KWICSystem.
+Definition KWICAction := @Action KWICSystem.
+Definition KWICChange := @Change KWICSystem.
+Definition KWICValue := @Value KWICSystem.
+Definition KWICChangeRequirement := @ChangeRequirement KWICSystem.
 
 (** *** States *)
 Definition inputFormatOneState: KWICAssertion   := fun k: KWIC=> inputFormatOneProp k.
@@ -44,17 +43,17 @@ Definition AlphabetizePartiallyState: KWICAssertion := fun k: KWIC=> Alphabetize
 (** Input  Format Change*)
 Definition changeInputFormat: KWICAction := 
   fun k: KWIC=>
-    mk_kwic input_format_another (lineStorage k) (wordPack k) (circularShifter k) (alphabetizer k).
+    mk_kwic (interactivePerformance k) input_format_another (lineStorage k) (wordPack k) (circularShifter k) (alphabetizer k).
 
 Definition inputFormatChange: KWICChange := mk_change inputFormatOneState changeInputFormat inputFormatAnotherState.
 
 Definition inputFormatChangeValue (v: KWICValue): Prop := 
-    (modules (get_cost (cost v))) = 1 /\ 
-    (developers (get_cost (cost v))) < 4 /\
-    (interfaces (get_cost (cost v))) < 5 /\
-    (developmentTime (get_cost (cost v))) < 7 /\
-    (satisfaction (get_benefit (benefit v))) > 3 /\
-    (dollars (get_benefit (benefit v))) > 100.
+    (modules v) = 1 /\ 
+    (developers v) < 4 /\
+    (interfaces v) < 5 /\
+    (developmentTime v) < 7 /\
+    (satisfaction v) > 3 /\
+    (dollars v) > 100.
 
 Example input_format_changeable_by_customer: KWICChangeRequirement := mkChangeRequirement 
     inputFormatOneState customer nominal maintenance  inputFormatChange inputFormatChangeValue.
@@ -62,24 +61,22 @@ Example input_format_changeable_by_customer: KWICChangeRequirement := mkChangeRe
 (** Line Storage Change*)
 Definition changeLineStorage: KWICAction := 
   fun k: KWIC=>
-    mk_kwic (inputFormat k) (line_storage_all_in_core) (wordPack k) (circularShifter k) (alphabetizer k).
+    mk_kwic (interactivePerformance k) (inputFormat k) (line_storage_all_in_core) (wordPack k) (circularShifter k) (alphabetizer k).
 
 Definition lineStorageChange: KWICChange := mk_change LineStorageAllInCoreState changeLineStorage LineStoragePartialInCoreState.
 
 Definition lineStorageChangeValue (v: KWICValue): Prop := 
-    (modules (get_cost (cost v))) = 1 /\ 
-    (developers (get_cost (cost v))) < 4 /\
-    (interfaces (get_cost (cost v))) < 5 /\
-    (developmentTime (get_cost (cost v))) < 14 /\
-    (runtime (get_cost (cost v))) < 100 /\
-    (memory (get_cost (cost v))) < 100 /\
-    (satisfaction (get_benefit (benefit v))) > 3 /\
-    (dollars (get_benefit (benefit v))) > 100.
+    (modules v) = 1 /\ 
+    (developers v) < 4 /\
+    (interfaces v) < 5 /\
+    (developmentTime v) < 14 /\
+    (runtime v) < 100 /\
+    (memory v) < 100 /\
+    (satisfaction v) > 3 /\
+    (dollars v) > 100.
 
 Example line_storage_changeable_by_developer: KWICChangeRequirement := mkChangeRequirement 
     LineStorageAllInCoreState developer nominal testing  lineStorageChange lineStorageChangeValue.
-
-Definition KWICSystem := System KWICMetaSystem.
 
 (** Requirement-Specific Logic goes here *)
 Inductive meets_requirement: KWICSystem -> KWICChangeRequirement -> Prop :=

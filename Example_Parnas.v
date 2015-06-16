@@ -4,7 +4,7 @@ Require Export System.
 
 (** ** Context *)
 
-Inductive Context := nominal.
+Inductive KWIC_Contexts := nominal.
 
 (** ** Phase *)
 
@@ -13,7 +13,7 @@ Inductive Context := nominal.
 *)
 
 (** design, implementation and maintenance are talked about in the paper*)
-Inductive Phase := requirements | design | implementation | testing | deployment | maintenance.
+Inductive KWIC_Phases := requirements | design | implementation | testing | deployment | maintenance.
 
 (** ** Stakeholder *)
 
@@ -21,7 +21,7 @@ Inductive Phase := requirements | design | implementation | testing | deployment
 [Stakeholder] represents the set of potential system change agents
 *)
 
-Inductive Stakeholder :=  developer | customer.
+Inductive KWIC_Stakeholders :=  developer | customer.
 
 (** ** Resources for measuring cost-benefit *)
 
@@ -30,7 +30,7 @@ Inductive Stakeholder :=  developer | customer.
 elements of value that can be gained or lost as a result of a change.
 *)
 
-Inductive Value := mkValue {
+Inductive KWIC_Value := mkValue {
   linesOfCode: nat;
   modules: nat;
   interfaces: nat;
@@ -42,6 +42,8 @@ Inductive Value := mkValue {
   satisfaction: nat;
   developmentTime: nat
 }.
+
+Definition initial_kwic_value := mkValue 0 0 0 0 0 0 0 0 0 0.
 
 (** ** Likely changes *)
 
@@ -97,4 +99,19 @@ Inductive KWIC := mk_kwic {
   alphabetizer: Alphabetizer
 }.
 
+Definition initial_kwic := mk_kwic false input_format_one line_storage_all_in_core word_pack_four circular_shift_with_index alphabetize_once.
+
+(**
 Definition KWICSystem (kwic: KWIC) (val: Value): System := mk_sys Context Stakeholder Phase KWIC Value kwic val.
+
+*)
+
+Definition KWICSystem := {|
+  Contexts:= KWIC_Contexts;
+  Stakeholders:= KWIC_Stakeholders;
+  Phases:= KWIC_Phases;
+  Artifacts:= KWIC;
+  Value:= KWIC_Value;
+  artifacts:= initial_kwic;
+  value:= initial_kwic_value
+|}.

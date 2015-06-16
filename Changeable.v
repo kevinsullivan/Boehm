@@ -15,34 +15,10 @@ Section Changeable.
   Definition artifact := (Artifacts sys).
   Definition value := (Value sys).
 
-  
-  Inductive Cost := 
-    | cost_simple: value -> Cost.
-
-  Inductive Benefit :=
-    | benefit_simple: value -> Benefit.
-
-
-  Definition get_cost (c: Cost): value :=
-    match c with
-        | cost_simple r => r
-    end.
-  
-  Definition get_benefit (b: Benefit): value :=
-    match b with
-        | benefit_simple r => r
-    end.
-(**
-  Record Value := mk_value {
-    cost: Cost;
-    benefit: Benefit 
-  }.
-*)
-
   (** Note: Hoare logic over artifacts could evolve to a Hoare logic over values of System type [sys] *)
-  Definition Assertion := artifact -> Prop.
+  Definition Assertion := System -> Prop.
 
-  Definition Action := artifact -> artifact.
+  Definition Action := System -> System.
 
   Record Change := mk_change {
     changePrecondition: Assertion;
@@ -56,7 +32,7 @@ Section Changeable.
     ctxt: context;
     ph: phase;
     change: Change;
-    val: value -> Prop
+    val:= value -> Prop
   }.
 
   Inductive Changeable (sys: System) : Prop :=
