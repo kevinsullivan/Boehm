@@ -1,46 +1,62 @@
-(**
-"<who> needs to be able to change <what> <when> <why>"
-*)
 Require Export System.
 
 Section Changeable.
 
+(**
+[sys_type: SystemType] is an implicit parameter of definitions in this section.
+*)
 
-  Context {sys : System}.
+Context {sys_type : SystemType}.
 
-  (** Convenience Aliasing *)
-  Definition context := (Contexts sys).
-  Definition stakeholder := (Stakeholders sys).
-  Definition phase := (Phases sys).
-  Definition artifact := (Artifacts sys).
-  Definition value := (Value sys).
+(**
+An [Assertion] represents a property of system instance states.
+*)
 
-  (** Note: Hoare logic over artifacts could evolve to a Hoare logic over values of System type [sys] *)
-  Definition Assertion := System -> Prop.
+Definition Assertion := @SystemInstance sys_type -> Prop.
 
-  Definition Action := System -> System.
+(** 
+An [Action] represents a function that transforms on system 
+instance state to another. Currently we don't have a way to
+represent additional parameters of such operations.
+*)
 
-  Record Change := mk_change {
-    changePrecondition: Assertion;
-    changeAction: Action;
-    changePostcondition: Assertion
-  }.
+Definition Action := @SystemInstance sys_type -> @SystemInstance sys_type.
 
-  Record ChangeRequirement : Type := mkChangeRequirement {
-    trigger: Assertion;
-    sh: stakeholder;
-    ctxt: context;
-    ph: phase;
-    change: Change;
-    val:= value -> Prop
-  }.
+(**
+An [ActionSpec] represents a relation between system instance
+states. We use these objects to represent specifications that
+Actions must satisfy.
+*)
+Definition ActionSpec := @SystemInstance sys_type -> @SystemInstance sys_type -> Prop.
 
-  Inductive Changeable (sys: System) : Prop :=
-    satisfiesChangeabilityRequirement:
-      (exists changable: context -> stakeholder -> phase -> artifact -> value -> Prop, 
-       exists af: artifact,
-       exists val: value,
-       (forall ctxt: context, forall sh: stakeholder, forall ph: phase, changable ctxt sh ph af val)) ->
-    Changeable sys.
+
+(**
+[ChangeSpec] is currently unused. It's here on a possible path to 
+a common signature/type for all Ross-style change specifications.
+*)
+
+Definition ChangeSpec := Assertion -> Stakeholders sys_type -> @SystemInstance sys_type -> @SystemInstance sys_type -> Prop.
+
+(**
+[ActionSatisfiesActionSpec] returns a proposition stating that an 
+action satisfies a given specification.
+*)
+
+Definition ActionSatisfiesActionSpec (act_spec: ActionSpec) (act: Action): Prop := 
+  forall s: @SystemInstance sys_type, 
+    act_spec s (act s).
+
+(**
+[Changeable] is the leaf node in our Boehm-style means-ends hierarchy.
+A proof of a [Changeable] proposition requires a proof, for all contexts,
+phases, and stakeholders, of whatever proposition, parameterized by those
+values, the user of this overall framework plugs in. 
+*)
+
+Inductive Changeable (sys_type: SystemType): Prop :=
+  satisfiesChangeabilityRequirements:
+    (exists changeable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, changeable c p s st) ->
+        Changeable sys_type.
 
 End Changeable.

@@ -1,10 +1,11 @@
 (** * KWIC System  *)
 
 Require Export System.
+Require Export Changeable.
 
 (** ** Context *)
 
-Inductive KWIC_Contexts := nominal.
+Inductive KWICContexts := nominal.
 
 (** ** Phase *)
 
@@ -13,7 +14,7 @@ Inductive KWIC_Contexts := nominal.
 *)
 
 (** design, implementation and maintenance are talked about in the paper*)
-Inductive KWIC_Phases := requirements | design | implementation | testing | deployment | maintenance.
+Inductive KWICPhases := requirements | design | implementation | testing | deployment | maintenance.
 
 (** ** Stakeholder *)
 
@@ -21,7 +22,7 @@ Inductive KWIC_Phases := requirements | design | implementation | testing | depl
 [Stakeholder] represents the set of potential system change agents
 *)
 
-Inductive KWIC_Stakeholders :=  developer | customer.
+Inductive KWICStakeholders :=  developer | customer.
 
 (** ** Resources for measuring cost-benefit *)
 
@@ -30,7 +31,7 @@ Inductive KWIC_Stakeholders :=  developer | customer.
 elements of value that can be gained or lost as a result of a change.
 *)
 
-Inductive KWIC_Value := mkValue {
+Inductive KWICValue := mkValue {
   linesOfCode: nat;
   modules: nat;
   interfaces: nat;
@@ -43,9 +44,7 @@ Inductive KWIC_Value := mkValue {
   developmentTime: nat
 }.
 
-Definition initial_kwic_value := mkValue 0 0 0 0 0 0 0 0 0 0.
-
-(** ** Likely changes *)
+(** ** Likely change variables*)
 
 (**
 There are a number of design decisions which are questionable and likely to change under many circumstances.
@@ -99,19 +98,59 @@ Inductive KWIC := mk_kwic {
   alphabetizer: Alphabetizer
 }.
 
-Definition initial_kwic := mk_kwic false input_format_one line_storage_all_in_core word_pack_four circular_shift_with_index alphabetize_once.
+Definition KWICSystemType := mk_system_type KWICContexts KWICStakeholders KWICPhases KWIC KWICValue.
 
 (**
-Definition KWICSystem (kwic: KWIC) (val: Value): System := mk_sys Context Stakeholder Phase KWIC Value kwic val.
-
+Abbreviations for writing propositions, assertions, actions.
 *)
 
-Definition KWICSystem := {|
-  Contexts:= KWIC_Contexts;
-  Stakeholders:= KWIC_Stakeholders;
-  Phases:= KWIC_Phases;
-  Artifacts:= KWIC;
-  Value:= KWIC_Value;
-  artifacts:= initial_kwic;
-  value:= initial_kwic_value
-|}.
+Definition KWICSystemState := @SystemInstance KWICSystemType.
+
+Definition KWICAssertion := @Assertion KWICSystemType.
+
+Definition KWICAction := @Action KWICSystemType.
+
+(** * Useful propositions *)
+
+Definition inputFormatOne (ks: KWICSystemState): Prop := (inputFormat (artifact ks)) = input_format_one.
+Definition inputFormatAnother (ks: KWICSystemState): Prop := (inputFormat (artifact ks)) = input_format_another.
+Definition LineStorageAllInCore (ks: KWICSystemState): Prop := (lineStorage (artifact ks)) = line_storage_all_in_core.
+Definition LineStoragePartialInCore (ks: KWICSystemState): Prop := (lineStorage (artifact ks)) = line_storage_partial_in_core.
+Definition WordPackFour (ks: KWICSystemState): Prop := (wordPack (artifact ks)) = word_pack_four.
+Definition WordPackNone (ks: KWICSystemState): Prop := (wordPack (artifact ks)) = word_pack_none.
+Definition WordPackDiffFormat (ks: KWICSystemState): Prop := (wordPack (artifact ks)) = word_pack_diff_format.
+Definition CircularShifterWithIndex (ks: KWICSystemState): Prop := (circularShifter (artifact ks)) = circular_shift_with_index.
+Definition CircularShifterWithoutIndex (ks: KWICSystemState): Prop := (circularShifter (artifact ks)) = circular_shift_without_index.
+Definition AlphabetizeOnce (ks: KWICSystemState): Prop := (alphabetizer (artifact ks)) = alphabetize_once.
+Definition SearchWhenNeeded (ks: KWICSystemState): Prop := (alphabetizer (artifact ks)) = search_when_needed.
+Definition AlphabetizePartially (ks: KWICSystemState): Prop := (alphabetizer (artifact ks)) =  alphabetize_partially.
+
+Definition inMaintenancePhase (ks: KWICSystemState): Prop := (phase ks) = maintenance.
+
+(** *** States *)
+Definition inputFormatOneState: KWICAssertion   := fun ks: KWICSystemState=> inputFormatOne ks.
+Definition inputFormatAnotherState: KWICAssertion  := fun ks: KWICSystemState=> inputFormatAnother ks.
+Definition LineStorageAllInCoreState: KWICAssertion := fun ks: KWICSystemState=> LineStorageAllInCore ks.
+Definition LineStoragePartialInCoreState: KWICAssertion := fun ks: KWICSystemState=> LineStoragePartialInCore ks.
+Definition WordPackFourState: KWICAssertion   := fun ks: KWICSystemState=> WordPackFour ks.
+Definition WordPackNoneState: KWICAssertion  := fun ks: KWICSystemState=> WordPackNone ks.
+Definition WordPackDiffFormatState: KWICAssertion := fun ks: KWICSystemState=> WordPackDiffFormat ks.
+Definition CircularShifterWithIndexState: KWICAssertion := fun ks: KWICSystemState=> CircularShifterWithIndex ks.
+Definition CircularShifterWithoutIndexState: KWICAssertion   := fun ks: KWICSystemState=> CircularShifterWithoutIndex ks.
+Definition AlphabetizeOnceState: KWICAssertion  := fun ks: KWICSystemState=> AlphabetizeOnce ks.
+Definition SearchWhenNeededState: KWICAssertion := fun ks: KWICSystemState=> SearchWhenNeeded ks.
+Definition AlphabetizePartiallyState: KWICAssertion := fun ks: KWICSystemState=> AlphabetizePartially ks.
+
+Definition customerChangeImputFormat: KWICAction :=
+    fun ks: KWICSystemState =>
+      mk_system KWICSystemType
+         (context ks)
+         (phase ks)
+         (mk_kwic
+           (interactivePerformance (artifact ks)) 
+            input_format_another
+           (lineStorage (artifact ks))
+           (wordPack (artifact ks))
+           (circularShifter (artifact ks))
+           (alphabetizer (artifact ks)))
+          (value ks).

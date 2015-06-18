@@ -1,4 +1,5 @@
 Require Export System.
+Require Export Changeable.
 
 
 (** Mission Effective *)
@@ -15,64 +16,86 @@ Its definition indicates that the property of a [System] being [MissionEffective
 mission effective implicitly for all [Stakeholders] in those [Contexts], only if all the requirements of the subattributes
 are satisfied.
  *)
-Inductive Accurate  (sys: System) : Prop :=
-  satisfiesAccuracyRequirement:
-    (exists accurate: System -> Prop, accurate sys) -> Accurate sys.
+Inductive Accurate (sys_type: SystemType): Prop :=
+  satisfiesAccuracyRequirements:
+    (exists accurate: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, accurate c p s st) ->
+        Accurate sys_type.
 
-Inductive PhysicalCapable (sys: System) : Prop :=
-  satisfiesPhysicalCapabilityRequirement:
-    (exists physicalCapable: System -> Prop, physicalCapable sys) -> PhysicalCapable sys.
+Inductive PhysicalCapable (sys_type: SystemType) : Prop :=
+  satisfiesPhysicalCapabilityRequirements:
+    (exists physicalCapable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, physicalCapable c p s st) ->
+        PhysicalCapable sys_type.
 
-Inductive CyberCapable (sys: System) : Prop :=
-  satisfiesCyberCapabilityRequirement:
-    (exists cyberCapable: System -> Prop, cyberCapable sys) -> CyberCapable sys.
+Inductive CyberCapable (sys_type: SystemType) : Prop :=
+  satisfiesCyberCapabilityRequirements:
+    (exists cyberCapable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, cyberCapable c p s st) ->
+        CyberCapable sys_type.
 
-Inductive HumanUsable (sys: System) : Prop :=
-  satisfiesHumanUsabilityRequirement:
-    (exists humanUsable: System -> Prop, humanUsable sys) -> HumanUsable sys.
+Inductive HumanUsable (sys_type: SystemType) : Prop :=
+  satisfiesHumanUsabilityRequirements:
+    (exists humanUsable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, humanUsable c p s st) ->
+        HumanUsable sys_type.
 
-Inductive Speed (sys: System) : Prop :=
-  satisfiesSpeedRequirement:
-    (exists speed: System -> Prop, speed sys) -> Speed sys.
+Inductive Speed (sys_type: SystemType) : Prop :=
+  satisfiesSpeedRequirements:
+    (exists speed: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, speed c p s st) ->
+        Speed sys_type.
 
-Inductive Endurable (sys: System) : Prop :=
-  satisfiesEndurabilityRequirement:
-    (exists endurable: System -> Prop, endurable sys) -> Endurable sys.
+Inductive Endurable (sys_type: SystemType) : Prop :=
+  satisfiesEndurabilityRequirements:
+    (exists endurable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, endurable c p s st) ->
+        Endurable sys_type.
 
-Inductive Maneuverable (sys: System) : Prop :=
-  satisfiesManeuverabilityRequirement:
-    (exists maneuverable: System -> Prop, maneuverable sys) -> Maneuverable sys.
+Inductive Maneuverable (sys_type: SystemType) : Prop :=
+  satisfiesManeuverabilityRequirements:
+    (exists maneuverable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, maneuverable c p s st) ->
+        Maneuverable sys_type.
 
-Inductive Impactful (sys: System) : Prop :=
-  satisfiesImpactRequirement:
-    (exists impactful: System -> Prop, impactful sys) -> Impactful sys.
+Inductive Impactful (sys_type: SystemType) : Prop :=
+  satisfiesImpactRequirements:
+    (exists impactful: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, impactful c p s st) ->
+        Impactful sys_type.
 
-Inductive Scalable (sys: System) : Prop :=
-  satisfiesScalabilityRequirement:
-    (exists scalable: System -> Prop, scalable sys) -> Scalable sys.
+Inductive Scalable (sys_type: SystemType) : Prop :=
+  satisfiesScalabilityRequirements:
+    (exists scalable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, scalable c p s st) ->
+        Scalable sys_type.
 
-Inductive Versatile (sys: System) : Prop :=
-  satisfiesVersatilityRequirement:
-    (exists versatile: System -> Prop, versatile sys) -> Versatile sys.
+Inductive Versatile (sys_type: SystemType) : Prop :=
+  satisfiesVersatilityRequirements:
+    (exists versatile: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, versatile c p s st) ->
+        Versatile sys_type.
 
-Inductive Interoperable (sys: System) : Prop :=
-  satisfiesInteroperabilityRequirement:
-    (exists interoperable: System -> Prop, interoperable sys) -> Interoperable sys.
+Inductive Interoperable (sys_type: SystemType) : Prop :=
+  satisfiesInteroperabilityRequirements:
+    (exists interoperable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, interoperable c p s st) ->
+        Interoperable sys_type.
 
-Inductive MissionEffective (sys: System): Prop :=
-  isMissionEffective:
-    PhysicalCapable sys ->
-    CyberCapable sys ->
-    HumanUsable sys ->
-    Speed sys ->
-    Endurable sys ->
-    Maneuverable sys ->
-    Accurate sys ->
-    Impactful sys ->
-    Scalable sys ->
-    Versatile sys ->
-    Interoperable sys ->
-    MissionEffective sys.
+Inductive MissionEffective (sys_type: SystemType): Prop :=
+  satisfiesMissionEffectivenessPrerequisites:
+    PhysicalCapable sys_type ->
+    CyberCapable sys_type ->
+    HumanUsable sys_type ->
+    Speed sys_type ->
+    Endurable sys_type ->
+    Maneuverable sys_type ->
+    Accurate sys_type ->
+    Impactful sys_type ->
+    Scalable sys_type ->
+    Versatile sys_type ->
+    Interoperable sys_type ->
+    MissionEffective sys_type.
 
 (** Efficient *)
 (**
@@ -91,39 +114,51 @@ A system [sys] belonging to the set of systems [System] is deemed [Efficient] gi
 if and only if all the requirements of its sub-attributes are satisfied given the same conditions.
  *)
 
-Inductive Cost (sys: System) : Prop :=
-  satisfiesCostRequirement:
-    (exists cost: System -> Prop, cost sys) -> Cost sys.
+Inductive Cost (sys_type: SystemType) : Prop :=
+  satisfiesCostRequirements:
+    (exists cost: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, cost c p s st) ->
+        Cost sys_type.
 
-Inductive Duration (sys: System) : Prop :=
-  satisfiesDurationRequirement:
-    (exists duration: System -> Prop, duration sys) -> Duration sys.
+Inductive Duration (sys_type: SystemType) : Prop :=
+  satisfiesDurationRequirements:
+    (exists duration: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, duration c p s st) ->
+        Duration sys_type.
 
-Inductive KeyPersonnel (sys: System) : Prop :=
-  satisfiesKeyPersonnelRequirement:
-    (exists key_personnel: System -> Prop, key_personnel sys) -> KeyPersonnel sys.
+Inductive KeyPersonnel (sys_type: SystemType) : Prop :=
+  satisfiesKeyPersonnelRequirements:
+    (exists keyPersonnel: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, keyPersonnel c p s st) ->
+        KeyPersonnel sys_type.
 
-Inductive OtherScarceResources (sys: System) : Prop :=
-  satisfiesOtherResourcesRequirement:
-    (exists otherResources: System -> Prop, otherResources sys) -> OtherScarceResources sys.
+Inductive OtherScarceResources (sys_type: SystemType) : Prop :=
+  satisfiesOtherResourcesRequirements:
+    (exists otherScarceResources: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, otherScarceResources c p s st) ->
+        OtherScarceResources sys_type.
 
-Inductive Manufacturable (sys: System) : Prop :=
-  satisfiesManufacturabilityRequirement:
-    (exists manufacturable: System -> Prop, manufacturable sys) -> Manufacturable sys.
+Inductive Manufacturable (sys_type: SystemType) : Prop :=
+  satisfiesManufacturabilityRequirements:
+    (exists manufacturable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, manufacturable c p s st) ->
+        Manufacturable sys_type.
 
-Inductive Sustainable (sys: System) : Prop :=
-  satisfiesSustainabilityRequirement:
-    (exists sustainable: System -> Prop, sustainable sys) -> Sustainable sys.
+Inductive Sustainable (sys_type: SystemType) : Prop :=
+  satisfiesSustainabilityRequirements:
+    (exists sustainable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, sustainable c p s st) ->
+        Sustainable sys_type.
 
-Inductive Efficient (sys: System) : Prop :=
+Inductive Efficient (sys_type: SystemType) : Prop :=
   satisfiesEfficiencyPrerequisites:
-    Cost sys ->
-    Duration sys ->
-    KeyPersonnel sys ->
-    OtherScarceResources sys ->
-    Manufacturable sys ->
-    Sustainable sys ->
-    Efficient sys.
+    Cost sys_type ->
+    Duration sys_type ->
+    KeyPersonnel sys_type ->
+    OtherScarceResources sys_type ->
+    Manufacturable sys_type ->
+    Sustainable sys_type ->
+    Efficient sys_type.
 
 
 (** Affordable *)
@@ -137,11 +172,11 @@ in set [Stakeholder] given the set of phases and contexts [Context] and [Phase] 
 requirements of its sub-attributes ([MissionEffective], and [Efficient]) are satisfied given
 the same conditions. *) 
 
-Inductive Affordable (sys: System): Prop :=
+Inductive Affordable (sys_type: SystemType): Prop :=
   satisfiesAffordabilityPrerequisites:
-    MissionEffective sys ->
-    Efficient sys ->
-    Affordable sys.
+    MissionEffective sys_type ->
+    Efficient sys_type ->
+    Affordable sys_type.
 
 
 (** Dependable *)
@@ -153,44 +188,58 @@ A system [sys] belonging to the set of systems [System] is deemed [Dependable] g
 and phases [Phase] if and only if all the requirements of its sub-attributes ([Security], [Safety], [Reliability],
 ..., and [Robustness]) are satisfied given the same conditions.
 *)
-Inductive Secure (sys: System) : Prop :=
-  satisfiesSecurityRequirement:
-    (exists secure: System -> Prop, secure sys) -> Secure sys.
+Inductive Secure (sys_type: SystemType) : Prop :=
+  satisfiesSecurityRequirements:
+    (exists secure: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, secure c p s st) ->
+        Secure sys_type.
 
-Inductive Safe (sys: System) : Prop :=
-  satisfiesSafetyRequirement:
-    (exists safe: System -> Prop, safe sys) -> Safe sys.
+Inductive Safe (sys_type: SystemType) : Prop :=
+  satisfiesSafetyRequirements:
+    (exists safe: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, safe c p s st) ->
+        Safe sys_type.
 
-Inductive Reliable (sys: System) : Prop :=
-  satisfiesReliabilityRequirement:
-    (exists reliable: System -> Prop, reliable sys) -> Reliable sys.
+Inductive Reliable (sys_type: SystemType) : Prop :=
+  satisfiesReliabilityRequirements:
+    (exists reliable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, reliable c p s st) ->
+        Reliable sys_type.
 
-Inductive Maintainable (sys: System) : Prop :=
-  satisfiesMaintainabilityRequirement:
-    (exists maintainable: System -> Prop, maintainable sys) -> Maintainable sys.
+Inductive Maintainable (sys_type: SystemType) : Prop :=
+  satisfiesMaintainabilityRequirements:
+    (exists maintainable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, maintainable c p s st) ->
+        Maintainable sys_type.
 
-Inductive Available (sys: System) : Prop :=
-  satisfiesAvailabilityRequirement:
-    (exists available: System -> Prop, available sys) -> Available sys.
+Inductive Available (sys_type: SystemType) : Prop :=
+  satisfiesAvailabilityRequirements:
+    (exists available: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, available c p s st) ->
+        Available sys_type.
 
-Inductive Survivable (sys: System) : Prop :=
-  satisfiesSurvivabilityRequirement:
-    (exists survivable: System -> Prop, survivable sys) -> Survivable sys.
+Inductive Survivable (sys_type: SystemType) : Prop :=
+  satisfiesSurvivabilityRequirements:
+    (exists survivable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, survivable c p s st) ->
+        Survivable sys_type.
 
-Inductive Robust (sys: System) : Prop :=
-  satisfiesRobustnessRequirement:
-    (exists robust: System -> Prop, robust sys) -> Robust sys.
+Inductive Robust (sys_type: SystemType) : Prop :=
+  satisfiesRobustnessRequirements:
+    (exists robust: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, robust c p s st) ->
+        Robust sys_type.
 
-Inductive Dependable (sys: System) : Prop :=
+Inductive Dependable (sys_type: SystemType) : Prop :=
   satisfiesDependabilityPrerequisites:
-    Secure sys ->
-    Safe sys ->
-    Reliable sys ->
-    Maintainable sys ->
-    Available sys ->
-    Survivable sys ->
-    Robust sys ->
-    Dependable sys.
+    Secure sys_type ->
+    Safe sys_type ->
+    Reliable sys_type ->
+    Maintainable sys_type ->
+    Available sys_type ->
+    Survivable sys_type ->
+    Robust sys_type ->
+    Dependable sys_type.
 
 (** Flexible *)
 (**
@@ -205,26 +254,32 @@ lower-level modifiability, tailorability, and adaptability requirements across t
 parameters.
 *)
 
-Inductive Modifiable (sys: System) : Prop :=
-  satisfiesModifiabilityRequirement:
-    (exists modifiable: System -> Prop, modifiable sys) -> Modifiable sys.
+Inductive Modifiable (sys_type: SystemType) : Prop :=
+  satisfiesModifiabilityRequirements:
+    (exists modifiable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, modifiable c p s st) ->
+        Modifiable sys_type.
 
-Inductive Tailorable (sys: System) : Prop :=
-  satisfiesTailorabilityRequirement:
-    (exists tailorable: System -> Prop, tailorable sys) -> Tailorable sys.
+Inductive Tailorable (sys_type: SystemType) : Prop :=
+  satisfiesTailorabilityRequirements:
+    (exists tailorable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, tailorable c p s st) ->
+        Tailorable sys_type.
 
 
-Inductive Adaptable  (sys: System) : Prop :=
-  satisfiesAdaptabilityRequirement:
-    (exists adaptable: System -> Prop, adaptable sys) -> Adaptable sys.
+Inductive Adaptable (sys_type: SystemType) : Prop :=
+  satisfiesAdaptabilityRequirements:
+    (exists adaptable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
+      forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, adaptable c p s st) ->
+        Adaptable sys_type.
 
-Inductive Flexible (sys: System)
+Inductive Flexible (sys_type: SystemType)
 : Prop :=
   satisfiesFlexibilityPrerequisites:
-    Modifiable sys ->
-    Tailorable sys ->
-    Adaptable sys ->
-    Flexible sys.
+    Modifiable sys_type ->
+    Tailorable sys_type ->
+    Adaptable sys_type ->
+    Flexible sys_type.
 
 (** Resilient *)
 (**
@@ -237,12 +292,13 @@ The definition we give here includes [Changeable] as a sub-quality of resiliency
 well. We have inserted this node to illustrate how we can begin to combine Boehm's
 top-level taxonomy with quality-specific formal theories developed by others.
  *)
-Inductive Resilient (sys: System)
+Inductive Resilient (sys_type: SystemType)
 : Prop :=
   satisfiesResiliencyPrerequisites:
-    Dependable sys ->
-    Flexible sys ->
-    Resilient sys.
+    Dependable sys_type ->
+    Flexible sys_type ->
+    Changeable sys_type ->
+    Resilient sys_type.
 
 
 (** Satisfactory *)
@@ -253,5 +309,5 @@ and phases [Phase], it is both [Affordable] and [Resilient].  These
 system qualities are themselves composites of lower-level system
 qualities, as detailed in their respective files.
 *)
-Inductive Satisfactory (sys: System): Prop :=
-  meetsSatisfactoryRequirements: Affordable sys -> Resilient sys -> Satisfactory sys.
+Inductive Satisfactory (sys_type: SystemType): Prop :=
+  meetsSatisfactoryRequirementss: Affordable sys_type -> Resilient sys_type -> Satisfactory sys_type.
