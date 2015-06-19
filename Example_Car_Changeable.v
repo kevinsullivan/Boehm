@@ -115,19 +115,8 @@ Proof.
 constructor.
 exists car_changeability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. 
+destruct c, p, s; auto.
 simpl. exact verifyChangeOil.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto.
 Qed.
 
 Theorem car_accuracy_certificate: @Accurate CarSystemType.
@@ -135,18 +124,7 @@ Proof.
 constructor.
 exists car_accuracy_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.  
 Qed. 
 
 Theorem car_physicalCapability_certificate: @PhysicalCapable CarSystemType.
@@ -154,18 +132,7 @@ Proof.
 constructor.
 exists car_physicalCapability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.      
+destruct c, p, s; auto. 
 Qed.
 
 Theorem car_cyberCapability_certificate: @CyberCapable CarSystemType.
@@ -173,18 +140,7 @@ Proof.
 constructor.
 exists car_cyberCapability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.
 Qed.
 
 Theorem car_humanUsability_certificate: @HumanUsable CarSystemType.
@@ -192,18 +148,7 @@ Proof.
 constructor.
 exists car_humanUsability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_speed_certificate: @Speed CarSystemType.
@@ -211,18 +156,7 @@ Proof.
 constructor.
 exists car_speed_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_endurability_certificate: @Endurable CarSystemType.
@@ -230,18 +164,7 @@ Proof.
 constructor.
 exists car_endurability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_maneuverability_certificate: @Maneuverable CarSystemType.
@@ -249,18 +172,7 @@ Proof.
 constructor.
 exists car_maneuverability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_impact_certificate: @Impactful CarSystemType.
@@ -268,18 +180,7 @@ Proof.
 constructor.
 exists car_impact_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_scalability_certificate: @Scalable CarSystemType.
@@ -287,18 +188,7 @@ Proof.
 constructor.
 exists car_scalability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_versatility_certificate: @Versatile CarSystemType.
@@ -306,18 +196,7 @@ Proof.
 constructor.
 exists car_versatility_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_interoperability_certificate: @Interoperable CarSystemType.
@@ -325,18 +204,7 @@ Proof.
 constructor.
 exists car_interoperability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_missionEffectiveness_certificate: @MissionEffective CarSystemType.
@@ -360,18 +228,7 @@ Proof.
 constructor.
 exists car_cost_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_duration_certificate: @Duration CarSystemType.
@@ -379,18 +236,7 @@ Proof.
 constructor.
 exists car_duration_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_keyPersonnel_certificate: @KeyPersonnel CarSystemType.
@@ -398,18 +244,7 @@ Proof.
 constructor.
 exists car_keyPersonnel_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_otherScarceResources_certificate: @OtherScarceResources CarSystemType.
@@ -417,18 +252,7 @@ Proof.
 constructor.
 exists car_otherScarceResources_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 
@@ -437,18 +261,7 @@ Proof.
 constructor.
 exists car_manufacturability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 
@@ -457,18 +270,7 @@ Proof.
 constructor.
 exists car_sustainability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 
@@ -496,18 +298,7 @@ Proof.
 constructor.
 exists car_security_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_safety_certificate: @Safe CarSystemType.
@@ -515,18 +306,7 @@ Proof.
 constructor.
 exists car_safety_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_reliability_certificate: @Reliable CarSystemType.
@@ -534,18 +314,7 @@ Proof.
 constructor.
 exists car_reliability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_maintainability_certificate: @Maintainable CarSystemType.
@@ -553,18 +322,7 @@ Proof.
 constructor.
 exists car_maintainability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_availability_certificate: @Available CarSystemType.
@@ -572,18 +330,7 @@ Proof.
 constructor.
 exists car_availability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_survivability_certificate: @Survivable CarSystemType.
@@ -591,18 +338,7 @@ Proof.
 constructor.
 exists car_survivability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_robustness_certificate: @Robust CarSystemType.
@@ -610,18 +346,7 @@ Proof.
 constructor.
 exists car_robustness_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 
@@ -642,18 +367,7 @@ Proof.
 constructor.
 exists car_modifiability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_tailorability_certificate: @Tailorable CarSystemType.
@@ -661,18 +375,7 @@ Proof.
 constructor.
 exists car_tailorability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_adaptability_certificate: @Adaptable CarSystemType.
@@ -680,18 +383,7 @@ Proof.
 constructor.
 exists car_adaptability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
-auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem car_flexibility_certificate: @Flexible CarSystemType.

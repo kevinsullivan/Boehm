@@ -40,10 +40,10 @@ unfold ActionSatisfiesActionSpec.
 intros.
 unfold inputFormatChangeActionSpec.
 jauto_set.
-unfold inputFormatAnother.
-auto. auto. 
+unfold inputFormatAnother; auto; simpl. 
 simpl; omega. 
 simpl; omega. 
+simpl; omega.
 simpl; omega.
 simpl; omega.
 Qed.
@@ -123,21 +123,7 @@ Proof.
 constructor.
 exists kwic_changeability_reqs.
 intros.
-destruct c, p, s.
-auto.
-simpl; exact verifyChangeInputFormat.
-auto.
-simpl; exact verifyChangeInputFormat.
-auto;
-simpl; exact verifyChangeInputFormat.
-auto.
-simpl; exact verifyChangeInputFormat.
-auto.
-simpl; exact verifyChangeInputFormat.
-auto.
-simpl; exact verifyChangeInputFormat.
-auto.
-simpl; exact verifyChangeInputFormat.
+destruct c, p, s; auto; simpl; exact verifyChangeInputFormat.
 Qed.
 
 Theorem kwic_accuracy_certificate: @Accurate KWICSystemType.
@@ -145,9 +131,7 @@ Proof.
 constructor.
 exists kwic_accuracy_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto.  
-auto. auto. auto. auto. auto. auto.
+destruct c, p, s; auto.
 Qed.
 
 Theorem kwic_physicalCapability_certificate: @PhysicalCapable KWICSystemType.
@@ -155,9 +139,7 @@ Proof.
 constructor.
 exists kwic_physicalCapability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem kwic_cyberCapability_certificate: @CyberCapable KWICSystemType.
@@ -165,9 +147,7 @@ Proof.
 constructor.
 exists kwic_cyberCapability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.     
+destruct c, p, s; auto.     
 Qed.
 
 Theorem kwic_humanUsability_certificate: @HumanUsable KWICSystemType.
@@ -175,9 +155,7 @@ Proof.
 constructor.
 exists kwic_humanUsability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_speed_certificate: @Speed KWICSystemType.
@@ -185,9 +163,7 @@ Proof.
 constructor.
 exists kwic_speed_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_endurability_certificate: @Endurable KWICSystemType.
@@ -195,9 +171,7 @@ Proof.
 constructor.
 exists kwic_endurability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_maneuverability_certificate: @Maneuverable KWICSystemType.
@@ -205,9 +179,7 @@ Proof.
 constructor.
 exists kwic_maneuverability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_impact_certificate: @Impactful KWICSystemType.
@@ -215,9 +187,7 @@ Proof.
 constructor.
 exists kwic_impact_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_scalability_certificate: @Scalable KWICSystemType.
@@ -225,9 +195,7 @@ Proof.
 constructor.
 exists kwic_scalability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_versatility_certificate: @Versatile KWICSystemType.
@@ -235,9 +203,7 @@ Proof.
 constructor.
 exists kwic_versatility_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_interoperability_certificate: @Interoperable KWICSystemType.
@@ -245,9 +211,7 @@ Proof.
 constructor.
 exists kwic_interoperability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_missionEffectiveness_certificate: @MissionEffective KWICSystemType.
@@ -271,9 +235,7 @@ Proof.
 constructor.
 exists kwic_cost_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_duration_certificate: @Duration KWICSystemType.
@@ -281,9 +243,7 @@ Proof.
 constructor.
 exists kwic_duration_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_keyPersonnel_certificate: @KeyPersonnel KWICSystemType.
@@ -291,9 +251,7 @@ Proof.
 constructor.
 exists kwic_keyPersonnel_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_otherScarceResources_certificate: @OtherScarceResources KWICSystemType.
@@ -301,9 +259,7 @@ Proof.
 constructor.
 exists kwic_otherScarceResources_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 
@@ -312,9 +268,7 @@ Proof.
 constructor.
 exists kwic_manufacturability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 
@@ -323,9 +277,7 @@ Proof.
 constructor.
 exists kwic_sustainability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 
@@ -353,9 +305,7 @@ Proof.
 constructor.
 exists kwic_security_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_safety_certificate: @Safe KWICSystemType.
@@ -363,9 +313,7 @@ Proof.
 constructor.
 exists kwic_safety_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_reliability_certificate: @Reliable KWICSystemType.
@@ -373,9 +321,7 @@ Proof.
 constructor.
 exists kwic_reliability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_maintainability_certificate: @Maintainable KWICSystemType.
@@ -383,9 +329,7 @@ Proof.
 constructor.
 exists kwic_maintainability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_availability_certificate: @Available KWICSystemType.
@@ -393,9 +337,7 @@ Proof.
 constructor.
 exists kwic_availability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_survivability_certificate: @Survivable KWICSystemType.
@@ -403,9 +345,7 @@ Proof.
 constructor.
 exists kwic_survivability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_robustness_certificate: @Robust KWICSystemType.
@@ -413,9 +353,7 @@ Proof.
 constructor.
 exists kwic_robustness_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 
@@ -436,9 +374,7 @@ Proof.
 constructor.
 exists kwic_modifiability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_tailorability_certificate: @Tailorable KWICSystemType.
@@ -446,9 +382,7 @@ Proof.
 constructor.
 exists kwic_tailorability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_adaptability_certificate: @Adaptable KWICSystemType.
@@ -456,9 +390,7 @@ Proof.
 constructor.
 exists kwic_adaptability_reqs.
 intros.
-destruct c, p, s.
-auto. auto. auto. auto. auto. auto. 
-auto. auto. auto. auto. auto. auto.   
+destruct c, p, s; auto.   
 Qed.
 
 Theorem kwic_flexibility_certificate: @Flexible KWICSystemType.
