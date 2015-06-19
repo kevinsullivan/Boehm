@@ -21,24 +21,25 @@ Definition homeOilActionSpec (trigger: CarAssertion) (agent: CarStakeholders) (p
         agent = owner /\ atHome pre /\ inOwnershipPhase pre ->
         oilClean post /\ timeMinutes (value post) <= timeMinutes (value pre) + 60.
 
+Hint Unfold homeOilActionSpec.
+
 (**
 This theorem and proof show that the [ownerChangeOil] function as 
 defined here does satsify this specification.
 *)
 
+Require Import LibTactics.
+Require Import Omega.
+
 Theorem verifyChangeOil: ActionSatisfiesActionSpec (homeOilActionSpec oilDirtyState owner)  ownerChangeOil.
-(* auto works here *)
+Proof.
 unfold ActionSatisfiesActionSpec.
 intros.
 unfold homeOilActionSpec.
-intros.
-split.
+jauto_set.
 unfold oilClean.
-simpl.
-reflexivity.
-simpl.
-Require Import Omega.
-omega.
+auto.
+simpl; omega.
 Qed.
 
 (**
@@ -55,7 +56,6 @@ Definition car_changeability_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeho
     | home, ownership, owner, _ =>  ActionSatisfiesActionSpec (homeOilActionSpec oilDirty owner) ownerChangeOil
     | _, _, _, _ => True
   end.
-
 
 Definition car_accuracy_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholders) (st: CarSystemState): Prop := True.
 Definition car_physicalCapability_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholders) (st: CarSystemState): Prop := True.
@@ -98,323 +98,250 @@ Definition car_resiliency_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholde
 
 Definition car_satisfactory_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholders) (st: CarSystemState): Prop := True.
 
+Hint Unfold car_changeability_reqs car_accuracy_reqs car_physicalCapability_reqs car_cyberCapability_reqs car_humanUsability_reqs
+            car_speed_reqs car_endurability_reqs car_maneuverability_reqs car_impact_reqs car_scalability_reqs car_versatility_reqs
+            car_interoperability_reqs car_missionEffectiveness_reqs car_cost_reqs car_duration_reqs car_keyPersonnel_reqs
+            car_otherScarceResources_reqs car_manufacturability_reqs car_sustainability_reqs car_efficiency_reqs car_affordability_reqs
+            car_security_reqs car_safety_reqs car_reliability_reqs car_maintainability_reqs car_availability_reqs car_survivability_reqs
+            car_robustness_reqs car_dependability_reqs car_modifiability_reqs car_tailorability_reqs car_adaptability_reqs car_flexibility_reqs
+            car_resiliency_reqs car_satisfactory_reqs.
 
 (**
 Here's the proof. Clearly we need some proof automation here.
 *)
 
 Theorem car_changeability_certificate: @Changeable CarSystemType.
-apply satisfiesChangeabilityRequirements.
+Proof.
+constructor.
 exists car_changeability_reqs.
 intros.
 destruct c, p, s.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. 
 simpl. exact verifyChangeOil.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
-simpl. exact I.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto.
 Qed.
 
 Theorem car_accuracy_certificate: @Accurate CarSystemType.
-apply satisfiesAccuracyRequirements.
+Proof.
+constructor.
 exists car_accuracy_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
-Qed.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.   
+Qed. 
 
 Theorem car_physicalCapability_certificate: @PhysicalCapable CarSystemType.
-apply satisfiesPhysicalCapabilityRequirements.
+Proof.
+constructor.
 exists car_physicalCapability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.      
 Qed.
 
 Theorem car_cyberCapability_certificate: @CyberCapable CarSystemType.
-apply satisfiesCyberCapabilityRequirements.
+Proof.
+constructor.
 exists car_cyberCapability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_humanUsability_certificate: @HumanUsable CarSystemType.
-apply satisfiesHumanUsabilityRequirements.
+Proof.
+constructor.
 exists car_humanUsability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_speed_certificate: @Speed CarSystemType.
-apply satisfiesSpeedRequirements.
+Proof.
+constructor.
 exists car_speed_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_endurability_certificate: @Endurable CarSystemType.
-apply satisfiesEndurabilityRequirements.
+Proof.
+constructor.
 exists car_endurability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_maneuverability_certificate: @Maneuverable CarSystemType.
-apply satisfiesManeuverabilityRequirements.
+Proof.
+constructor.
 exists car_maneuverability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_impact_certificate: @Impactful CarSystemType.
-apply satisfiesImpactRequirements.
+Proof.
+constructor.
 exists car_impact_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_scalability_certificate: @Scalable CarSystemType.
-apply satisfiesScalabilityRequirements.
+Proof.
+constructor.
 exists car_scalability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_versatility_certificate: @Versatile CarSystemType.
-apply satisfiesVersatilityRequirements.
+Proof.
+constructor.
 exists car_versatility_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_interoperability_certificate: @Interoperable CarSystemType.
-apply satisfiesInteroperabilityRequirements.
+Proof.
+constructor.
 exists car_interoperability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_missionEffectiveness_certificate: @MissionEffective CarSystemType.
-apply satisfiesMissionEffectivenessPrerequisites.
+Proof.
+constructor.
 apply car_physicalCapability_certificate.
 apply car_cyberCapability_certificate.
 apply car_humanUsability_certificate.
@@ -429,118 +356,125 @@ apply car_interoperability_certificate.
 Qed.
 
 Theorem car_cost_certificate: @Cost CarSystemType.
-apply satisfiesCostRequirements.
+Proof.
+constructor.
 exists car_cost_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_duration_certificate: @Duration CarSystemType.
-apply satisfiesDurationRequirements.
+Proof.
+constructor.
 exists car_duration_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_keyPersonnel_certificate: @KeyPersonnel CarSystemType.
-apply satisfiesKeyPersonnelRequirements.
+Proof.
+constructor.
 exists car_keyPersonnel_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_otherScarceResources_certificate: @OtherScarceResources CarSystemType.
-apply satisfiesOtherResourcesRequirements.
+Proof.
+constructor.
 exists car_otherScarceResources_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 
 Theorem car_manufacturability_certificate: @Manufacturable CarSystemType.
-apply satisfiesManufacturabilityRequirements.
+Proof.
+constructor.
 exists car_manufacturability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 
 Theorem car_sustainability_certificate: @Sustainable CarSystemType.
-apply satisfiesSustainabilityRequirements.
+Proof.
+constructor.
 exists car_sustainability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 
 Theorem car_efficiency_certificate: @Efficient CarSystemType.
-apply satisfiesEfficiencyPrerequisites.
+Proof.
+constructor.
 apply car_cost_certificate.
 apply car_duration_certificate.
 apply car_keyPersonnel_certificate.
@@ -551,140 +485,149 @@ Qed.
 
 
 Theorem car_affordability_certificate: @Affordable CarSystemType.
-apply satisfiesAffordabilityPrerequisites.
+Proof.
+constructor.
 apply car_missionEffectiveness_certificate.
 apply car_efficiency_certificate.  
 Qed.
 
 Theorem car_security_certificate: @Secure CarSystemType.
-apply satisfiesSecurityRequirements.
+Proof.
+constructor.
 exists car_security_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_safety_certificate: @Safe CarSystemType.
-apply satisfiesSafetyRequirements.
+Proof.
+constructor.
 exists car_safety_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_reliability_certificate: @Reliable CarSystemType.
-apply satisfiesReliabilityRequirements.
+Proof.
+constructor.
 exists car_reliability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_maintainability_certificate: @Maintainable CarSystemType.
-apply satisfiesMaintainabilityRequirements.
+Proof.
+constructor.
 exists car_maintainability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_availability_certificate: @Available CarSystemType.
-apply satisfiesAvailabilityRequirements.
+Proof.
+constructor.
 exists car_availability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_survivability_certificate: @Survivable CarSystemType.
-apply satisfiesSurvivabilityRequirements.
+Proof.
+constructor.
 exists car_survivability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_robustness_certificate: @Robust CarSystemType.
-apply satisfiesRobustnessRequirements.
+Proof.
+constructor.
 exists car_robustness_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 
 Theorem car_dependability_certificate: @Dependable CarSystemType.
-apply satisfiesDependabilityPrerequisites.
+Proof.
+constructor.
 apply car_security_certificate.
 apply car_safety_certificate.
 apply car_reliability_certificate.
@@ -695,75 +638,81 @@ apply car_robustness_certificate.
 Qed.
 
 Theorem car_modifiability_certificate: @Modifiable CarSystemType.
-apply satisfiesModifiabilityRequirements.
+Proof.
+constructor.
 exists car_modifiability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_tailorability_certificate: @Tailorable CarSystemType.
-apply satisfiesTailorabilityRequirements.
+Proof.
+constructor.
 exists car_tailorability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_adaptability_certificate: @Adaptable CarSystemType.
-apply satisfiesAdaptabilityRequirements.
+Proof.
+constructor.
 exists car_adaptability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I. exact I.
-exact I. exact I. exact I. exact I. exact I.    
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto. auto. auto. auto. auto. auto.
+auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem car_flexibility_certificate: @Flexible CarSystemType.
-apply satisfiesFlexibilityPrerequisites. 
+Proof.
+constructor. 
 apply car_modifiability_certificate.
 apply car_tailorability_certificate.
 apply car_adaptability_certificate.
 Qed.
 
 Theorem car_resiliency_certificate: @Resilient CarSystemType.
-apply satisfiesResiliencyPrerequisites.
+Proof.
+constructor.
 apply car_dependability_certificate.
 apply car_flexibility_certificate.
 apply car_changeability_certificate.
 Qed.
 
 Theorem car_satisfactory_certificate: @Satisfactory CarSystemType.
-apply meetsSatisfactoryRequirementss.
+Proof.
+constructor.
 apply car_affordability_certificate.
 apply car_resiliency_certificate.
 Qed.

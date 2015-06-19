@@ -26,33 +26,26 @@ Definition inputFormatChangeActionSpec (trigger: KWICAssertion) (agent: KWICStak
                                    developmentTime (value post) <= developmentTime (value pre) + 7 /\
                                    satisfaction (value pre) <= satisfaction (value post) + 3 /\
                                    dollars (value pre) < dollars (value post) + 100.
-
+Hint Unfold inputFormatChangeActionSpec.
 (**
 This theorem and proof show that the [customerChangeImputFormat] function as 
 defined here does satsify this specification.
 *)
+Require Import LibTactics.
+Require Import Omega.
 
 Theorem verifyChangeInputFormat: ActionSatisfiesActionSpec (inputFormatChangeActionSpec inputFormatOneState customer)  customerChangeImputFormat.
-(* auto works here *)
+Proof.
 unfold ActionSatisfiesActionSpec.
 intros.
 unfold inputFormatChangeActionSpec.
-intros.
-split.
+jauto_set.
 unfold inputFormatAnother.
-simpl.
-reflexivity.
-simpl.
-split.
-reflexivity.
-split.
-Require Import Omega.
-omega.
-split.
-omega.
-split.
-omega.
-omega.
+auto. auto. 
+simpl; omega. 
+simpl; omega. 
+simpl; omega.
+simpl; omega.
 Qed.
 
 
@@ -114,131 +107,152 @@ Definition kwic_resiliency_reqs (c: KWICContexts) (p: KWICPhases) (s: KWICStakeh
 
 Definition kwic_satisfactory_reqs (c: KWICContexts) (p: KWICPhases) (s: KWICStakeholders) (st: KWICSystemState): Prop := True.
 
-
+Hint Unfold kwic_changeability_reqs kwic_accuracy_reqs kwic_physicalCapability_reqs kwic_cyberCapability_reqs kwic_humanUsability_reqs
+            kwic_speed_reqs kwic_endurability_reqs kwic_maneuverability_reqs kwic_impact_reqs kwic_scalability_reqs kwic_versatility_reqs
+            kwic_interoperability_reqs kwic_missionEffectiveness_reqs kwic_cost_reqs kwic_duration_reqs kwic_keyPersonnel_reqs
+            kwic_otherScarceResources_reqs kwic_manufacturability_reqs kwic_sustainability_reqs kwic_efficiency_reqs kwic_affordability_reqs
+            kwic_security_reqs kwic_safety_reqs kwic_reliability_reqs kwic_maintainability_reqs kwic_availability_reqs kwic_survivability_reqs
+            kwic_robustness_reqs kwic_dependability_reqs kwic_modifiability_reqs kwic_tailorability_reqs kwic_adaptability_reqs kwic_flexibility_reqs
+            kwic_resiliency_reqs kwic_satisfactory_reqs.
 (**
 Here's the proof. Clearly we need some proof automation here.
 *)
 
 Theorem kwic_changeability_certificate: @Changeable KWICSystemType.
-apply satisfiesChangeabilityRequirements.
+Proof.
+constructor.
 exists kwic_changeability_reqs.
 intros.
 destruct c, p, s.
-simpl. exact I.
-simpl. exact verifyChangeInputFormat.
-simpl. exact I.
-simpl. exact verifyChangeInputFormat.
-simpl. exact I.
-simpl. exact verifyChangeInputFormat.
-simpl. exact I.
-simpl. exact verifyChangeInputFormat.
-simpl. exact I.
-simpl. exact verifyChangeInputFormat.
-simpl. exact I.
-simpl. exact verifyChangeInputFormat.
+auto.
+simpl; exact verifyChangeInputFormat.
+auto.
+simpl; exact verifyChangeInputFormat.
+auto;
+simpl; exact verifyChangeInputFormat.
+auto.
+simpl; exact verifyChangeInputFormat.
+auto.
+simpl; exact verifyChangeInputFormat.
+auto.
+simpl; exact verifyChangeInputFormat.
+auto.
+simpl; exact verifyChangeInputFormat.
 Qed.
 
 Theorem kwic_accuracy_certificate: @Accurate KWICSystemType.
-apply satisfiesAccuracyRequirements.
+Proof.
+constructor.
 exists kwic_accuracy_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto.  
+auto. auto. auto. auto. auto. auto.
 Qed.
 
 Theorem kwic_physicalCapability_certificate: @PhysicalCapable KWICSystemType.
-apply satisfiesPhysicalCapabilityRequirements.
+Proof.
+constructor.
 exists kwic_physicalCapability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.     
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem kwic_cyberCapability_certificate: @CyberCapable KWICSystemType.
-apply satisfiesCyberCapabilityRequirements.
+Proof.
+constructor.
 exists kwic_cyberCapability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.     
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.     
 Qed.
 
 Theorem kwic_humanUsability_certificate: @HumanUsable KWICSystemType.
-apply satisfiesHumanUsabilityRequirements.
+Proof.
+constructor.
 exists kwic_humanUsability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_speed_certificate: @Speed KWICSystemType.
-apply satisfiesSpeedRequirements.
+Proof.
+constructor.
 exists kwic_speed_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_endurability_certificate: @Endurable KWICSystemType.
-apply satisfiesEndurabilityRequirements.
+Proof.
+constructor.
 exists kwic_endurability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_maneuverability_certificate: @Maneuverable KWICSystemType.
-apply satisfiesManeuverabilityRequirements.
+Proof.
+constructor.
 exists kwic_maneuverability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_impact_certificate: @Impactful KWICSystemType.
-apply satisfiesImpactRequirements.
+Proof.
+constructor.
 exists kwic_impact_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_scalability_certificate: @Scalable KWICSystemType.
-apply satisfiesScalabilityRequirements.
+Proof.
+constructor.
 exists kwic_scalability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_versatility_certificate: @Versatile KWICSystemType.
-apply satisfiesVersatilityRequirements.
+Proof.
+constructor.
 exists kwic_versatility_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_interoperability_certificate: @Interoperable KWICSystemType.
-apply satisfiesInteroperabilityRequirements.
+Proof.
+constructor.
 exists kwic_interoperability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_missionEffectiveness_certificate: @MissionEffective KWICSystemType.
-apply satisfiesMissionEffectivenessPrerequisites.
+Proof.
+constructor.
 apply kwic_physicalCapability_certificate.
 apply kwic_cyberCapability_certificate.
 apply kwic_humanUsability_certificate.
@@ -253,64 +267,71 @@ apply kwic_interoperability_certificate.
 Qed.
 
 Theorem kwic_cost_certificate: @Cost KWICSystemType.
-apply satisfiesCostRequirements.
+Proof.
+constructor.
 exists kwic_cost_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_duration_certificate: @Duration KWICSystemType.
-apply satisfiesDurationRequirements.
+Proof.
+constructor.
 exists kwic_duration_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_keyPersonnel_certificate: @KeyPersonnel KWICSystemType.
-apply satisfiesKeyPersonnelRequirements.
+Proof.
+constructor.
 exists kwic_keyPersonnel_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_otherScarceResources_certificate: @OtherScarceResources KWICSystemType.
-apply satisfiesOtherResourcesRequirements.
+Proof.
+constructor.
 exists kwic_otherScarceResources_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 
 Theorem kwic_manufacturability_certificate: @Manufacturable KWICSystemType.
-apply satisfiesManufacturabilityRequirements.
+Proof.
+constructor.
 exists kwic_manufacturability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 
 Theorem kwic_sustainability_certificate: @Sustainable KWICSystemType.
-apply satisfiesSustainabilityRequirements.
+Proof.
+constructor.
 exists kwic_sustainability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 
 Theorem kwic_efficiency_certificate: @Efficient KWICSystemType.
-apply satisfiesEfficiencyPrerequisites.
+Proof.
+constructor.
 apply kwic_cost_certificate.
 apply kwic_duration_certificate.
 apply kwic_keyPersonnel_certificate.
@@ -321,77 +342,86 @@ Qed.
 
 
 Theorem kwic_affordability_certificate: @Affordable KWICSystemType.
-apply satisfiesAffordabilityPrerequisites.
+Proof.
+constructor.
 apply kwic_missionEffectiveness_certificate.
 apply kwic_efficiency_certificate.  
 Qed.
 
 Theorem kwic_security_certificate: @Secure KWICSystemType.
-apply satisfiesSecurityRequirements.
+Proof.
+constructor.
 exists kwic_security_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_safety_certificate: @Safe KWICSystemType.
-apply satisfiesSafetyRequirements.
+Proof.
+constructor.
 exists kwic_safety_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_reliability_certificate: @Reliable KWICSystemType.
-apply satisfiesReliabilityRequirements.
+Proof.
+constructor.
 exists kwic_reliability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_maintainability_certificate: @Maintainable KWICSystemType.
-apply satisfiesMaintainabilityRequirements.
+Proof.
+constructor.
 exists kwic_maintainability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_availability_certificate: @Available KWICSystemType.
-apply satisfiesAvailabilityRequirements.
+Proof.
+constructor.
 exists kwic_availability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_survivability_certificate: @Survivable KWICSystemType.
-apply satisfiesSurvivabilityRequirements.
+Proof.
+constructor.
 exists kwic_survivability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_robustness_certificate: @Robust KWICSystemType.
-apply satisfiesRobustnessRequirements.
+Proof.
+constructor.
 exists kwic_robustness_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 
 Theorem kwic_dependability_certificate: @Dependable KWICSystemType.
-apply satisfiesDependabilityPrerequisites.
+Proof.
+constructor.
 apply kwic_security_certificate.
 apply kwic_safety_certificate.
 apply kwic_reliability_certificate.
@@ -402,48 +432,54 @@ apply kwic_robustness_certificate.
 Qed.
 
 Theorem kwic_modifiability_certificate: @Modifiable KWICSystemType.
-apply satisfiesModifiabilityRequirements.
+Proof.
+constructor.
 exists kwic_modifiability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_tailorability_certificate: @Tailorable KWICSystemType.
-apply satisfiesTailorabilityRequirements.
+Proof.
+constructor.
 exists kwic_tailorability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_adaptability_certificate: @Adaptable KWICSystemType.
-apply satisfiesAdaptabilityRequirements.
+Proof.
+constructor.
 exists kwic_adaptability_reqs.
 intros.
 destruct c, p, s.
-exact I. exact I. exact I. exact I. exact I. exact I. 
-exact I. exact I. exact I. exact I. exact I. exact I.   
+auto. auto. auto. auto. auto. auto. 
+auto. auto. auto. auto. auto. auto.   
 Qed.
 
 Theorem kwic_flexibility_certificate: @Flexible KWICSystemType.
-apply satisfiesFlexibilityPrerequisites. 
+Proof.
+constructor.
 apply kwic_modifiability_certificate.
 apply kwic_tailorability_certificate.
 apply kwic_adaptability_certificate.
 Qed.
 
 Theorem kwic_resiliency_certificate: @Resilient KWICSystemType.
-apply satisfiesResiliencyPrerequisites.
+Proof.
+constructor.
 apply kwic_dependability_certificate.
 apply kwic_flexibility_certificate.
 apply kwic_changeability_certificate.
 Qed.
 
 Theorem kwic_satisfactory_certificate: @Satisfactory KWICSystemType.
-apply meetsSatisfactoryRequirementss.
+Proof.
+constructor.
 apply kwic_affordability_certificate.
 apply kwic_resiliency_certificate.
 Qed.

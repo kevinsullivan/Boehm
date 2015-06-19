@@ -46,6 +46,7 @@ Definition ActionSatisfiesActionSpec (act_spec: ActionSpec) (act: Action): Prop 
   forall s: @SystemInstance sys_type, 
     act_spec s (act s).
 
+Hint Unfold ActionSatisfiesActionSpec.
 (**
 [Changeable] is the leaf node in our Boehm-style means-ends hierarchy.
 A proof of a [Changeable] proposition requires a proof, for all contexts,
@@ -58,5 +59,7 @@ Inductive Changeable (sys_type: SystemType): Prop :=
     (exists changeable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 
       forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, changeable c p s st) ->
         Changeable sys_type.
+
+Hint Constructors Changeable.
 
 End Changeable.
