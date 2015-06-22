@@ -1,6 +1,7 @@
 Require Export Quality.
 Require Export Value.
 Require Export Example_Car.
+Require Export BoehmTactics.
 
 (**
 [homeOilActionSpec] expresses a Ross-style changeability requirement
@@ -108,12 +109,6 @@ Hint Unfold car_changeability_reqs car_accuracy_reqs car_physicalCapability_reqs
 (**
 Proofs for satisfying ility requirements.
 *)
-
-(**
-A Ltac tactic for reducing the proofs to just one line each.
-*)
-
-Ltac Prove_satisfaction requirements context phase stakeholder := constructor; exists requirements; intros; destruct context, phase, stakeholder; auto.
 
 Theorem car_changeability_certificate: @Changeable CarSystemType.
 Proof.

@@ -1,6 +1,7 @@
 Require Export Quality.
 Require Export Value.
 Require Export Example_Parnas.
+Require Export BoehmTactics.
 
 (**
 [inputFormatChangeActionSpec] expresses a Ross-style changeability requirement
@@ -118,12 +119,6 @@ Hint Unfold kwic_changeability_reqs kwic_accuracy_reqs kwic_physicalCapability_r
 (**
 Proofs for satisfying ility requirements.
 *)
-
-(**
-A Ltac tactic for reducing the proofs to just one line each.
-*)
-
-Ltac Prove_satisfaction requirements context phase stakeholder := constructor; exists requirements; intros; destruct context, phase, stakeholder; auto.
 
 Theorem kwic_changeability_certificate: @Changeable KWICSystemType.
 Proof.
