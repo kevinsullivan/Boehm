@@ -26,7 +26,7 @@ Definition inputFormatChangeActionSpec (trigger: KWICAssertion) (agent: KWICStak
                                    developmentTime (value post) <= developmentTime (value pre) + 7 /\
                                    satisfaction (value pre) <= satisfaction (value post) + 3 /\
                                    dollars (value pre) < dollars (value post) + 100.
-Hint Unfold inputFormatChangeActionSpec.
+
 (**
 This theorem and proof show that the [customerChangeImputFormat] function as 
 defined here does satsify this specification.
@@ -40,10 +40,10 @@ unfold ActionSatisfiesActionSpec.
 intros.
 unfold inputFormatChangeActionSpec.
 jauto_set.
-unfold inputFormatAnother; auto; simpl. 
+unfold inputFormatAnother; auto.
 simpl; omega. 
 simpl; omega. 
-simpl; omega.
+simpl; omega. 
 simpl; omega.
 simpl; omega.
 Qed.
@@ -114,306 +114,199 @@ Hint Unfold kwic_changeability_reqs kwic_accuracy_reqs kwic_physicalCapability_r
             kwic_security_reqs kwic_safety_reqs kwic_reliability_reqs kwic_maintainability_reqs kwic_availability_reqs kwic_survivability_reqs
             kwic_robustness_reqs kwic_dependability_reqs kwic_modifiability_reqs kwic_tailorability_reqs kwic_adaptability_reqs kwic_flexibility_reqs
             kwic_resiliency_reqs kwic_satisfactory_reqs.
+
 (**
-Here's the proof. Clearly we need some proof automation here.
+Proofs for satisfying ility requirements.
 *)
+
+(**
+A Ltac tactic for reducing the proofs to just one line each.
+*)
+
+Ltac Prove_satisfaction requirements context phase stakeholder := constructor; exists requirements; intros; destruct context, phase, stakeholder; auto.
 
 Theorem kwic_changeability_certificate: @Changeable KWICSystemType.
 Proof.
-constructor.
-exists kwic_changeability_reqs.
-intros.
-destruct c, p, s; auto; simpl; exact verifyChangeInputFormat.
+Prove_satisfaction kwic_changeability_reqs c p s
+;simpl; exact verifyChangeInputFormat.
 Qed.
 
 Theorem kwic_accuracy_certificate: @Accurate KWICSystemType.
 Proof.
-constructor.
-exists kwic_accuracy_reqs.
-intros.
-destruct c, p, s; auto.
+Prove_satisfaction kwic_accuracy_reqs c p s.
 Qed.
 
 Theorem kwic_physicalCapability_certificate: @PhysicalCapable KWICSystemType.
 Proof.
-constructor.
-exists kwic_physicalCapability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction kwic_physicalCapability_reqs c p s.     
 Qed.
 
 Theorem kwic_cyberCapability_certificate: @CyberCapable KWICSystemType.
 Proof.
-constructor.
-exists kwic_cyberCapability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction kwic_cyberCapability_reqs c p s.    
 Qed.
 
 Theorem kwic_humanUsability_certificate: @HumanUsable KWICSystemType.
 Proof.
-constructor.
-exists kwic_humanUsability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_humanUsability_reqs c p s.  
 Qed.
 
 Theorem kwic_speed_certificate: @Speed KWICSystemType.
 Proof.
-constructor.
-exists kwic_speed_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_speed_reqs c p s. 
 Qed.
 
 Theorem kwic_endurability_certificate: @Endurable KWICSystemType.
 Proof.
-constructor.
-exists kwic_endurability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_endurability_reqs c p s.    
 Qed.
 
 Theorem kwic_maneuverability_certificate: @Maneuverable KWICSystemType.
 Proof.
-constructor.
-exists kwic_maneuverability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_maneuverability_reqs c p s.   
 Qed.
 
 Theorem kwic_impact_certificate: @Impactful KWICSystemType.
 Proof.
-constructor.
-exists kwic_impact_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_impact_reqs c p s. 
 Qed.
 
 Theorem kwic_scalability_certificate: @Scalable KWICSystemType.
 Proof.
-constructor.
-exists kwic_scalability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_scalability_reqs c p s.
 Qed.
 
 Theorem kwic_versatility_certificate: @Versatile KWICSystemType.
 Proof.
-constructor.
-exists kwic_versatility_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_versatility_reqs c p s. 
 Qed.
 
 Theorem kwic_interoperability_certificate: @Interoperable KWICSystemType.
 Proof.
-constructor.
-exists kwic_interoperability_reqs.
-intros.
-destruct c, p, s; auto.   
-Qed.
-
-Theorem kwic_missionEffectiveness_certificate: @MissionEffective KWICSystemType.
-Proof.
-constructor.
-apply kwic_physicalCapability_certificate.
-apply kwic_cyberCapability_certificate.
-apply kwic_humanUsability_certificate.
-apply kwic_speed_certificate.
-apply kwic_endurability_certificate.
-apply kwic_maneuverability_certificate.
-apply kwic_accuracy_certificate.
-apply kwic_impact_certificate.
-apply kwic_scalability_certificate.
-apply kwic_versatility_certificate.
-apply kwic_interoperability_certificate.
+Prove_satisfaction kwic_interoperability_reqs c p s.      
 Qed.
 
 Theorem kwic_cost_certificate: @Cost KWICSystemType.
 Proof.
-constructor.
-exists kwic_cost_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_cost_reqs c p s.  
 Qed.
 
 Theorem kwic_duration_certificate: @Duration KWICSystemType.
 Proof.
-constructor.
-exists kwic_duration_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_duration_reqs c p s.  
 Qed.
 
 Theorem kwic_keyPersonnel_certificate: @KeyPersonnel KWICSystemType.
 Proof.
-constructor.
-exists kwic_keyPersonnel_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_keyPersonnel_reqs c p s.   
 Qed.
 
 Theorem kwic_otherScarceResources_certificate: @OtherScarceResources KWICSystemType.
 Proof.
-constructor.
-exists kwic_otherScarceResources_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_otherScarceResources_reqs c p s.    
 Qed.
-
 
 Theorem kwic_manufacturability_certificate: @Manufacturable KWICSystemType.
 Proof.
-constructor.
-exists kwic_manufacturability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_manufacturability_reqs c p s.  
 Qed.
-
 
 Theorem kwic_sustainability_certificate: @Sustainable KWICSystemType.
 Proof.
-constructor.
-exists kwic_sustainability_reqs.
-intros.
-destruct c, p, s; auto.   
-Qed.
-
-
-Theorem kwic_efficiency_certificate: @Efficient KWICSystemType.
-Proof.
-constructor.
-apply kwic_cost_certificate.
-apply kwic_duration_certificate.
-apply kwic_keyPersonnel_certificate.
-apply kwic_otherScarceResources_certificate.
-apply kwic_manufacturability_certificate.
-apply kwic_sustainability_certificate.
-Qed.
-
-
-Theorem kwic_affordability_certificate: @Affordable KWICSystemType.
-Proof.
-constructor.
-apply kwic_missionEffectiveness_certificate.
-apply kwic_efficiency_certificate.  
+Prove_satisfaction kwic_sustainability_reqs c p s.    
 Qed.
 
 Theorem kwic_security_certificate: @Secure KWICSystemType.
 Proof.
-constructor.
-exists kwic_security_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_security_reqs c p s.   
 Qed.
 
 Theorem kwic_safety_certificate: @Safe KWICSystemType.
 Proof.
-constructor.
-exists kwic_safety_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_safety_reqs c p s.  
 Qed.
 
 Theorem kwic_reliability_certificate: @Reliable KWICSystemType.
 Proof.
-constructor.
-exists kwic_reliability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_reliability_reqs c p s.  
 Qed.
 
 Theorem kwic_maintainability_certificate: @Maintainable KWICSystemType.
 Proof.
-constructor.
-exists kwic_maintainability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_maintainability_reqs c p s.  
 Qed.
 
 Theorem kwic_availability_certificate: @Available KWICSystemType.
 Proof.
-constructor.
-exists kwic_availability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_availability_reqs c p s.
 Qed.
 
 Theorem kwic_survivability_certificate: @Survivable KWICSystemType.
 Proof.
-constructor.
-exists kwic_survivability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_survivability_reqs c p s.  
 Qed.
 
 Theorem kwic_robustness_certificate: @Robust KWICSystemType.
 Proof.
-constructor.
-exists kwic_robustness_reqs.
-intros.
-destruct c, p, s; auto.   
-Qed.
-
-
-Theorem kwic_dependability_certificate: @Dependable KWICSystemType.
-Proof.
-constructor.
-apply kwic_security_certificate.
-apply kwic_safety_certificate.
-apply kwic_reliability_certificate.
-apply kwic_maintainability_certificate.
-apply kwic_availability_certificate.
-apply kwic_survivability_certificate.
-apply kwic_robustness_certificate.
+Prove_satisfaction kwic_robustness_reqs c p s.   
 Qed.
 
 Theorem kwic_modifiability_certificate: @Modifiable KWICSystemType.
 Proof.
-constructor.
-exists kwic_modifiability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_modifiability_reqs c p s.   
 Qed.
 
 Theorem kwic_tailorability_certificate: @Tailorable KWICSystemType.
 Proof.
-constructor.
-exists kwic_tailorability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_tailorability_reqs c p s.   
 Qed.
 
 Theorem kwic_adaptability_certificate: @Adaptable KWICSystemType.
 Proof.
-constructor.
-exists kwic_adaptability_reqs.
-intros.
-destruct c, p, s; auto.   
+Prove_satisfaction kwic_adaptability_reqs c p s.   
+Qed.
+
+Hint Resolve kwic_changeability_certificate kwic_physicalCapability_certificate kwic_cyberCapability_certificate kwic_humanUsability_certificate
+             kwic_speed_certificate kwic_endurability_certificate kwic_maneuverability_certificate kwic_accuracy_certificate 
+             kwic_impact_certificate kwic_scalability_certificate kwic_versatility_certificate kwic_interoperability_certificate
+             kwic_cost_certificate kwic_duration_certificate kwic_keyPersonnel_certificate kwic_otherScarceResources_certificate
+             kwic_manufacturability_certificate kwic_sustainability_certificate kwic_security_certificate kwic_safety_certificate 
+             kwic_reliability_certificate kwic_maintainability_certificate kwic_availability_certificate kwic_survivability_certificate
+             kwic_robustness_certificate kwic_modifiability_certificate kwic_tailorability_certificate kwic_adaptability_certificate.
+
+Theorem kwic_missionEffectiveness_certificate: @MissionEffective KWICSystemType.
+Proof.
+auto.
+Qed.
+
+Theorem kwic_efficiency_certificate: @Efficient KWICSystemType.
+Proof.
+auto.
 Qed.
 
 Theorem kwic_flexibility_certificate: @Flexible KWICSystemType.
 Proof.
-constructor.
-apply kwic_modifiability_certificate.
-apply kwic_tailorability_certificate.
-apply kwic_adaptability_certificate.
+auto.
+Qed.
+
+Theorem kwic_dependability_certificate: @Dependable KWICSystemType.
+Proof.
+auto.
+Qed.
+
+Theorem kwic_affordability_certificate: @Affordable KWICSystemType.
+Proof.
+auto.
 Qed.
 
 Theorem kwic_resiliency_certificate: @Resilient KWICSystemType.
 Proof.
-constructor.
-apply kwic_dependability_certificate.
-apply kwic_flexibility_certificate.
-apply kwic_changeability_certificate.
+auto.
 Qed.
 
 Theorem kwic_satisfactory_certificate: @Satisfactory KWICSystemType.
 Proof.
-constructor.
-apply kwic_affordability_certificate.
-apply kwic_resiliency_certificate.
+auto.
 Qed.
 
 

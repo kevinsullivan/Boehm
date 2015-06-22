@@ -10,7 +10,7 @@ Inductive KWICContexts := nominal.
 (** ** Phase *)
 
 (**
-[Phase] represents the lifecycle phases of a software system.
+[KWICPhases] represents the lifecycle phases of a software system.
 *)
 
 (** design, implementation and maintenance are talked about in the paper*)
@@ -19,15 +19,15 @@ Inductive KWICPhases := requirements | design | implementation | testing | deplo
 (** ** Stakeholder *)
 
 (**
-[Stakeholder] represents the set of potential system change agents
+[KWICStakeholders] represents the set of potential system change agents
 *)
 
 Inductive KWICStakeholders :=  developer | customer.
 
-(** ** Resources for measuring cost-benefit *)
+(** ** Value for measuring cost-benefit *)
 
 (** 
-[Resources] is a framework for quantifying time, money, and other
+[KWICValue] is a framework for quantifying time, money, and other
 elements of value that can be gained or lost as a result of a change.
 *)
 

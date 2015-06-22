@@ -314,7 +314,7 @@ Inductive Satisfactory (sys_type: SystemType): Prop :=
 
 Hint Constructors
   (** Composite **)
-  MissionEffective Dependable Flexible Efficient Affordable Resilient
+  MissionEffective Dependable Flexible Efficient Affordable Resilient Satisfactory
   (** Contributing **)
   Adaptable PhysicalCapable CyberCapable HumanUsable Speed Endurable Maneuverable
   Accurate Impactful Scalable Versatile Interoperable Cost Duration KeyPersonnel OtherScarceResources

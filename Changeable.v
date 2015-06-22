@@ -46,7 +46,6 @@ Definition ActionSatisfiesActionSpec (act_spec: ActionSpec) (act: Action): Prop 
   forall s: @SystemInstance sys_type, 
     act_spec s (act s).
 
-Hint Unfold ActionSatisfiesActionSpec.
 (**
 [Changeable] is the leaf node in our Boehm-style means-ends hierarchy.
 A proof of a [Changeable] proposition requires a proof, for all contexts,

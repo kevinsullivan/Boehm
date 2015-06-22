@@ -21,8 +21,6 @@ Definition homeOilActionSpec (trigger: CarAssertion) (agent: CarStakeholders) (p
         agent = owner /\ atHome pre /\ inOwnershipPhase pre ->
         oilClean post /\ timeMinutes (value post) <= timeMinutes (value pre) + 60.
 
-Hint Unfold homeOilActionSpec.
-
 (**
 This theorem and proof show that the [ownerChangeOil] function as 
 defined here does satsify this specification.
@@ -35,6 +33,7 @@ Theorem verifyChangeOil: ActionSatisfiesActionSpec (homeOilActionSpec oilDirtySt
 Proof.
 unfold ActionSatisfiesActionSpec.
 intros.
+simpl.
 unfold homeOilActionSpec.
 jauto_set.
 unfold oilClean.
@@ -107,304 +106,197 @@ Hint Unfold car_changeability_reqs car_accuracy_reqs car_physicalCapability_reqs
             car_resiliency_reqs car_satisfactory_reqs.
 
 (**
-Here's the proof. Clearly we need some proof automation here.
+Proofs for satisfying ility requirements.
 *)
+
+(**
+A Ltac tactic for reducing the proofs to just one line each.
+*)
+
+Ltac Prove_satisfaction requirements context phase stakeholder := constructor; exists requirements; intros; destruct context, phase, stakeholder; auto.
 
 Theorem car_changeability_certificate: @Changeable CarSystemType.
 Proof.
-constructor.
-exists car_changeability_reqs.
-intros.
-destruct c, p, s; auto.
-simpl. exact verifyChangeOil.
+Prove_satisfaction car_changeability_reqs c p s.
+simpl; exact verifyChangeOil.
 Qed.
 
 Theorem car_accuracy_certificate: @Accurate CarSystemType.
 Proof.
-constructor.
-exists car_accuracy_reqs.
-intros.
-destruct c, p, s; auto.  
+Prove_satisfaction car_accuracy_reqs c p s. 
 Qed. 
 
 Theorem car_physicalCapability_certificate: @PhysicalCapable CarSystemType.
 Proof.
-constructor.
-exists car_physicalCapability_reqs.
-intros.
-destruct c, p, s; auto. 
+Prove_satisfaction car_physicalCapability_reqs c p s.
 Qed.
 
 Theorem car_cyberCapability_certificate: @CyberCapable CarSystemType.
 Proof.
-constructor.
-exists car_cyberCapability_reqs.
-intros.
-destruct c, p, s; auto.
+Prove_satisfaction car_cyberCapability_reqs c p s.
 Qed.
 
 Theorem car_humanUsability_certificate: @HumanUsable CarSystemType.
 Proof.
-constructor.
-exists car_humanUsability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_humanUsability_reqs c p s.   
 Qed.
 
 Theorem car_speed_certificate: @Speed CarSystemType.
 Proof.
-constructor.
-exists car_speed_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_speed_reqs c p s.     
 Qed.
 
 Theorem car_endurability_certificate: @Endurable CarSystemType.
 Proof.
-constructor.
-exists car_endurability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_endurability_reqs c p s.  
 Qed.
 
 Theorem car_maneuverability_certificate: @Maneuverable CarSystemType.
 Proof.
-constructor.
-exists car_maneuverability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_maneuverability_reqs c p s.    
 Qed.
 
 Theorem car_impact_certificate: @Impactful CarSystemType.
 Proof.
-constructor.
-exists car_impact_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_impact_reqs c p s.    
 Qed.
 
 Theorem car_scalability_certificate: @Scalable CarSystemType.
 Proof.
-constructor.
-exists car_scalability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_scalability_reqs c p s.    
 Qed.
 
 Theorem car_versatility_certificate: @Versatile CarSystemType.
 Proof.
-constructor.
-exists car_versatility_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_versatility_reqs c p s.    
 Qed.
 
 Theorem car_interoperability_certificate: @Interoperable CarSystemType.
 Proof.
-constructor.
-exists car_interoperability_reqs.
-intros.
-destruct c, p, s; auto.     
-Qed.
-
-Theorem car_missionEffectiveness_certificate: @MissionEffective CarSystemType.
-Proof.
-constructor.
-apply car_physicalCapability_certificate.
-apply car_cyberCapability_certificate.
-apply car_humanUsability_certificate.
-apply car_speed_certificate.
-apply car_endurability_certificate.
-apply car_maneuverability_certificate.
-apply car_accuracy_certificate.
-apply car_impact_certificate.
-apply car_scalability_certificate.
-apply car_versatility_certificate.
-apply car_interoperability_certificate.
+Prove_satisfaction car_interoperability_reqs c p s.     
 Qed.
 
 Theorem car_cost_certificate: @Cost CarSystemType.
 Proof.
-constructor.
-exists car_cost_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_cost_reqs c p s.   
 Qed.
 
 Theorem car_duration_certificate: @Duration CarSystemType.
 Proof.
-constructor.
-exists car_duration_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_duration_reqs c p s.     
 Qed.
 
 Theorem car_keyPersonnel_certificate: @KeyPersonnel CarSystemType.
 Proof.
-constructor.
-exists car_keyPersonnel_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_keyPersonnel_reqs c p s.   
 Qed.
 
 Theorem car_otherScarceResources_certificate: @OtherScarceResources CarSystemType.
 Proof.
-constructor.
-exists car_otherScarceResources_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_otherScarceResources_reqs c p s.     
 Qed.
-
 
 Theorem car_manufacturability_certificate: @Manufacturable CarSystemType.
 Proof.
-constructor.
-exists car_manufacturability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_manufacturability_reqs c p s.
 Qed.
-
 
 Theorem car_sustainability_certificate: @Sustainable CarSystemType.
 Proof.
-constructor.
-exists car_sustainability_reqs.
-intros.
-destruct c, p, s; auto.     
-Qed.
-
-
-Theorem car_efficiency_certificate: @Efficient CarSystemType.
-Proof.
-constructor.
-apply car_cost_certificate.
-apply car_duration_certificate.
-apply car_keyPersonnel_certificate.
-apply car_otherScarceResources_certificate.
-apply car_manufacturability_certificate.
-apply car_sustainability_certificate.
-Qed.
-
-
-Theorem car_affordability_certificate: @Affordable CarSystemType.
-Proof.
-constructor.
-apply car_missionEffectiveness_certificate.
-apply car_efficiency_certificate.  
+Prove_satisfaction car_sustainability_reqs c p s.    
 Qed.
 
 Theorem car_security_certificate: @Secure CarSystemType.
 Proof.
-constructor.
-exists car_security_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_security_reqs c p s.
 Qed.
 
 Theorem car_safety_certificate: @Safe CarSystemType.
 Proof.
-constructor.
-exists car_safety_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_safety_reqs c p s.    
 Qed.
 
 Theorem car_reliability_certificate: @Reliable CarSystemType.
 Proof.
-constructor.
-exists car_reliability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_reliability_reqs c p s.   
 Qed.
 
 Theorem car_maintainability_certificate: @Maintainable CarSystemType.
 Proof.
-constructor.
-exists car_maintainability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_maintainability_reqs c p s.    
 Qed.
 
 Theorem car_availability_certificate: @Available CarSystemType.
 Proof.
-constructor.
-exists car_availability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_availability_reqs c p s.   
 Qed.
 
 Theorem car_survivability_certificate: @Survivable CarSystemType.
 Proof.
-constructor.
-exists car_survivability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_survivability_reqs c p s.    
 Qed.
 
 Theorem car_robustness_certificate: @Robust CarSystemType.
 Proof.
-constructor.
-exists car_robustness_reqs.
-intros.
-destruct c, p, s; auto.     
-Qed.
-
-
-Theorem car_dependability_certificate: @Dependable CarSystemType.
-Proof.
-constructor.
-apply car_security_certificate.
-apply car_safety_certificate.
-apply car_reliability_certificate.
-apply car_maintainability_certificate.
-apply car_availability_certificate.
-apply car_survivability_certificate.
-apply car_robustness_certificate.
+Prove_satisfaction car_robustness_reqs c p s.  
 Qed.
 
 Theorem car_modifiability_certificate: @Modifiable CarSystemType.
 Proof.
-constructor.
-exists car_modifiability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_modifiability_reqs c p s.    
 Qed.
 
 Theorem car_tailorability_certificate: @Tailorable CarSystemType.
 Proof.
-constructor.
-exists car_tailorability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_tailorability_reqs c p s.    
 Qed.
 
 Theorem car_adaptability_certificate: @Adaptable CarSystemType.
 Proof.
-constructor.
-exists car_adaptability_reqs.
-intros.
-destruct c, p, s; auto.     
+Prove_satisfaction car_adaptability_reqs c p s.  
+Qed.
+
+Hint Resolve car_changeability_certificate car_physicalCapability_certificate car_cyberCapability_certificate car_humanUsability_certificate
+             car_speed_certificate car_endurability_certificate car_maneuverability_certificate car_accuracy_certificate 
+             car_impact_certificate car_scalability_certificate car_versatility_certificate car_interoperability_certificate
+             car_cost_certificate car_duration_certificate car_keyPersonnel_certificate car_otherScarceResources_certificate
+             car_manufacturability_certificate car_sustainability_certificate car_security_certificate car_safety_certificate 
+             car_reliability_certificate car_maintainability_certificate car_availability_certificate car_survivability_certificate
+             car_robustness_certificate car_modifiability_certificate car_tailorability_certificate car_adaptability_certificate.
+
+
+
+Theorem car_missionEffectiveness_certificate: @MissionEffective CarSystemType.
+Proof.
+auto.
+Qed.
+
+Theorem car_efficiency_certificate: @Efficient CarSystemType.
+Proof.
+auto.
 Qed.
 
 Theorem car_flexibility_certificate: @Flexible CarSystemType.
 Proof.
-constructor. 
-apply car_modifiability_certificate.
-apply car_tailorability_certificate.
-apply car_adaptability_certificate.
+auto.
+Qed.
+
+Theorem car_dependability_certificate: @Dependable CarSystemType.
+Proof.
+auto.
+Qed.
+
+Theorem car_affordability_certificate: @Affordable CarSystemType.
+Proof.
+auto.  
 Qed.
 
 Theorem car_resiliency_certificate: @Resilient CarSystemType.
 Proof.
-constructor.
-apply car_dependability_certificate.
-apply car_flexibility_certificate.
-apply car_changeability_certificate.
+auto.
 Qed.
 
 Theorem car_satisfactory_certificate: @Satisfactory CarSystemType.
 Proof.
-constructor.
-apply car_affordability_certificate.
-apply car_resiliency_certificate.
+auto.
 Qed.
