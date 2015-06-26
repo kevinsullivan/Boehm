@@ -14,19 +14,13 @@ which shows that a given function does satisfy this condition. Here
 the condition requires that agent be [customer] and the KWIC system is 
 using [input_format_one] and in the [maintenance] phase of its lifecycle, 
 and if this is the case then a concrete operation must effect a transition
-to a new state in which the input format is another, only one module was 
-changed(that is, the number of modules remained the same), no more that 2
-developers were involved, no more than 7 days were spent, at least 3 level
-of satisfaction were increased, and at least 100 unit dollars were increased.
+to a new state in which the input format is another, no more than one module was 
+changed.
 *)
 
 Definition inputFormatChangeActionSpec (trigger: KWICAssertion) (agent: KWICStakeholders) (pre post: KWICSystemState): Prop  :=  
         agent = customer /\ inputFormatOne pre /\ inMaintenancePhase pre ->
-        inputFormatAnother post /\ modules (value post) = modules (value pre) /\ 
-                                   developers (value post) <= developers (value pre) + 2 /\
-                                   developmentTime (value post) <= developmentTime (value pre) + 7 /\
-                                   satisfaction (value pre) <= satisfaction (value post) + 3 /\
-                                   dollars (value pre) < dollars (value post) + 100.
+        inputFormatAnother post /\ modules (value post) <= modules (value pre) + 1.
 
 (**
 This theorem and proof show that the [customerChangeImputFormat] function as 
@@ -42,10 +36,6 @@ intros.
 unfold inputFormatChangeActionSpec.
 jauto_set.
 unfold inputFormatAnother; auto.
-simpl; omega. 
-simpl; omega. 
-simpl; omega. 
-simpl; omega.
 simpl; omega.
 Qed.
 

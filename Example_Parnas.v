@@ -31,7 +31,7 @@ Inductive KWICStakeholders :=  developer | customer.
 elements of value that can be gained or lost as a result of a change.
 *)
 
-Inductive KWICValue := mkValue {
+Inductive KWICValue := mkValue { 
   linesOfCode: nat;
   modules: nat;
   interfaces: nat;
@@ -44,7 +44,7 @@ Inductive KWICValue := mkValue {
   developmentTime: nat
 }.
 
-(** ** Likely change variables*)
+(** ** Design decisions that are likely to change*)
 
 (**
 There are a number of design decisions which are questionable and likely to change under many circumstances.
