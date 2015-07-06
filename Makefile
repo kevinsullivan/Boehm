@@ -82,8 +82,6 @@ endif
 
 VFILES:=BoehmTactics.v\
   Changeable.v\
-  Example_Car.v\
-  Example_Car_Changeable.v\
   Example_Parnas.v\
   Example_Parnas_Changeable.v\
   LibTactics.v\

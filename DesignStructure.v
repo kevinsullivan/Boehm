@@ -23,33 +23,34 @@ Inductive KWICPhases := requirements | design | implementation | testing | deplo
 Inductive KWICStakeholders :=  developer | customer.
 
 (** Dependency Relation Class*)
-Class Dependency (SystemParameter: Set) (Stakeholder: Set):= {
-    (* Relation between system parameters and stakeholders​, to make sure if a system parameter is an environment parameter. *)
-    isEP: SystemParameter -> Stakeholder -> Prop;
-    (* Relation among environment parameters: affect *)
-    affect: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between interfaces and environment parameters: adapt *)
-    adapt: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between data structure and environment parameters: ds_ep *)
-    ds_ep: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between algorithm and environment parameters: alg_ep *)
-    alg_ep: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between master and environment parameters: ms_ep *)
-    ms_ep: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between data structures and interfaces: satisfy *)
-    satisfy: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between algorithms and interfaces: implement *)
-    implement: SystemParameter -> SystemParameter -> Prop;
-    (* Relation among interfaces: call *)
-    call: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between algorithms and data structures: access *)
-    access: SystemParameter -> SystemParameter -> Prop;
-    (* Relation among data structures: rely *)
-    rely: SystemParameter -> SystemParameter -> Prop;
-    (* Relation between master and interfaces: control *)
-    control: SystemParameter -> SystemParameter -> Prop;
-    (* Higher order relation: dependOn. It should be a combination of the above relations, and it holds if any of the above relations holds *)
-    dependOn: SystemParameter -> SystemParameter -> Prop;
-    (* Transitive dependency relation *)
-    dependOn_trans: forall x y z: SystemParameter, dependOn x y -> dependOn y z -> dependOn x z
-}.
+Section Dependency.
+  Variable params : Set.
+  
+  Set Printing Projections.
+
+  Record Dependency : Type := {
+    Uses : params -> params -> Prop;
+    Satisfies : params -> params -> Prop;
+    Encapsulates : params -> params -> Prop
+  }.
+
+  Inductive depends_on (dep: Dependency) : params -> params -> Prop :=
+  | dep_by_use : forall a b, dep.(Uses) a b -> depends_on dep a b
+  | dep_by_trans : forall a b c, depends_on dep a b -> depends_on dep b c -> depends_on dep a c.
+  
+  Definition has_circular_deps (dep : Dependency): Prop :=
+    exists a b, depends_on dep a b /\ depends_on dep b a.
+  
+  Definition bad_circle (dep : Dependency): Prop :=
+    exists a b, dep.(Uses) a b /\ dep.(Satisfies) a b.
+  
+  Definition providers_always_encapsulate (dep : Dependency): Prop :=
+    forall a b, dep.(Satisfies) a b -> dep.(Encapsulates) b a .
+  
+  Definition modular (dep : Dependency): Prop :=
+    ~ bad_circle dep /\ providers_always_encapsulate dep /\ ~ has_circular_deps dep.
+
+  Unset Printing Projections.
+
+End Dependency.
+
