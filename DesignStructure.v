@@ -15,49 +15,69 @@ Section Dependency.
 
   Record Dependency : Type := mk_dep {
     Modules : list Module;
+    Volatile : params -> Prop;
     Uses : params -> params -> Prop;
     Satisfies : params -> params -> Prop;
     Encapsulates : params -> params -> Prop
   }.
 
-  Inductive depends_on (dep: Dependency) : params -> params -> Prop :=
-  | dep_by_use : forall a b, dep.(Uses) a b -> depends_on dep a b
-  | dep_by_trans : forall a b c, depends_on dep a b -> depends_on dep b c -> depends_on dep a c.
+  Fixpoint inDependency (d: Dependency) (m: Module): Prop :=
+    In m d.(Modules).
 
-  Inductive share_module (dep : Dependency) : params -> params -> Prop :=
-    | share : forall m a b, In m dep.(Modules)
-                       -> inModule m a
-                       -> inModule m b
-                       -> share_module dep a b.
-  
-  Definition has_circular_deps (dep : Dependency): Prop :=
-    exists a b, depends_on dep a b /\ depends_on dep b a /\ ~ share_module dep a b.
-  
-  Definition cross_module_circularity (dep : Dependency): Prop :=
-    exists a b, (depends_on dep a b /\
-            depends_on dep b a /\
-            ~ share_module dep a b).
+  (* Theorem : Any "Likely to change" parameter does not leak its volatility to other modules *)
+  (* This says nothing about other parameters *)
 
-  Definition use_and_satisfy (dep : Dependency): Prop :=
-    exists a b, dep.(Uses) a b /\ dep.(Satisfies) a b.
+  Inductive VolatileStar (dep : Dependency) : params -> Prop :=
+    | VRefl : forall p, dep.(Volatile) p -> VolatileStar dep p
+    | VUse : forall a b, VolatileStar dep b
+                      -> dep.(Uses) a b
+                      -> VolatileStar dep a
+    | VSatisfies : forall a b, VolatileStar dep b
+                          -> dep.(Satisfies) a b
+                          -> VolatileStar dep a.
 
-  Lemma share_commute : forall d a b, share_module d a b -> share_module d b a.
-    Proof.
-      intros.
-      inversion H; subst; clear H.
-      econstructor; eauto.
-    Qed.      
+  Definition separate_modules (dep : Dependency) (a b: params): Prop :=
+    forall m1 m2, inDependency dep m1 -> inDependency dep m2
+             -> inModule m1 a
+             -> inModule m2 b
+             -> m1 <> m2.
 
-    Hint Rewrite share_commute.
-  
-  Inductive providers_always_encapsulate: Dependency -> Prop :=
-    yes: forall dep a b, dep.(Satisfies) a b -> dep.(Encapsulates) b a -> providers_always_encapsulate dep .
-  
+  (* Bad *)
+  Definition leaks_volatility (dep: Dependency): Prop :=
+    exists a b, dep.(Satisfies) a b \/ dep.(Uses) a b
+           -> VolatileStar dep b
+           -> separate_modules dep a b.
+
+  (* Bad *)
+  Definition cross_module_circular_use (dep : Dependency): Prop :=
+    exists a b, dep.(Uses) a b ->
+           dep.(Uses) b a ->
+           separate_modules dep a b.
+
+  (* Good *)
+  Definition no_circular_satisfaction (dep : Dependency): Prop :=
+    forall a b, dep.(Satisfies) a b ->
+           ~ dep.(Satisfies) b a.
+
+  (* Good *)
+  Definition satisfy_and_encapsulate_coupled (dep : Dependency): Prop :=
+    forall a b, dep.(Satisfies) a b -> dep.(Encapsulates) b a.
+
+  Hint Unfold separate_modules leaks_volatility
+       cross_module_circular_use no_circular_satisfaction satisfy_and_encapsulate_coupled.
+
+  (* Good *)
   Definition modular (dep : Dependency): Prop :=
-    ~ cross_module_circularity dep /\
-    ~ use_and_satisfy dep /\
-    providers_always_encapsulate dep /\
-    ~ has_circular_deps dep.
+    no_circular_satisfaction dep
+    /\ satisfy_and_encapsulate_coupled dep
+    /\ ~ cross_module_circular_use dep
+    /\ ~ leaks_volatility dep.
+
+  Lemma separate_commute : forall d a b, separate_modules d a b -> separate_modules d b a.
+  Proof.
+    unfold separate_modules.
+    eauto.
+  Qed.      
 
   Unset Printing Projections.
 
