@@ -24,7 +24,7 @@ Definition uses (a b: kwicParameter) : Prop :=
       | alph_data, (input_data | circ_data
                     | computer | corpus) => True
       | out_data, (computer | corpus) => True
-      | master, user => True
+      | master, (user | input_type | circ_type | alph_type | out_type) => True
       | _, _ => False
   end.
 
@@ -112,7 +112,6 @@ Inductive uses : kwicParameter -> kwicParameter -> Prop :=
      | uses_alphDS_lineType: uses alph_data line_type
      | uses_alphAlg_lineType: uses alph_alg line_type
      | uses_outAlg_lineType: uses out_alg line_type.
-
 
 Inductive satisfies: kwicParameter -> kwicParameter -> Prop :=
     | satisfies_lineDS_lineType: satisfies line_data line_type
