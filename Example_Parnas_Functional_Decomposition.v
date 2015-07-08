@@ -37,15 +37,8 @@ Definition satisfies (a b: kwicParameter) : Prop :=
       | _, _ => False
   end.
 
-Definition encapsulates (a b : kwicParameter) : Prop :=
-  match a, b with
-    | input_type, input_alg => True
-    | circ_type, circ_alg => True
-    | alph_type, alph_alg => True
-    | out_type, out_alg => True
-    | _, _ => False
-  end.
-
+Definition encapsulates (a b : kwicParameter) : Prop := False.
+  
 Definition kwic_volatile (p : kwicParameter): Prop :=
   match p with
     | corpus => True
@@ -78,21 +71,10 @@ Proof.
   intros.
   inversion H.
   inversion H1.
-  inversion H3.
-  apply H4.
-  unfold cross_module_circular_use.
-  exists circ_data, input_data.
-  clear; intros.
-  unfold Uses in *. simpl in *.
-  unfold separate_modules.
-  intros.
-  destruct m1, m2.
-  inversion H1; inversion H2.
-  inversion H5; inversion H6; subst.
-  contradiction.
-  inversion H5
-  
-
+  unfold satisfy_and_encapsulate_coupled in H2.
+  unfold Satisfies in *. simpl in *.
+  destruct H2 with (a := input_alg) (b := input_type).
+  simpl. exact I.
 Qed.
 
 End ExampleOne.
@@ -123,27 +105,6 @@ Inductive uses : kwicParameter -> kwicParameter -> Prop :=
      | uses_master_circType: uses master circ_type
      | uses_master_alphType: uses master alph_type
      | uses_master_outType: uses master out_type
-     | uses_lineDS_computer: uses line_data computer
-     | uses_inputDS_computer: uses input_data computer
-     | uses_circDS_computer: uses circ_data computer
-     | uses_alphDS_computer: uses alph_data computer
-     | uses_outDS_computer: uses out_data computer
-     | uses_lineDS_corpus: uses line_data corpus
-     | uses_inputDS_corpus: uses input_data corpus
-     | uses_circDS_corpus: uses circ_data corpus
-     | uses_alphDS_corpus: uses alph_data corpus
-     | uses_outDS_corpus: uses out_data corpus
-     | uses_lineAlg_computer: uses line_alg computer
-     | uses_alphAlg_computer: uses alph_alg computer
-     | uses_outAlg_computer: uses out_alg computer
-     | uses_lineAlg_corpus: uses line_alg corpus
-     | uses_inputAlg_corpus: uses input_alg corpus
-     | uses_circAlg_corpus: uses circ_alg corpus
-     | uses_alphAlg_corpus: uses alph_alg corpus
-     | uses_outAlg_corpus: uses out_alg corpus
-     | uses_inputAlg_user: uses input_alg user
-     | uses_circAlg_user: uses circ_alg user
-     | uses_alphAlg_user: uses alph_alg user
      | uses_master_user: uses master user
      | uses_inputAlg_lineType: uses input_alg line_type
      | uses_circDS_lineType: uses circ_data line_type
@@ -172,26 +133,34 @@ Inductive encapsulates: kwicParameter -> kwicParameter -> Prop :=
     | encapsulates_alphType_alphDS: encapsulates alph_type alph_data
     | encapsulates_outType_outDS: encapsulates out_type out_data
     | encapsulates_lineType_lineAlg: encapsulates line_type line_alg
+    | encapsulates_lineType_lineData: encapsulates line_type line_data
     | encapsulates_inputType_inputAlg: encapsulates input_type input_alg
     | encapsulates_circType_circAlg: encapsulates circ_type circ_alg
     | encapsulates_alphType_alphAlg: encapsulates alph_type alph_alg
     | encapsulates_outType_outAlg: encapsulates out_type out_alg.
 
+Definition in_mod := {| name := "Input";
+      elements := [input_data; input_alg; input_type]|}.
+Definition line_mod := {| name := "Line";
+       elements := [line_data; line_alg; line_type]|}.
+Definition circ_mod := {| name := "Circular";
+       elements := [circ_data; circ_alg; circ_type]|}.
+Definition alph_mod := {| name := "Alphabetizer";
+       elements := [alph_data; alph_alg; alph_type]|}.
+Definition out_mod := {| name := "Output";
+       elements := [out_data; out_alg; out_type]|}.
+Definition env_mod := {| name := "Environment";
+       elements := [user; computer; corpus; master]|}.
+
 Definition kwic_modules : list (@Module kwicParameter) :=
-  [{| name := "Input";
-      elements := [input_data; input_alg]|};
-    {| name := "Circular";
-       elements := [circ_data; circ_alg]|};
-    {| name := "Alphabetizer";
-       elements := [alph_data; alph_alg]|};
-    {| name := "Output";
-       elements := [out_data; out_alg]|}].
+  [in_mod; line_mod; circ_mod; alph_mod; out_mod; env_mod].
 
 Definition kwic_volatile (p : kwicParameter): Prop :=
   match p with
     | corpus => True
     | computer => True
     | user => True
+    | master => True
     | _ => False
   end.
 
@@ -203,30 +172,72 @@ Definition kwic_dependency := {|
                                  Encapsulates:= encapsulates
                                |}.
 
-(* Hint Unfold modular separate_modules leaks_volatility *)
-(*      cross_module_circular_use circular_satisfaction satisfy_and_encapsulate_coupled. *)
+Hint Unfold separate_modules hides_volatility
+     no_cross_module_circular_use no_circular_satisfaction satisfy_and_encapsulate_coupled.
 
 Theorem modular_kwic_2 : modular kwic_dependency.
 Proof.
   unfold modular.
   split.
   (* No Circular Satisfies *)
-  unfold not, circular_satisfaction.
-  intros; destruct H; destruct H.
-  unfold Satisfies in H.
-  simpl in H.
-  destruct x, x0. 
-
-
-  
-
-
+  unfold not, no_circular_satisfaction.
+  intros.
+  inversion H; subst; unfold not; unfold Satisfies in *; simpl in *; intros;
+  match goal with
+      | [ H : satisfies ?a ?b |- _] => inversion H
+  end.
+  split.
   (* Satisfy and Encapsulate Coupled *)
-
-  (* No Cross Module Circular Use *)
+  unfold satisfy_and_encapsulate_coupled; intros.
+  inversion H; subst; unfold not; unfold Encapsulates in *; simpl in *; intros;
+  repeat constructor.
 
   (* No leak volatility *)
+  unfold hides_volatility. intros.
+  unfold not, separate_modules. intros.
 
-Abort.
+  unfold Satisfies in H; simpl in H.
+  destruct H.
+  destruct a, b; inversion H.
+  inversion H0; subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+  inversion H0. subst. inversion H1. inversion H2. inversion H2.
+
+  destruct H.
+  exists env_mod; split; simpl; auto.
+  exists env_mod; split; simpl; auto.
+  exists env_mod; split; simpl; auto.
+  exists line_mod; split; simpl; auto.
+  exists line_mod; split; simpl; auto.
+  exists in_mod; split; simpl; auto.
+  exists in_mod; split; simpl; auto.
+  exists circ_mod; split; simpl; auto.
+  exists circ_mod; split; simpl; auto.
+  exists alph_mod; split; simpl; auto.
+  exists alph_mod; split; simpl; auto.
+  exists out_mod; split; simpl; auto.
+  exists out_mod; split; simpl; auto.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+
+  exists env_mod; split; simpl; auto.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+  inversion H0. inversion H. inversion H1. inversion H1.
+
+Qed.
 
 End ExampleTwo.

@@ -42,17 +42,17 @@ Section Dependency.
              -> inModule m2 b
              -> m1 <> m2.
 
-  (* Bad *)
-  Definition leaks_volatility (dep: Dependency): Prop :=
-    exists a b, dep.(Satisfies) a b \/ dep.(Uses) a b
+  (* Good *)
+  Definition hides_volatility (dep: Dependency): Prop :=
+    forall a b, dep.(Satisfies) a b \/ dep.(Uses) a b
            -> VolatileStar dep b
-           -> separate_modules dep a b.
+           -> exists m, (inModule m a /\ inModule m b).
 
-  (* Bad *)
-  Definition cross_module_circular_use (dep : Dependency): Prop :=
-    exists a b, dep.(Uses) a b ->
+  (* Good *)
+  Definition no_cross_module_circular_use (dep : Dependency): Prop :=
+    forall a b, dep.(Uses) a b ->
            dep.(Uses) b a ->
-           separate_modules dep a b.
+           ~ separate_modules dep a b.
 
   (* Good *)
   Definition no_circular_satisfaction (dep : Dependency): Prop :=
@@ -63,15 +63,12 @@ Section Dependency.
   Definition satisfy_and_encapsulate_coupled (dep : Dependency): Prop :=
     forall a b, dep.(Satisfies) a b -> dep.(Encapsulates) b a.
 
-  Hint Unfold separate_modules leaks_volatility
-       cross_module_circular_use no_circular_satisfaction satisfy_and_encapsulate_coupled.
 
   (* Good *)
   Definition modular (dep : Dependency): Prop :=
     no_circular_satisfaction dep
     /\ satisfy_and_encapsulate_coupled dep
-    /\ ~ cross_module_circular_use dep
-    /\ ~ leaks_volatility dep.
+    /\ hides_volatility dep.
 
   Lemma separate_commute : forall d a b, separate_modules d a b -> separate_modules d b a.
   Proof.
