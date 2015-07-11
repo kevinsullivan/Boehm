@@ -1,5 +1,8 @@
 Require Export System.
 Require Export Changeable.
+Require Export DesignStructure.
+Require Import List.
+Import ListNotations.
 
 Inductive CarStakeholders := manufacturer | dealer | owner | driver | passenger | mechanic | ai.
 
@@ -27,17 +30,64 @@ Inductive OilCondition := mk_oil_condition {
 Inductive Location := l_home | l_away.
 
 Inductive TireInflation := tire_full | tire_low | tire_empty | tire_punctured.
+
+Record ArtifactState : Set :=
+  {
+    oilState : OilCondition;
+    tireState : TireInflation;
+    location : Location }.
+
+Inductive car_params := interior | exterior | engine | fuel_intake | chassis | wheel_axel.
+
+Definition uses (p1 p2: car_params): Prop :=
+  match p1, p2 with
+      | engine, wheel_axel => True
+      | engine, fuel_intake => True
+      | _, _ => False
+  end.
+
+Definition satisfies (p1 p2: car_params): Prop :=
+  False.
+
+Definition encapsulates (p1 p2: car_params): Prop :=
+  False.
+
+Definition volatile (p: car_params): Prop :=
+  match p with
+      | interior => True
+      | _ => False
+  end.
+
+Definition engine_module := {| elements := [engine; fuel_intake; wheel_axel]; name := "moves car" |}.
+Definition interior_module := {| elements := [interior]; name := "interior" |}.
+
+Definition modules: list (@Module car_params) := [engine_module; interior_module].
+
+Definition car_dep: Dependency :=
+  {| Modules := modules;
+     Uses := uses;
+     Satisfies := satisfies;
+     Encapsulates := encapsulates;
+     Volatile := volatile |}.
+
+Inductive car_dep_type :=
+  | mk_car_dep : forall d: Dependency, d = car_dep -> car_dep_type.
+
+Definition extract_dep cdt :=
+  match cdt with
+      | mk_car_dep d _ => d
+  end.
+
 Inductive Car := mk_car { 
-  oilState: OilCondition;
-  tireState: TireInflation;
-  location: Location 
-}.
+                     car_artifact: ArtifactState;
+                     car_design: car_dep_type
+                   }.
 
 Definition CarSystemType := mk_system_type CarContexts CarStakeholders CarPhases Car CarValue.
 
 (**
 Abbreviations for writing propositions, assertions, actions.
-*)
+ *)
 
 Definition CarSystemState := @SystemInstance CarSystemType.
 
@@ -47,13 +97,15 @@ Definition CarAction := @Action CarSystemType.
 
 (**
 Useful propositions
-*)
+ *)
 
-Definition oilLow (cs: CarSystemState): Prop := (oilFullness (oilState (artifact cs))) = oil_low.
-Definition oilFull (cs: CarSystemState): Prop := (oilFullness (oilState (artifact cs))) = oil_full.
-Definition oilClean (cs: CarSystemState): Prop := (oilCleanliness (oilState (artifact cs))) = oil_clean.
-Definition oilDirty (cs: CarSystemState): Prop := (oilCleanliness (oilState (artifact cs))) = oil_dirty.
-Definition atHome (cs: CarSystemState): Prop := (location (artifact cs) = l_home).
+Definition isModular (cs: CarSystemState): Prop := modular (extract_dep (car_design (artifact cs))).
+
+Definition oilLow (cs: CarSystemState): Prop := (oilFullness (oilState (car_artifact (artifact cs)))) = oil_low.
+Definition oilFull (cs: CarSystemState): Prop := (oilFullness (oilState (car_artifact (artifact cs)))) = oil_full.
+Definition oilClean (cs: CarSystemState): Prop := (oilCleanliness (oilState (car_artifact (artifact cs)))) = oil_clean.
+Definition oilDirty (cs: CarSystemState): Prop := (oilCleanliness (oilState (car_artifact (artifact cs)))) = oil_dirty.
+Definition atHome (cs: CarSystemState): Prop := (location (car_artifact (artifact cs)) = l_home).
 Definition inOwnershipPhase (cs: CarSystemState) := Prop = ((phase cs) = ownership).
 
 Definition oilLowState: CarAssertion   := fun cs: CarSystemState => oilLow cs.
@@ -67,18 +119,18 @@ Definition atHomeState: CarAssertion   := fun cs: CarSystemState => atHome cs.
 (**
 The changeOil action yields a full tank of clean oil and makes no other changes.
 We should FIX the failure to update the cost.
-*)
+ *)
 
 Definition ownerChangeOil: CarAction := 
-    fun cs: CarSystemState => 
-      mk_system CarSystemType 
-        (context cs)
-        (phase cs)
-        (mk_car 
-          (mk_oil_condition oil_clean oil_full) 
-          (tireState (artifact cs)) 
-          (location (artifact cs)))
-        (value cs).
+  fun cs: CarSystemState => 
+    mk_system CarSystemType 
+              home 
+              ownership
+              {| car_artifact := {|  oilState := {| oilCleanliness := oil_clean; oilFullness := oil_full|};
+                                     tireState := (tireState (car_artifact (artifact cs)));
+                                     location := (location (car_artifact (artifact cs)))|};
+                 car_design := mk_car_dep car_dep eq_refl|}
+              (value cs).
 
 (*
 
@@ -96,4 +148,4 @@ Definition initCar: SystemInstance :=
       l_home)
     (mk_car_value 0 0 0 0).
 
-*)
+ *)

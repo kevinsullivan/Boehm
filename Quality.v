@@ -22,6 +22,11 @@ Inductive Accurate (sys_type: SystemType): Prop :=
       forall c: Contexts sys_type, forall p: Phases sys_type, forall s: Stakeholders sys_type, forall st: @SystemInstance sys_type, accurate c p s st) ->
         Accurate sys_type.
 
+(* Inductive Accurate (sys_type: SystemType): Prop := *)
+(*   satisfiesAccuracyRequirements: *)
+(*     (exists accurate: SystemInstance sys_type -> Prop, forall sys: SystemInstance sys_type, accurate sys) -> *)
+(*         Accurate sys_type. *)
+
 Inductive PhysicalCapable (sys_type: SystemType) : Prop :=
   satisfiesPhysicalCapabilityRequirements:
     (exists physicalCapable: Contexts sys_type -> Phases sys_type -> Stakeholders sys_type -> @SystemInstance sys_type -> Prop, 

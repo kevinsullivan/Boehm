@@ -1,11 +1,11 @@
 (** * System Model *)
 
 Record SystemType := mk_system_type {
-  Contexts: Set;
-  Stakeholders: Set;
+  Contexts: Type;
+  Stakeholders: Type;
   Phases: Set;
-  ArtifactType: Set;
-  ValueType: Set
+  ArtifactType: Type;
+  ValueType: Type
 }.
 
 (**
@@ -17,7 +17,7 @@ rather someone or something that could effect a change or be affected by
 one.
 *)
 
-Inductive SystemInstance {sys_type: SystemType}: Type := mk_system {
+Inductive SystemInstance {sys_type: SystemType} : Type := mk_system {
     context: (Contexts sys_type)
   ; phase: (Phases sys_type)
   ; artifact: (ArtifactType sys_type)
