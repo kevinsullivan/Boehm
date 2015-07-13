@@ -1,4 +1,3 @@
-Require Export System.
 Require Export Changeable.
 Require Export DesignStructure.
 Require Import List.
@@ -63,15 +62,14 @@ Definition interior_module := {| elements := [interior]; name := "interior" |}.
 
 Definition modules: list (@Module car_params) := [engine_module; interior_module].
 
-Definition car_dep: Dependency :=
+Definition car_dep: DesignStructure :=
   {| Modules := modules;
      Uses := uses;
      Satisfies := satisfies;
-     Encapsulates := encapsulates;
      Volatile := volatile |}.
 
 Inductive car_dep_type :=
-  | mk_car_dep : forall d: Dependency, d = car_dep -> car_dep_type.
+  | mk_car_dep : forall d: DesignStructure, d = car_dep -> car_dep_type.
 
 Definition extract_dep cdt :=
   match cdt with

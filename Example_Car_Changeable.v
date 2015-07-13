@@ -58,7 +58,8 @@ Theorem car_modularity_certificate : modular car_dep.
     split.
     unfold no_circular_satisfaction. intuition.
     split.
-    unfold satisfy_and_encapsulate_coupled. intuition.
+    unfold no_cross_module_circular_use. intuition.
+    simpl in *. destruct a; try inversion H. destruct b; inversion H0.
     unfold hides_volatility. intros.
     destruct H.
     inversion H.

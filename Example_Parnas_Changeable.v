@@ -26,7 +26,6 @@ Definition inputFormatChangeActionSpec (trigger: KWICAssertion) (agent: KWICStak
 This theorem and proof show that the [customerChangeImputFormat] function as 
 defined here does satsify this specification.
 *)
-Require Import LibTactics.
 Require Import Omega.
 
 Theorem verifyChangeInputFormat: ActionSatisfiesActionSpec (inputFormatChangeActionSpec inputFormatOneState customer)  customerChangeImputFormat.
@@ -34,11 +33,9 @@ Proof.
 unfold ActionSatisfiesActionSpec.
 intros.
 unfold inputFormatChangeActionSpec.
-jauto_set.
+intuition.
 unfold inputFormatAnother; auto.
-simpl; omega.
 Qed.
-
 
 (**
 Now we write the [changebility] plug-in to the Boehm framework.

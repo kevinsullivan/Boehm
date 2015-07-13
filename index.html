@@ -77,7 +77,7 @@ path.link {
 	// root.children.forEach(toggleAll);
 	
 	// Turn off Ross
-	toggle(root.children[0].children[1]);
+	<!-- toggle(root.children[0].children[1]); -->
 	update(root);
 	});
 
@@ -191,7 +191,13 @@ path.link {
 	}
 
 	function openDocs(d) {
-        window.open("./html/" + d.name + ".html");
+	  if (d.name == "Extended-Ross-Language") {
+             window.open("./html/Top.Changeable.html");
+	  } else if (d.name == "DesignStructure") {
+	    window.open("./html/Top.DesignStructure.html");
+	  } else {
+            window.open("./html/Top.Quality.html");
+	  }
 	toggle(d);
 	}
 
