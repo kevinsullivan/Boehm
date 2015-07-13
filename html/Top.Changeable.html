@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Top.Changeable</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Top.Changeable</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">System</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <span class="id" title="var">Changeable</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="variable">sys_type</span>:</span> <span class="inlinecode"><span class="id" title="record">SystemType</span></span> is an implicit parameter of definitions in this section.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">sys_type</span> : <span class="id" title="var">SystemType</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+An <span class="inlinecode"><span class="id" title="definition">Assertion</span></span> represents a property of system instance states.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">Assertion</span> := @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+
+<div class="paragraph"> </div>
+
+An <span class="inlinecode"><span class="id" title="definition">Action</span></span> represents a function that transforms on system 
+instance state to another. Currently we don't have a way to
+represent additional parameters of such operations.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">Action</span> := @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+An <span class="inlinecode"><span class="id" title="definition">ActionSpec</span></span> represents a relation between system instance
+states. We use these objects to represent specifications that
+Actions must satisfy.
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">ActionSpec</span> := @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="definition">ChangeSpec</span></span> is currently unused. It's here on a possible path to 
+a common signature/type for all Ross-style change specifications.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">ChangeSpec</span> := <span class="id" title="var">Assertion</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="definition">ActionSatisfiesActionSpec</span></span> returns a proposition stating that an 
+action satisfies a given specification.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">ActionSatisfiesActionSpec</span> (<span class="id" title="var">act_spec</span>: <span class="id" title="var">ActionSpec</span>) (<span class="id" title="var">act</span>: <span class="id" title="var">Action</span>): <span class="id" title="keyword">Prop</span> := <br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">act_spec</span> <span class="id" title="var">s</span> (<span class="id" title="var">act</span> <span class="id" title="var">s</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="inductive">Changeable</span></span> is the leaf node in our Boehm-style means-ends hierarchy.
+A proof of a <span class="inlinecode"><span class="id" title="inductive">Changeable</span></span> proposition requires a proof, for all contexts,
+phases, and stakeholders, of whatever proposition, parameterized by those
+values, the user of this overall framework plugs in. 
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Changeable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesChangeabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">changeable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">changeable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Changeable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Constructors</span> <span class="id" title="var">Changeable</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <span class="id" title="var">Changeable</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

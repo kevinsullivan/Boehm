@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Top.Example_Parnas</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Top.Example_Parnas</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab2"></a><h1 class="section">KWIC System</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">System</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Changeable</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab3"></a><h2 class="section">Context</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">KWICContexts</span> := <span class="id" title="var">nominal</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab4"></a><h2 class="section">Phase</h2>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="inductive">KWICPhases</span></span> represents the lifecycle phases of a software system.
+
+<div class="paragraph"> </div>
+
+ design, implementation and maintenance are talked about in the paper
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">KWICPhases</span> := <span class="id" title="var">requirements</span> | <span class="id" title="var">design</span> | <span class="id" title="var">implementation</span> | <span class="id" title="var">testing</span> | <span class="id" title="var">deployment</span> | <span class="id" title="var">maintenance</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab5"></a><h2 class="section">Stakeholder</h2>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="inductive">KWICStakeholders</span></span> represents the set of potential system change agents
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">KWICStakeholders</span> :=  <span class="id" title="var">developer</span> | <span class="id" title="var">customer</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab6"></a><h2 class="section">Value for measuring cost-benefit</h2>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="record">KWICValue</span></span> is a framework for quantifying time, money, and other
+elements of value that can be gained or lost as a result of a change.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">KWICValue</span> := <span class="id" title="var">mkValue</span> { <br/>
+&nbsp;&nbsp;<span class="id" title="var">linesOfCode</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">modules</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">interfaces</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">developers</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">dollars</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">memory</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">space</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">runtime</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfaction</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">developmentTime</span>: <span class="id" title="var">nat</span><br/>
+}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab7"></a><h2 class="section">Design decisions that are likely to change</h2>
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+There are a number of design decisions which are questionable and likely to change under many circumstances.
+This a partial list.
+
+<div class="paragraph"> </div>
+
+ Input format 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">InputFormat</span> := <span class="id" title="var">input_format_one</span> | <span class="id" title="var">input_format_another</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+
+<div class="paragraph"> </div>
+
+The decision to have all lines stored in core. For large jobs it may prove inconvenient or imppractical to keep
+all of the lines in core at any one time.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">LineStorage</span> := <span class="id" title="var">line_storage_all_in_core</span> | <span class="id" title="var">line_storage_partial_in_core</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The desicion to pack the characters four to a word. In cases where we are working with small amounts of data 
+it may prove undesirable to pack the characters; time will be saved by a character per word layout. In other cases,
+we may pack, but in different formats.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">WordPack</span> := <span class="id" title="var">word_pack_four</span> | <span class="id" title="var">word_pack_none</span> | <span class="id" title="var">word_pack_diff_format</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The decision to make an index for the circular shifts rather that actually store them as such. Again for a small index 
+or a large core, writing them out may be the preferable approach.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">CircularShifter</span> := <span class="id" title="var">circular_shift_with_index</span> | <span class="id" title="var">circular_shift_without_index</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The desicion to alphabetize the list once, rather than either(a) search for each item when needed, or (b) partially alphabetize
+as is done in Hoare's FIND. In a number of circumstance it would be advantageous to distribute the computation involved in 
+alphabetization over the time required to produce the index.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Alphabetizer</span> := <span class="id" title="var">alphabetize_once</span> | <span class="id" title="var">search_when_needed</span> | <span class="id" title="var">alphabetize_partially</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let us revisit the issue of design decisions VS changes of customer requirements
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">KWIC</span> := <span class="id" title="var">mk_kwic</span> { <br/>
+<br/>
+&nbsp;&nbsp;<span class="id" title="var">interactivePerformance</span>: <span class="id" title="var">bool</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">inputFormat</span>: <span class="id" title="var">InputFormat</span>;<br/>
+<br/>
+&nbsp;&nbsp;<span class="id" title="var">lineStorage</span>: <span class="id" title="var">LineStorage</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">wordPack</span>: <span class="id" title="var">WordPack</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">circularShifter</span>: <span class="id" title="var">CircularShifter</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">alphabetizer</span>: <span class="id" title="var">Alphabetizer</span><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">KWICSystemType</span> := <span class="id" title="var">mk_system_type</span> <span class="id" title="var">KWICContexts</span> <span class="id" title="var">KWICStakeholders</span> <span class="id" title="var">KWICPhases</span> <span class="id" title="var">KWIC</span> <span class="id" title="var">KWICValue</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Abbreviations for writing propositions, assertions, actions.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">KWICSystemState</span> := @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">KWICAssertion</span> := @<span class="id" title="var">Assertion</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">KWICAction</span> := @<span class="id" title="var">Action</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab8"></a><h1 class="section">Useful propositions</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inputFormatOne</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">inputFormat</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">input_format_one</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inputFormatAnother</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">inputFormat</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">input_format_another</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">LineStorageAllInCore</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">lineStorage</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">line_storage_all_in_core</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">LineStoragePartialInCore</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">lineStorage</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">line_storage_partial_in_core</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">WordPackFour</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">wordPack</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">word_pack_four</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">WordPackNone</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">wordPack</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">word_pack_none</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">WordPackDiffFormat</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">wordPack</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">word_pack_diff_format</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CircularShifterWithIndex</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">circularShifter</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">circular_shift_with_index</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CircularShifterWithoutIndex</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">circularShifter</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">circular_shift_without_index</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">AlphabetizeOnce</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">alphabetizer</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">alphabetize_once</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">SearchWhenNeeded</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">alphabetizer</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) = <span class="id" title="var">search_when_needed</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">AlphabetizePartially</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">alphabetizer</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) =  <span class="id" title="var">alphabetize_partially</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inMaintenancePhase</span> (<span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">phase</span> <span class="id" title="var">ks</span>) = <span class="id" title="var">maintenance</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab9"></a><h3 class="section">States</h3>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inputFormatOneState</span>: <span class="id" title="var">KWICAssertion</span>   := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">inputFormatOne</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inputFormatAnotherState</span>: <span class="id" title="var">KWICAssertion</span>  := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">inputFormatAnother</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">LineStorageAllInCoreState</span>: <span class="id" title="var">KWICAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">LineStorageAllInCore</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">LineStoragePartialInCoreState</span>: <span class="id" title="var">KWICAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">LineStoragePartialInCore</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">WordPackFourState</span>: <span class="id" title="var">KWICAssertion</span>   := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">WordPackFour</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">WordPackNoneState</span>: <span class="id" title="var">KWICAssertion</span>  := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">WordPackNone</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">WordPackDiffFormatState</span>: <span class="id" title="var">KWICAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">WordPackDiffFormat</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CircularShifterWithIndexState</span>: <span class="id" title="var">KWICAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">CircularShifterWithIndex</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CircularShifterWithoutIndexState</span>: <span class="id" title="var">KWICAssertion</span>   := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">CircularShifterWithoutIndex</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">AlphabetizeOnceState</span>: <span class="id" title="var">KWICAssertion</span>  := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">AlphabetizeOnce</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">SearchWhenNeededState</span>: <span class="id" title="var">KWICAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">SearchWhenNeeded</span> <span class="id" title="var">ks</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">AlphabetizePartiallyState</span>: <span class="id" title="var">KWICAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span>⇒ <span class="id" title="var">AlphabetizePartially</span> <span class="id" title="var">ks</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">customerChangeImputFormat</span>: <span class="id" title="var">KWICAction</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">ks</span>: <span class="id" title="var">KWICSystemState</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">mk_system</span> <span class="id" title="var">KWICSystemType</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">context</span> <span class="id" title="var">ks</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">phase</span> <span class="id" title="var">ks</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">mk_kwic</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">interactivePerformance</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">input_format_another</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">lineStorage</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">wordPack</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">circularShifter</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">alphabetizer</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">ks</span>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">value</span> <span class="id" title="var">ks</span>).<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

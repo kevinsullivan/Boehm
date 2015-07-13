@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Top.Quality</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Top.Quality</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">System</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Changeable</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Mission Effective 
+<div class="paragraph"> </div>
+
+In the following definition, <span class="inlinecode"><span class="id" title="inductive">MissionEffective</span></span> is parameterized by three typeclasses,
+<span class="inlinecode"><span class="id" title="library">System</span></span>, <span class="inlinecode"><span class="id" title="var">Stakeholder</span></span>, and <span class="inlinecode"><span class="id" title="keyword">Context</span></span>, a system, sys, of type <span class="inlinecode"><span class="id" title="library">System</span></span>, and sevaral ternary
+relations over <span class="inlinecode"><span class="id" title="library">System</span></span>, <span class="inlinecode"><span class="id" title="keyword">Context</span></span>, and/or <span class="inlinecode"><span class="id" title="var">Stakeholder</span></span>.
+Those ternary relations are associated with its sub-attributes. For example, physicalCapability is a ternary relation,
+which is to say, a set of triples, (s, sh, c), between a system, s, a stakeholder, sh, and a context, c,
+that we expect to hold (for the proposition to be provable, iff system s satisfies its mission effective
+requirement (which isn't represented explicitly here) in context, c.)
+
+<div class="paragraph"> </div>
+
+Its definition indicates that the property of a <span class="inlinecode"><span class="id" title="library">System</span></span> being <span class="inlinecode"><span class="id" title="inductive">MissionEffective</span></span> for all <span class="inlinecode"><span class="id" title="projection">Contexts</span></span>, the system is
+mission effective implicitly for all <span class="inlinecode"><span class="id" title="projection">Stakeholders</span></span> in those <span class="inlinecode"><span class="id" title="projection">Contexts</span></span>, only if all the requirements of the subattributes
+are satisfied.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Accurate</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesAccuracyRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">accurate</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">accurate</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Accurate</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">PhysicalCapable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesPhysicalCapabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">physicalCapable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">physicalCapable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">PhysicalCapable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">CyberCapable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesCyberCapabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">cyberCapable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">cyberCapable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">CyberCapable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">HumanUsable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesHumanUsabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">humanUsable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">humanUsable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">HumanUsable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Speed</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesSpeedRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">speed</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">speed</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Speed</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Endurable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesEndurabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">endurable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">endurable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Endurable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Maneuverable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesManeuverabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">maneuverable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">maneuverable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Maneuverable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Impactful</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesImpactRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">impactful</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">impactful</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Impactful</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Scalable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesScalabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">scalable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">scalable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Scalable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Versatile</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesVersatilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">versatile</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">versatile</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Versatile</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Interoperable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesInteroperabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">interoperable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">interoperable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Interoperable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">MissionEffective</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesMissionEffectivenessPrerequisites</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">PhysicalCapable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">CyberCapable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">HumanUsable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Speed</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Endurable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Maneuverable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Accurate</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Impactful</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Scalable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Versatile</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Interoperable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">MissionEffective</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Efficient 
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="inductive">Efficient</span></span> is parameterized by a <span class="inlinecode"><span class="id" title="library">System</span></span> type, a <span class="inlinecode"><span class="id" title="keyword">Context</span></span> type,
+an instance of type <span class="inlinecode"><span class="id" title="library">System</span></span>, and sevaral binary relations over <span class="inlinecode"><span class="id" title="library">System</span></span> and <span class="inlinecode"><span class="id" title="keyword">Context</span></span>
+representing the relationship between the given <span class="inlinecode"><span class="id" title="library">System</span></span> set, <span class="inlinecode"><span class="id" title="keyword">Context</span></span> set, and some
+constituent attribute. The constituent attributes of <span class="inlinecode"><span class="id" title="var">Efficiency</span></span> are
+the things it uses efficiently and whether it can be produced and maintained efficiently.
+(Note: We have soon see cause to split these up - they aren't really very similar)
+
+<div class="paragraph"> </div>
+
+The constituent attributes are given by binary relations represent the given system type's ability to satisfy
+the specified requirement in the given context.
+
+<div class="paragraph"> </div>
+
+Informally, in English:
+A system <span class="inlinecode"><span class="id" title="var">sys</span></span> belonging to the set of systems <span class="inlinecode"><span class="id" title="library">System</span></span> is deemed <span class="inlinecode"><span class="id" title="inductive">Efficient</span></span> given the set of contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span>
+if and only if all the requirements of its sub-attributes are satisfied given the same conditions.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Cost</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesCostRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">cost</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">cost</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Cost</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Duration</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesDurationRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">duration</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">duration</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Duration</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">KeyPersonnel</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesKeyPersonnelRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">keyPersonnel</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">keyPersonnel</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">KeyPersonnel</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">OtherScarceResources</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesOtherResourcesRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">otherScarceResources</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">otherScarceResources</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">OtherScarceResources</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Manufacturable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesManufacturabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">manufacturable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">manufacturable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Manufacturable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Sustainable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesSustainabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">sustainable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">sustainable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Sustainable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Efficient</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesEfficiencyPrerequisites</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Cost</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Duration</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">KeyPersonnel</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">OtherScarceResources</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Manufacturable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Sustainable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Efficient</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Affordable 
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="var">Affordability</span></span> is a composite attribute of <span class="inlinecode"><span class="id" title="inductive">MissionEffective</span></span> and <span class="inlinecode"><span class="id" title="inductive">Efficient</span></span>.
+A system is <span class="inlinecode"><span class="id" title="inductive">Affordable</span></span> only if it meets the requirements of both <span class="inlinecode"><span class="id" title="inductive">MissionEffective</span></span> and <span class="inlinecode"><span class="id" title="inductive">Efficient</span></span>.
+
+<div class="paragraph"> </div>
+
+Informally,
+A system <span class="inlinecode"><span class="id" title="var">sys</span></span> belonging to the set of systems <span class="inlinecode"><span class="id" title="library">System</span></span> is deemed <span class="inlinecode"><span class="id" title="inductive">Affordable</span></span> for all stakeholders
+in set <span class="inlinecode"><span class="id" title="var">Stakeholder</span></span> given the set of phases and contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span> and <span class="inlinecode"><span class="id" title="var">Phase</span></span> if and only if all the
+requirements of its sub-attributes (<span class="inlinecode"><span class="id" title="inductive">MissionEffective</span></span>, and <span class="inlinecode"><span class="id" title="inductive">Efficient</span></span>) are satisfied given
+the same conditions. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Affordable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesAffordabilityPrerequisites</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">MissionEffective</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Efficient</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Affordable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Dependable 
+<div class="paragraph"> </div>
+
+<span class="inlinecode"><span class="id" title="inductive">Dependable</span></span> is a composite attribute of <span class="inlinecode"><span class="id" title="var">Security</span></span>, <span class="inlinecode"><span class="id" title="var">Safety</span></span>, <span class="inlinecode"><span class="id" title="var">Reliability</span></span>, ..., and <span class="inlinecode"><span class="id" title="var">Robustness</span></span>.
+
+<div class="paragraph"> </div>
+
+Informally, 
+A system <span class="inlinecode"><span class="id" title="var">sys</span></span> belonging to the set of systems <span class="inlinecode"><span class="id" title="library">System</span></span> is deemed <span class="inlinecode"><span class="id" title="inductive">Dependable</span></span> given the set of contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span>
+and phases <span class="inlinecode"><span class="id" title="var">Phase</span></span> if and only if all the requirements of its sub-attributes (<span class="inlinecode"><span class="id" title="var">Security</span></span>, <span class="inlinecode"><span class="id" title="var">Safety</span></span>, <span class="inlinecode"><span class="id" title="var">Reliability</span></span>,
+..., and <span class="inlinecode"><span class="id" title="var">Robustness</span></span>) are satisfied given the same conditions.
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Secure</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesSecurityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">secure</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">secure</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Secure</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Safe</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesSafetyRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">safe</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">safe</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Safe</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Reliable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesReliabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">reliable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">reliable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Reliable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Maintainable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesMaintainabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">maintainable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">maintainable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Maintainable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Available</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesAvailabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">available</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">available</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Available</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Survivable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesSurvivabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">survivable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">survivable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Survivable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Robust</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesRobustnessRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">robust</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">robust</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Robust</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Dependable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesDependabilityPrerequisites</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Secure</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Safe</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Reliable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Maintainable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Available</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Survivable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Robust</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Dependable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Flexible 
+<div class="paragraph"> </div>
+
+Boehm stipulates that, " ...The three means for achieving the end parent class of
+Flexibility are Modifiability, Tailorability, and Adaptability."
+
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+Informally, a system <span class="inlinecode"><span class="id" title="var">sys</span></span> of type <span class="inlinecode"><span class="id" title="library">System</span></span> is deemed to be <span class="inlinecode"><span class="id" title="inductive">Flexible</span></span> (i.e., to satisfy
+its flexibility requirements) for all stakeholders, contexts, and phases, if it satisfies its
+lower-level modifiability, tailorability, and adaptability requirements across this set of
+parameters.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Modifiable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesModifiabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">modifiable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">modifiable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Modifiable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Tailorable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesTailorabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">tailorable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">tailorable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Tailorable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Adaptable</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>) : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesAdaptabilityRequirements</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">adaptable</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span> → @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span> → <span class="id" title="keyword">Prop</span>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">c</span>: <span class="id" title="var">Contexts</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">p</span>: <span class="id" title="var">Phases</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">s</span>: <span class="id" title="var">Stakeholders</span> <span class="id" title="var">sys_type</span>, <span class="id" title="keyword">∀</span> <span class="id" title="var">st</span>: @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">sys_type</span>, <span class="id" title="var">adaptable</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span> <span class="id" title="var">st</span>) →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Adaptable</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Flexible</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>)<br/>
+: <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesFlexibilityPrerequisites</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Modifiable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Tailorable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Adaptable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Flexible</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Resilient 
+<div class="paragraph"> </div>
+
+Boehm stipulates that <span class="inlinecode"><span class="id" title="var">Resiliency</span></span> is a composite quality comprising <span class="inlinecode"><span class="id" title="var">Dependability</span></span>
+and <span class="inlinecode"><span class="id" title="var">Flexibility</span></span>. That is, a system can be deemed to be resilient across stakeholders,
+operational contexts, and lifecycle phases if it is deemed to be dependable and flexible in
+all these dimensions.
+
+<div class="paragraph"> </div>
+
+The definition we give here includes <span class="inlinecode"><span class="id" title="inductive">Changeable</span></span> as a sub-quality of resiliency, as
+well. We have inserted this node to illustrate how we can begin to combine Boehm's
+top-level taxonomy with quality-specific formal theories developed by others.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Resilient</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>)<br/>
+: <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">satisfiesResiliencyPrerequisites</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Dependable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Flexible</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Changeable</span> <span class="id" title="var">sys_type</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Resilient</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Satisfactory 
+<div class="paragraph"> </div>
+
+A given system <span class="inlinecode"><span class="id" title="var">sys</span></span> of type <span class="inlinecode"><span class="id" title="library">System</span></span> is satisfactory if, and only if, 
+for its given set of Stakeholders <span class="inlinecode"><span class="id" title="var">Stakeholder</span></span>, contexts <span class="inlinecode"><span class="id" title="keyword">Context</span></span>,
+and phases <span class="inlinecode"><span class="id" title="var">Phase</span></span>, it is both <span class="inlinecode"><span class="id" title="inductive">Affordable</span></span> and <span class="inlinecode"><span class="id" title="inductive">Resilient</span></span>.  These
+system qualities are themselves composites of lower-level system
+qualities, as detailed in their respective files.
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Satisfactory</span> (<span class="id" title="var">sys_type</span>: <span class="id" title="var">SystemType</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">meetsSatisfactoryRequirementss</span>: <span class="id" title="var">Affordable</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Resilient</span> <span class="id" title="var">sys_type</span> → <span class="id" title="var">Satisfactory</span> <span class="id" title="var">sys_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Constructors</span><br/>
+&nbsp;&nbsp;</div>
+
+<div class="doc">
+Composite 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="var">MissionEffective</span> <span class="id" title="var">Dependable</span> <span class="id" title="var">Flexible</span> <span class="id" title="var">Efficient</span> <span class="id" title="var">Affordable</span> <span class="id" title="var">Resilient</span> <span class="id" title="var">Satisfactory</span><br/>
+&nbsp;&nbsp;</div>
+
+<div class="doc">
+Contributing 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="var">Adaptable</span> <span class="id" title="var">PhysicalCapable</span> <span class="id" title="var">CyberCapable</span> <span class="id" title="var">HumanUsable</span> <span class="id" title="var">Speed</span> <span class="id" title="var">Endurable</span> <span class="id" title="var">Maneuverable</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Accurate</span> <span class="id" title="var">Impactful</span> <span class="id" title="var">Scalable</span> <span class="id" title="var">Versatile</span> <span class="id" title="var">Interoperable</span> <span class="id" title="var">Cost</span> <span class="id" title="var">Duration</span> <span class="id" title="var">KeyPersonnel</span> <span class="id" title="var">OtherScarceResources</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Manufacturable</span> <span class="id" title="var">Sustainable</span> <span class="id" title="var">Secure</span> <span class="id" title="var">Safe</span> <span class="id" title="var">Reliable</span> <span class="id" title="var">Maintainable</span> <span class="id" title="var">Available</span> <span class="id" title="var">Survivable</span> <span class="id" title="var">Robust</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Modifiable</span> <span class="id" title="var">Tailorable</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

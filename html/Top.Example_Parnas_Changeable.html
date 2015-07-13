@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Top.Example_Parnas_Changeable</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Top.Example_Parnas_Changeable</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Quality</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Value</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Example_Parnas</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">BoehmTactics</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="definition">inputFormatChangeActionSpec</span></span> expresses a Ross-style changeability requirement
+pertaining to system instances. We interpret this one as saying that 
+when the <span class="inlinecode"><span class="id" title="var">trigger</span></span> condition on a system instance state is true, then
+the <span class="inlinecode"><span class="id" title="variable">agent</span></span> should be able to perform an operation that satisfies the
+conditions formalized in the precondition/postcondition pair encoded 
+in the function body. This function returns a proposition, a proof of
+which shows that a given function does satisfy this condition. Here 
+the condition requires that agent be <span class="inlinecode"><span class="id" title="constructor">customer</span></span> and the KWIC system is 
+using <span class="inlinecode"><span class="id" title="constructor">input_format_one</span></span> and in the <span class="inlinecode"><span class="id" title="constructor">maintenance</span></span> phase of its lifecycle, 
+and if this is the case then a concrete operation must effect a transition
+to a new state in which the input format is another, no more than one module was 
+changed.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inputFormatChangeActionSpec</span> (<span class="id" title="var">trigger</span>: <span class="id" title="var">KWICAssertion</span>) (<span class="id" title="var">agent</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">pre</span> <span class="id" title="var">post</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span>  :=  <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">agent</span> = <span class="id" title="var">customer</span> ∧ <span class="id" title="var">inputFormatOne</span> <span class="id" title="var">pre</span> ∧ <span class="id" title="var">inMaintenancePhase</span> <span class="id" title="var">pre</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">inputFormatAnother</span> <span class="id" title="var">post</span> ∧ <span class="id" title="var">modules</span> (<span class="id" title="var">value</span> <span class="id" title="var">post</span>) ≤ <span class="id" title="var">modules</span> (<span class="id" title="var">value</span> <span class="id" title="var">pre</span>) + 1.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This theorem and proof show that the <span class="inlinecode"><span class="id" title="definition">customerChangeImputFormat</span></span> function as 
+defined here does satsify this specification.
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Omega</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">verifyChangeInputFormat</span>: <span class="id" title="var">ActionSatisfiesActionSpec</span> (<span class="id" title="var">inputFormatChangeActionSpec</span> <span class="id" title="var">inputFormatOneState</span> <span class="id" title="var">customer</span>)  <span class="id" title="var">customerChangeImputFormat</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">unfold</span> <span class="id" title="var">ActionSatisfiesActionSpec</span>.<br/>
+<span class="id" title="tactic">intros</span>.<br/>
+<span class="id" title="tactic">unfold</span> <span class="id" title="var">inputFormatChangeActionSpec</span>.<br/>
+<span class="id" title="tactic">intuition</span>.<br/>
+<span class="id" title="tactic">unfold</span> <span class="id" title="var">inputFormatAnother</span>; <span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now we write the <span class="inlinecode"><span class="id" title="var">changebility</span></span> plug-in to the Boehm framework.
+For any combination of context, phase, stakeholder, and state 
+other than the combination of interest here, this function just
+requires a trivial proof of <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.5beta2/stdlib/Coq.Init.Logic.html#True"><span class="id" title="inductive">True</span></a></span>. In the one case of interest,
+it requires a proof, such as <span class="inlinecode"><span class="id" title="lemma">verifyChangeInputFormat</span></span>, that
+<span class="inlinecode"><span class="id" title="definition">ActionSatisfiesActionSpec</span></span> <span class="inlinecode">(<span class="id" title="definition">inputFormatChangeActionSpec</span></span> 
+<span class="inlinecode"><span class="id" title="definition">inputFormatOneState</span></span> <span class="inlinecode"><span class="id" title="constructor">customer</span>)</span>  <span class="inlinecode"><span class="id" title="definition">customerChangeImputFormat</span></span>.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_changeability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">c</span>, <span class="id" title="var">p</span>, <span class="id" title="var">s</span>, <span class="id" title="var">st</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">nominal</span>, <span class="id" title="var">maintainance</span>, <span class="id" title="var">customer</span>, <span class="id" title="var">_</span> ⇒  <span class="id" title="var">ActionSatisfiesActionSpec</span> (<span class="id" title="var">inputFormatChangeActionSpec</span> <span class="id" title="var">inputFormatOneState</span> <span class="id" title="var">customer</span>)  <span class="id" title="var">customerChangeImputFormat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span>, <span class="id" title="var">_</span>, <span class="id" title="var">_</span>, <span class="id" title="var">_</span> ⇒ <span class="id" title="var">True</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_accuracy_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_physicalCapability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_cyberCapability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_humanUsability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_speed_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_endurability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_maneuverability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_impact_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_scalability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_versatility_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_interoperability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_missionEffectiveness_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_cost_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_duration_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_keyPersonnel_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_otherScarceResources_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_manufacturability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_sustainability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_efficiency_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_affordability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_security_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_safety_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_reliability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_maintainability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_availability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_survivability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_robustness_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_dependability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_modifiability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_tailorability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_adaptability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_flexibility_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_resiliency_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">kwic_satisfactory_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">KWICContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">KWICPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">KWICStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">KWICSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Unfold</span> <span class="id" title="var">kwic_changeability_reqs</span> <span class="id" title="var">kwic_accuracy_reqs</span> <span class="id" title="var">kwic_physicalCapability_reqs</span> <span class="id" title="var">kwic_cyberCapability_reqs</span> <span class="id" title="var">kwic_humanUsability_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_speed_reqs</span> <span class="id" title="var">kwic_endurability_reqs</span> <span class="id" title="var">kwic_maneuverability_reqs</span> <span class="id" title="var">kwic_impact_reqs</span> <span class="id" title="var">kwic_scalability_reqs</span> <span class="id" title="var">kwic_versatility_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_interoperability_reqs</span> <span class="id" title="var">kwic_missionEffectiveness_reqs</span> <span class="id" title="var">kwic_cost_reqs</span> <span class="id" title="var">kwic_duration_reqs</span> <span class="id" title="var">kwic_keyPersonnel_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_otherScarceResources_reqs</span> <span class="id" title="var">kwic_manufacturability_reqs</span> <span class="id" title="var">kwic_sustainability_reqs</span> <span class="id" title="var">kwic_efficiency_reqs</span> <span class="id" title="var">kwic_affordability_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_security_reqs</span> <span class="id" title="var">kwic_safety_reqs</span> <span class="id" title="var">kwic_reliability_reqs</span> <span class="id" title="var">kwic_maintainability_reqs</span> <span class="id" title="var">kwic_availability_reqs</span> <span class="id" title="var">kwic_survivability_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_robustness_reqs</span> <span class="id" title="var">kwic_dependability_reqs</span> <span class="id" title="var">kwic_modifiability_reqs</span> <span class="id" title="var">kwic_tailorability_reqs</span> <span class="id" title="var">kwic_adaptability_reqs</span> <span class="id" title="var">kwic_flexibility_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_resiliency_reqs</span> <span class="id" title="var">kwic_satisfactory_reqs</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Proofs for satisfying ility requirements.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_changeability_certificate</span>: @<span class="id" title="var">Changeable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_changeability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span><br/>
+;<span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">exact</span> <span class="id" title="var">verifyChangeInputFormat</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_accuracy_certificate</span>: @<span class="id" title="var">Accurate</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_accuracy_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_physicalCapability_certificate</span>: @<span class="id" title="var">PhysicalCapable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_physicalCapability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_cyberCapability_certificate</span>: @<span class="id" title="var">CyberCapable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_cyberCapability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_humanUsability_certificate</span>: @<span class="id" title="var">HumanUsable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_humanUsability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_speed_certificate</span>: @<span class="id" title="var">Speed</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_speed_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_endurability_certificate</span>: @<span class="id" title="var">Endurable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_endurability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_maneuverability_certificate</span>: @<span class="id" title="var">Maneuverable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_maneuverability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_impact_certificate</span>: @<span class="id" title="var">Impactful</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_impact_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_scalability_certificate</span>: @<span class="id" title="var">Scalable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_scalability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_versatility_certificate</span>: @<span class="id" title="var">Versatile</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_versatility_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_interoperability_certificate</span>: @<span class="id" title="var">Interoperable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_interoperability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_cost_certificate</span>: @<span class="id" title="var">Cost</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_cost_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_duration_certificate</span>: @<span class="id" title="var">Duration</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_duration_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_keyPersonnel_certificate</span>: @<span class="id" title="var">KeyPersonnel</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_keyPersonnel_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_otherScarceResources_certificate</span>: @<span class="id" title="var">OtherScarceResources</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_otherScarceResources_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_manufacturability_certificate</span>: @<span class="id" title="var">Manufacturable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_manufacturability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_sustainability_certificate</span>: @<span class="id" title="var">Sustainable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_sustainability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_security_certificate</span>: @<span class="id" title="var">Secure</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_security_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_safety_certificate</span>: @<span class="id" title="var">Safe</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_safety_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_reliability_certificate</span>: @<span class="id" title="var">Reliable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_reliability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_maintainability_certificate</span>: @<span class="id" title="var">Maintainable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_maintainability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_availability_certificate</span>: @<span class="id" title="var">Available</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_availability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_survivability_certificate</span>: @<span class="id" title="var">Survivable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_survivability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_robustness_certificate</span>: @<span class="id" title="var">Robust</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_robustness_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_modifiability_certificate</span>: @<span class="id" title="var">Modifiable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_modifiability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_tailorability_certificate</span>: @<span class="id" title="var">Tailorable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_tailorability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_adaptability_certificate</span>: @<span class="id" title="var">Adaptable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">kwic_adaptability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">kwic_changeability_certificate</span> <span class="id" title="var">kwic_physicalCapability_certificate</span> <span class="id" title="var">kwic_cyberCapability_certificate</span> <span class="id" title="var">kwic_humanUsability_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_speed_certificate</span> <span class="id" title="var">kwic_endurability_certificate</span> <span class="id" title="var">kwic_maneuverability_certificate</span> <span class="id" title="var">kwic_accuracy_certificate</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_impact_certificate</span> <span class="id" title="var">kwic_scalability_certificate</span> <span class="id" title="var">kwic_versatility_certificate</span> <span class="id" title="var">kwic_interoperability_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_cost_certificate</span> <span class="id" title="var">kwic_duration_certificate</span> <span class="id" title="var">kwic_keyPersonnel_certificate</span> <span class="id" title="var">kwic_otherScarceResources_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_manufacturability_certificate</span> <span class="id" title="var">kwic_sustainability_certificate</span> <span class="id" title="var">kwic_security_certificate</span> <span class="id" title="var">kwic_safety_certificate</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_reliability_certificate</span> <span class="id" title="var">kwic_maintainability_certificate</span> <span class="id" title="var">kwic_availability_certificate</span> <span class="id" title="var">kwic_survivability_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">kwic_robustness_certificate</span> <span class="id" title="var">kwic_modifiability_certificate</span> <span class="id" title="var">kwic_tailorability_certificate</span> <span class="id" title="var">kwic_adaptability_certificate</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_missionEffectiveness_certificate</span>: @<span class="id" title="var">MissionEffective</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_efficiency_certificate</span>: @<span class="id" title="var">Efficient</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_flexibility_certificate</span>: @<span class="id" title="var">Flexible</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_dependability_certificate</span>: @<span class="id" title="var">Dependable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_affordability_certificate</span>: @<span class="id" title="var">Affordable</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_resiliency_certificate</span>: @<span class="id" title="var">Resilient</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">kwic_satisfactory_certificate</span>: @<span class="id" title="var">Satisfactory</span> <span class="id" title="var">KWICSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

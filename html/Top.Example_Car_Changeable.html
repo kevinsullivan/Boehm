@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Top.Example_Car_Changeable</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Top.Example_Car_Changeable</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Quality</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Value</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Example_Car</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">BoehmTactics</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><span class="id" title="definition">homeOilActionSpec</span></span> expresses a Ross-style changeability requirement
+pertaining to system instances. We interpret this one as saying that 
+when the <span class="inlinecode"><span class="id" title="var">trigger</span></span> condition on a system instance state is true, then
+the <span class="inlinecode"><span class="id" title="variable">agent</span></span> should be able to perform an operation that satisfies the
+conditions formalized in the precondition/postcondition pair encoded 
+in the function body. This function returns a proposition, a proof of
+which shows that a given function does satisfy this condition. Here 
+the condition requires that agent be <span class="inlinecode"><span class="id" title="constructor">owner</span></span> and the car is at <span class="inlinecode"><span class="id" title="constructor">home</span></span> 
+and in the <span class="inlinecode"><span class="id" title="constructor">ownership</span></span> phase of its lifecycle, and if this is the case
+then a concrete operation must effect a transition to a new state in
+which the oil is clean and no more than 60 minutes were spent on the
+operation.  
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">homeOilActionSpec</span> (<span class="id" title="var">trigger</span>: <span class="id" title="var">CarAssertion</span>) (<span class="id" title="var">agent</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">pre</span> <span class="id" title="var">post</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span>  :=  <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">agent</span> = <span class="id" title="var">owner</span> ∧ <span class="id" title="var">atHome</span> <span class="id" title="var">pre</span> ∧ <span class="id" title="var">inOwnershipPhase</span> <span class="id" title="var">pre</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">oilClean</span> <span class="id" title="var">post</span> ∧ <span class="id" title="var">timeMinutes</span> (<span class="id" title="var">value</span> <span class="id" title="var">post</span>) ≤ <span class="id" title="var">timeMinutes</span> (<span class="id" title="var">value</span> <span class="id" title="var">pre</span>) + 60.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This theorem and proof show that the <span class="inlinecode"><span class="id" title="definition">ownerChangeOil</span></span> function as 
+defined here does satsify this specification.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Omega</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">verifyChangeOil</span>: <span class="id" title="var">ActionSatisfiesActionSpec</span> (<span class="id" title="var">homeOilActionSpec</span> <span class="id" title="var">oilDirtyState</span> <span class="id" title="var">owner</span>)  <span class="id" title="var">ownerChangeOil</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">ActionSatisfiesActionSpec</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">homeOilActionSpec</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>. <span class="id" title="tactic">clear</span> <span class="id" title="var">H0</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">oilClean</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">omega</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now we write the <span class="inlinecode"><span class="id" title="var">changebility</span></span> plug-in to the Boehm framework.
+For any combination of context, phase, stakeholder, and state 
+other than the combination of interest here, this function just
+requires a trivial proof of <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.5beta2/stdlib/Coq.Init.Logic.html#True"><span class="id" title="inductive">True</span></a></span>. In the one case of interest,
+it requires a proof, such as <span class="inlinecode"><span class="id" title="lemma">verifyChangeOil</span></span>, that <span class="inlinecode"><span class="id" title="var">VerifyAction</span></span> 
+<span class="inlinecode">(<span class="id" title="definition">homeOilActionSpec</span></span> <span class="inlinecode"><span class="id" title="definition">oilDirtyState</span></span> <span class="inlinecode"><span class="id" title="constructor">owner</span>)</span>  <span class="inlinecode"><span class="id" title="definition">ownerChangeOil</span></span>.
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_modularity_certificate</span> : <span class="id" title="var">modular</span> <span class="id" title="var">car_dep</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">modular</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">no_circular_satisfaction</span>. <span class="id" title="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">no_cross_module_circular_use</span>. <span class="id" title="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> ×. <span class="id" title="tactic">destruct</span> <span class="id" title="var">a</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">b</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">hides_volatility</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">Uses</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">a</span>, <span class="id" title="var">b</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">engine_module</span>. <span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">engine_module</span>. <span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_changeability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">isModular</span> <span class="id" title="var">st</span> ∧ (<span class="id" title="keyword">match</span> <span class="id" title="var">c</span>, <span class="id" title="var">p</span>, <span class="id" title="var">s</span>, <span class="id" title="var">st</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">home</span>, <span class="id" title="var">ownership</span>, <span class="id" title="var">owner</span>, <span class="id" title="var">_</span> ⇒  <span class="id" title="var">ActionSatisfiesActionSpec</span> (<span class="id" title="var">homeOilActionSpec</span> <span class="id" title="var">oilDirty</span> <span class="id" title="var">owner</span>) <span class="id" title="var">ownerChangeOil</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span>, <span class="id" title="var">_</span>, <span class="id" title="var">_</span>, <span class="id" title="var">_</span> ⇒ <span class="id" title="var">True</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_accuracy_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_physicalCapability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_cyberCapability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_humanUsability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_speed_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_endurability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_maneuverability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_impact_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_scalability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_versatility_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_interoperability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_missionEffectiveness_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_cost_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_duration_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_keyPersonnel_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_otherScarceResources_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_manufacturability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_sustainability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_efficiency_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_affordability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_security_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_safety_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_reliability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_maintainability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_availability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_survivability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_robustness_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_dependability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_modifiability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_tailorability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_adaptability_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_flexibility_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_resiliency_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_satisfactory_reqs</span> (<span class="id" title="var">c</span>: <span class="id" title="var">CarContexts</span>) (<span class="id" title="var">p</span>: <span class="id" title="var">CarPhases</span>) (<span class="id" title="var">s</span>: <span class="id" title="var">CarStakeholders</span>) (<span class="id" title="var">st</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">True</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Unfold</span> <span class="id" title="var">car_changeability_reqs</span> <span class="id" title="var">car_accuracy_reqs</span> <span class="id" title="var">car_physicalCapability_reqs</span> <span class="id" title="var">car_cyberCapability_reqs</span> <span class="id" title="var">car_humanUsability_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_speed_reqs</span> <span class="id" title="var">car_endurability_reqs</span> <span class="id" title="var">car_maneuverability_reqs</span> <span class="id" title="var">car_impact_reqs</span> <span class="id" title="var">car_scalability_reqs</span> <span class="id" title="var">car_versatility_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_interoperability_reqs</span> <span class="id" title="var">car_missionEffectiveness_reqs</span> <span class="id" title="var">car_cost_reqs</span> <span class="id" title="var">car_duration_reqs</span> <span class="id" title="var">car_keyPersonnel_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_otherScarceResources_reqs</span> <span class="id" title="var">car_manufacturability_reqs</span> <span class="id" title="var">car_sustainability_reqs</span> <span class="id" title="var">car_efficiency_reqs</span> <span class="id" title="var">car_affordability_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_security_reqs</span> <span class="id" title="var">car_safety_reqs</span> <span class="id" title="var">car_reliability_reqs</span> <span class="id" title="var">car_maintainability_reqs</span> <span class="id" title="var">car_availability_reqs</span> <span class="id" title="var">car_survivability_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_robustness_reqs</span> <span class="id" title="var">car_dependability_reqs</span> <span class="id" title="var">car_modifiability_reqs</span> <span class="id" title="var">car_tailorability_reqs</span> <span class="id" title="var">car_adaptability_reqs</span> <span class="id" title="var">car_flexibility_reqs</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_resiliency_reqs</span> <span class="id" title="var">car_satisfactory_reqs</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Proofs for satisfying ility requirements.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_changeability_certificate</span>: @<span class="id" title="var">Changeable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>. <span class="id" title="tactic">∃</span> <span class="id" title="var">car_changeability_reqs</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">isModular</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">car_design</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">st</span>)). <span class="id" title="tactic">rewrite</span> <span class="id" title="var">e</span>. <span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">exact</span> <span class="id" title="var">car_modularity_certificate</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">c</span>, <span class="id" title="var">p</span>, <span class="id" title="var">st</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">s</span>; <span class="id" title="tactic">auto</span>. <span class="id" title="tactic">exact</span> <span class="id" title="var">verifyChangeOil</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_accuracy_certificate</span>: @<span class="id" title="var">Accurate</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_accuracy_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_physicalCapability_certificate</span>: @<span class="id" title="var">PhysicalCapable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_physicalCapability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_cyberCapability_certificate</span>: @<span class="id" title="var">CyberCapable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_cyberCapability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_humanUsability_certificate</span>: @<span class="id" title="var">HumanUsable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_humanUsability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_speed_certificate</span>: @<span class="id" title="var">Speed</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_speed_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_endurability_certificate</span>: @<span class="id" title="var">Endurable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_endurability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_maneuverability_certificate</span>: @<span class="id" title="var">Maneuverable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_maneuverability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_impact_certificate</span>: @<span class="id" title="var">Impactful</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_impact_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_scalability_certificate</span>: @<span class="id" title="var">Scalable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_scalability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_versatility_certificate</span>: @<span class="id" title="var">Versatile</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_versatility_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_interoperability_certificate</span>: @<span class="id" title="var">Interoperable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_interoperability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_cost_certificate</span>: @<span class="id" title="var">Cost</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_cost_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_duration_certificate</span>: @<span class="id" title="var">Duration</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_duration_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_keyPersonnel_certificate</span>: @<span class="id" title="var">KeyPersonnel</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_keyPersonnel_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_otherScarceResources_certificate</span>: @<span class="id" title="var">OtherScarceResources</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_otherScarceResources_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_manufacturability_certificate</span>: @<span class="id" title="var">Manufacturable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_manufacturability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_sustainability_certificate</span>: @<span class="id" title="var">Sustainable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_sustainability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_security_certificate</span>: @<span class="id" title="var">Secure</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_security_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_safety_certificate</span>: @<span class="id" title="var">Safe</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_safety_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_reliability_certificate</span>: @<span class="id" title="var">Reliable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_reliability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_maintainability_certificate</span>: @<span class="id" title="var">Maintainable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_maintainability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_availability_certificate</span>: @<span class="id" title="var">Available</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_availability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_survivability_certificate</span>: @<span class="id" title="var">Survivable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_survivability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_robustness_certificate</span>: @<span class="id" title="var">Robust</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_robustness_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_modifiability_certificate</span>: @<span class="id" title="var">Modifiable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_modifiability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_tailorability_certificate</span>: @<span class="id" title="var">Tailorable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_tailorability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_adaptability_certificate</span>: @<span class="id" title="var">Adaptable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Prove_satisfaction</span> <span class="id" title="var">car_adaptability_reqs</span> <span class="id" title="var">c</span> <span class="id" title="var">p</span> <span class="id" title="var">s</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">car_changeability_certificate</span> <span class="id" title="var">car_physicalCapability_certificate</span> <span class="id" title="var">car_cyberCapability_certificate</span> <span class="id" title="var">car_humanUsability_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_speed_certificate</span> <span class="id" title="var">car_endurability_certificate</span> <span class="id" title="var">car_maneuverability_certificate</span> <span class="id" title="var">car_accuracy_certificate</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_impact_certificate</span> <span class="id" title="var">car_scalability_certificate</span> <span class="id" title="var">car_versatility_certificate</span> <span class="id" title="var">car_interoperability_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_cost_certificate</span> <span class="id" title="var">car_duration_certificate</span> <span class="id" title="var">car_keyPersonnel_certificate</span> <span class="id" title="var">car_otherScarceResources_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_manufacturability_certificate</span> <span class="id" title="var">car_sustainability_certificate</span> <span class="id" title="var">car_security_certificate</span> <span class="id" title="var">car_safety_certificate</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_reliability_certificate</span> <span class="id" title="var">car_maintainability_certificate</span> <span class="id" title="var">car_availability_certificate</span> <span class="id" title="var">car_survivability_certificate</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_robustness_certificate</span> <span class="id" title="var">car_modifiability_certificate</span> <span class="id" title="var">car_tailorability_certificate</span> <span class="id" title="var">car_adaptability_certificate</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_missionEffectiveness_certificate</span>: @<span class="id" title="var">MissionEffective</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_efficiency_certificate</span>: @<span class="id" title="var">Efficient</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_flexibility_certificate</span>: @<span class="id" title="var">Flexible</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_dependability_certificate</span>: @<span class="id" title="var">Dependable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_affordability_certificate</span>: @<span class="id" title="var">Affordable</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_resiliency_certificate</span>: @<span class="id" title="var">Resilient</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">car_satisfactory_certificate</span>: @<span class="id" title="var">Satisfactory</span> <span class="id" title="var">CarSystemType</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Top.Example_Car</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library Top.Example_Car</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">Changeable</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">DesignStructure</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">List</span>.<br/>
+<span class="id" title="keyword">Import</span> <span class="id" title="var">ListNotations</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">CarStakeholders</span> := <span class="id" title="var">manufacturer</span> | <span class="id" title="var">dealer</span> | <span class="id" title="var">owner</span> | <span class="id" title="var">driver</span> | <span class="id" title="var">passenger</span> | <span class="id" title="var">mechanic</span> | <span class="id" title="var">ai</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">CarValue</span> := <span class="id" title="var">mk_car_value</span> {<br/>
+&nbsp;&nbsp;<span class="id" title="var">timeMinutes</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">moneyDollars</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">gasolineGallons</span>: <span class="id" title="var">nat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">wearRate</span>: <span class="id" title="var">nat</span><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">CarPhases</span> := <span class="id" title="var">manufacturing</span> | <span class="id" title="var">sale</span> | <span class="id" title="var">ownership</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">CarContexts</span> := <span class="id" title="var">factory</span> | <span class="id" title="var">dealership</span> | <span class="id" title="var">home</span> | <span class="id" title="var">road</span> | <span class="id" title="var">shop</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab1"></a><h2 class="section">Model: Product state space</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">OilCleanliness</span> := <span class="id" title="var">oil_clean</span> | <span class="id" title="var">oil_dirty</span>.<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">OilFullness</span> := <span class="id" title="var">oil_full</span> | <span class="id" title="var">oil_low</span> | <span class="id" title="var">oil_empty</span>.<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">OilCondition</span> := <span class="id" title="var">mk_oil_condition</span> { <br/>
+&nbsp;&nbsp;<span class="id" title="var">oilCleanliness</span> : <span class="id" title="var">OilCleanliness</span>; <br/>
+&nbsp;&nbsp;<span class="id" title="var">oilFullness</span>: <span class="id" title="var">OilFullness</span><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Location</span> := <span class="id" title="var">l_home</span> | <span class="id" title="var">l_away</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">TireInflation</span> := <span class="id" title="var">tire_full</span> | <span class="id" title="var">tire_low</span> | <span class="id" title="var">tire_empty</span> | <span class="id" title="var">tire_punctured</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Record</span> <span class="id" title="var">ArtifactState</span> : <span class="id" title="keyword">Set</span> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">oilState</span> : <span class="id" title="var">OilCondition</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">tireState</span> : <span class="id" title="var">TireInflation</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">location</span> : <span class="id" title="var">Location</span> }.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">car_params</span> := <span class="id" title="var">interior</span> | <span class="id" title="var">exterior</span> | <span class="id" title="var">engine</span> | <span class="id" title="var">fuel_intake</span> | <span class="id" title="var">chassis</span> | <span class="id" title="var">wheel_axel</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">uses</span> (<span class="id" title="var">p1</span> <span class="id" title="var">p2</span>: <span class="id" title="var">car_params</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">p1</span>, <span class="id" title="var">p2</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">engine</span>, <span class="id" title="var">wheel_axel</span> ⇒ <span class="id" title="var">True</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">engine</span>, <span class="id" title="var">fuel_intake</span> ⇒ <span class="id" title="var">True</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span>, <span class="id" title="var">_</span> ⇒ <span class="id" title="var">False</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">satisfies</span> (<span class="id" title="var">p1</span> <span class="id" title="var">p2</span>: <span class="id" title="var">car_params</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">False</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">encapsulates</span> (<span class="id" title="var">p1</span> <span class="id" title="var">p2</span>: <span class="id" title="var">car_params</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">False</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">volatile</span> (<span class="id" title="var">p</span>: <span class="id" title="var">car_params</span>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">p</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">interior</span> ⇒ <span class="id" title="var">True</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> ⇒ <span class="id" title="var">False</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">engine_module</span> := {| <span class="id" title="var">elements</span> := [<span class="id" title="var">engine</span>; <span class="id" title="var">fuel_intake</span>; <span class="id" title="var">wheel_axel</span>]; <span class="id" title="var">name</span> := "moves car" |}.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">interior_module</span> := {| <span class="id" title="var">elements</span> := [<span class="id" title="var">interior</span>]; <span class="id" title="var">name</span> := "interior" |}.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">modules</span>: <span class="id" title="var">list</span> (@<span class="id" title="keyword">Module</span> <span class="id" title="var">car_params</span>) := [<span class="id" title="var">engine_module</span>; <span class="id" title="var">interior_module</span>].<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">car_dep</span>: <span class="id" title="var">DesignStructure</span> :=<br/>
+&nbsp;&nbsp;{| <span class="id" title="var">Modules</span> := <span class="id" title="var">modules</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Uses</span> := <span class="id" title="var">uses</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Satisfies</span> := <span class="id" title="var">satisfies</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">Volatile</span> := <span class="id" title="var">volatile</span> |}.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">car_dep_type</span> :=<br/>
+&nbsp;&nbsp;| <span class="id" title="var">mk_car_dep</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">d</span>: <span class="id" title="var">DesignStructure</span>, <span class="id" title="var">d</span> = <span class="id" title="var">car_dep</span> → <span class="id" title="var">car_dep_type</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">extract_dep</span> <span class="id" title="var">cdt</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">cdt</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">mk_car_dep</span> <span class="id" title="var">d</span> <span class="id" title="var">_</span> ⇒ <span class="id" title="var">d</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Car</span> := <span class="id" title="var">mk_car</span> { <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_artifact</span>: <span class="id" title="var">ArtifactState</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_design</span>: <span class="id" title="var">car_dep_type</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CarSystemType</span> := <span class="id" title="var">mk_system_type</span> <span class="id" title="var">CarContexts</span> <span class="id" title="var">CarStakeholders</span> <span class="id" title="var">CarPhases</span> <span class="id" title="var">Car</span> <span class="id" title="var">CarValue</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Abbreviations for writing propositions, assertions, actions.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CarSystemState</span> := @<span class="id" title="var">SystemInstance</span> <span class="id" title="var">CarSystemType</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CarAssertion</span> := @<span class="id" title="var">Assertion</span> <span class="id" title="var">CarSystemType</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">CarAction</span> := @<span class="id" title="var">Action</span> <span class="id" title="var">CarSystemType</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Useful propositions
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">isModular</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := <span class="id" title="var">modular</span> (<span class="id" title="var">extract_dep</span> (<span class="id" title="var">car_design</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>))).<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilLow</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">oilFullness</span> (<span class="id" title="var">oilState</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)))) = <span class="id" title="var">oil_low</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilFull</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">oilFullness</span> (<span class="id" title="var">oilState</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)))) = <span class="id" title="var">oil_full</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilClean</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">oilCleanliness</span> (<span class="id" title="var">oilState</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)))) = <span class="id" title="var">oil_clean</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilDirty</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">oilCleanliness</span> (<span class="id" title="var">oilState</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)))) = <span class="id" title="var">oil_dirty</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">atHome</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>): <span class="id" title="keyword">Prop</span> := (<span class="id" title="var">location</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)) = <span class="id" title="var">l_home</span>).<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">inOwnershipPhase</span> (<span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span>) := <span class="id" title="keyword">Prop</span> = ((<span class="id" title="var">phase</span> <span class="id" title="var">cs</span>) = <span class="id" title="var">ownership</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilLowState</span>: <span class="id" title="var">CarAssertion</span>   := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">oilLow</span> <span class="id" title="var">cs</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilFullState</span>: <span class="id" title="var">CarAssertion</span>  := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">oilFull</span> <span class="id" title="var">cs</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilCleanState</span>: <span class="id" title="var">CarAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">oilClean</span> <span class="id" title="var">cs</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilDirtyState</span>: <span class="id" title="var">CarAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">oilDirty</span> <span class="id" title="var">cs</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">oilFreshState</span>: <span class="id" title="var">CarAssertion</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">oilClean</span> <span class="id" title="var">cs</span> ∧ <span class="id" title="var">oilFull</span> <span class="id" title="var">cs</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">anyState</span>: <span class="id" title="var">CarAssertion</span>      := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">True</span>.<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">atHomeState</span>: <span class="id" title="var">CarAssertion</span>   := <span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <span class="id" title="var">atHome</span> <span class="id" title="var">cs</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The changeOil action yields a full tank of clean oil and makes no other changes.
+We should FIX the failure to update the cost.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">ownerChangeOil</span>: <span class="id" title="var">CarAction</span> := <br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">cs</span>: <span class="id" title="var">CarSystemState</span> ⇒ <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">mk_system</span> <span class="id" title="var">CarSystemType</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">home</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">ownership</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{| <span class="id" title="var">car_artifact</span> := {|  <span class="id" title="var">oilState</span> := {| <span class="id" title="var">oilCleanliness</span> := <span class="id" title="var">oil_clean</span>; <span class="id" title="var">oilFullness</span> := <span class="id" title="var">oil_full</span>|};<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">tireState</span> := (<span class="id" title="var">tireState</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">location</span> := (<span class="id" title="var">location</span> (<span class="id" title="var">car_artifact</span> (<span class="id" title="var">artifact</span> <span class="id" title="var">cs</span>)))|};<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">car_design</span> := <span class="id" title="var">mk_car_dep</span> <span class="id" title="var">car_dep</span> <span class="id" title="var">eq_refl</span>|}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">value</span> <span class="id" title="var">cs</span>).<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
