@@ -1,4 +1,4 @@
-Require Import DesignStructure.
+Require Export DesignStructure.
 Import ListNotations.
 Open Scope string_scope.
 Require Export System.
@@ -143,6 +143,7 @@ Definition kwicAssertion := @Assertion kwicSystemType.
 Definition kwicAction := @Action kwicSystemType.
 
 (*test more specifically whether a system is modular with respect to a single parameter*)
+Definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks))).
 Definition satisfiesModularity_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks))).
 
 Definition computerPre (ks: kwicSystemState): Prop := computer_state (kwic_volatile_state (artifact ks)) = computer_pre.
@@ -166,7 +167,7 @@ Definition costomerChangeCorpus: kwicAction :=
                          nominal
                          maintenance
                          {| kwic_volatile_state := {|  computer_state := computer_state (kwic_volatile_state (artifact ks));
-                                                                   corpus_state:= corpus_pre;
+                                                                   corpus_state:= corpus_post;
                                                                    user_state:= user_state (kwic_volatile_state (artifact ks))
                                                                |};
                             kwic_design := mk_kwic_ds kwic_ds eq_refl |}
