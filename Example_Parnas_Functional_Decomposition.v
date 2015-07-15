@@ -5,10 +5,7 @@ Require Export System.
 Require Export Changeable.
 Require Export Example_Parnas_Shared_Info.
 
-
-
 Inductive kwicParameter := computer | corpus | user
-                             | line_abs | line_alg | line_data
                              | alph_abs | alph_alg | alph_data
                              | circ_abs | circ_alg | circ_data
                              | input_abs | input_alg | input_data
@@ -17,59 +14,49 @@ Inductive kwicParameter := computer | corpus | user
 
 Definition uses (a b: kwicParameter): Prop :=
     match a, b with
-      | master, (line_abs | input_abs | circ_abs | alph_abs | output_abs) => True
-      | line_alg, line_data => True
-      | line_data, line_alg  => True
-      | input_alg, (input_data | line_abs) => True
-      | input_data, input_alg  => True
-      | circ_alg, (circ_data  | line_abs) => True
-      | circ_data, (circ_alg  | line_abs) => True
-      | alph_alg, (alph_data | line_abs) => True
-      | alph_data, (alph_alg | line_abs)  => True
-      | output_alg, (output_data | line_abs)  => True
-      | output_data, output_alg  => True
+      | master, (input_abs | circ_abs | alph_abs | output_abs) => True
+      | input_alg, input_data  => True
+      | input_data, (circ_data | alph_data) => True
+      | circ_alg, (circ_data  | input_data) => True
+      | circ_data, (input_data  | alph_data) => True
+      | alph_alg, (input_data | circ_data | alph_data) => True
+      | alph_data, (input_data | circ_data)  => True
+      | output_alg, (input_data | alph_data | output_data)  => True
       | _, _ => False
     end.
 
-  Definition satisfies (a b: kwicParameter): Prop :=
+Definition satisfies (a b: kwicParameter): Prop :=
     match b, a with
-      | computer,  (line_data | line_alg | input_data | circ_data | alph_data | alph_alg | output_data | output_alg)=> True
-      | corpus,  (line_data | line_alg | input_data | input_alg | circ_data | circ_alg | alph_data | alph_alg | output_data | output_alg)=> True
-      | user, (input_alg | circ_alg | alph_alg | master) => True
-      | line_abs, (line_data | line_alg) => True
-      | input_abs, (input_data | input_alg) => True
-      | circ_abs, (circ_data | circ_alg) => True
-      | alph_abs, (alph_data | alph_alg) => True
-      | output_abs, (output_data | output_alg) => True
+      | computer,  (input_data | circ_data | alph_data | output_data | input_alg | alph_alg | output_alg)=> True
+      | corpus,  (input_data | circ_data | alph_data | output_data | input_alg | circ_alg | alph_alg | output_alg)=> True
+      | user, (circ_alg | alph_alg | master) => True
+      | input_abs, input_alg => True
+      | circ_abs, circ_alg => True
+      | alph_abs, alph_alg => True
+      | output_abs, output_alg => True
       | _, _ => False
     end.
 
-Definition input_mod := {| name := "Input";
-      elements := [input_data; input_alg; input_abs]|}.
-Definition line_mod := {| name := "Line";
-       elements := [line_data; line_alg; line_abs]|}.
-Definition circ_mod := {| name := "Circular";
-       elements := [circ_data; circ_alg; circ_abs]|}.
-Definition alph_mod := {| name := "Alphabetizer";
-       elements := [alph_data; alph_alg; alph_abs]|}.
-Definition out_mod := {| name := "Output";
-       elements := [output_data; output_alg; output_abs]|}.
-Definition master_mod :=  {| name := "Master";
-       elements := [master]|}.
-(*
-Definition env_mod := {| name := "Environment";
-       elements := [user; computer; corpus]|}.
-*)
-Definition kwic_modules : list (@Module kwicParameter) :=
-  [input_mod; line_mod; circ_mod; alph_mod; out_mod; master_mod].
 
 Definition kwic_volatile (p : kwicParameter): Prop :=
-  match p with
-    | corpus => True
-    | computer => True
-    | user => True
-    | _ => False
-  end.
+    match p with
+      | corpus => True
+      | computer => True
+      | user => True
+      | _ => False
+    end.
+
+Definition kwic_modules : list (@Module kwicParameter) :=
+    [{| name := "Input";
+        elements := [] |};
+      {| name := "Circular";
+         elements := []|};
+      {| name := "Alphabetizer";
+         elements := []|};
+      {| name := "Output";
+         elements := []|};
+      {| name := "Master";
+         elements := []|}].
 
 Definition kwic_ds: DesignStructure := {|
                                  Modules := kwic_modules;
@@ -105,7 +92,7 @@ Definition kwicAction := @Action kwicSystemType.
 
 (*test more specifically whether a system is modular with respect to a single parameter*)
 Definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks))).
-Definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks))).
+Definition satisfiesModularity_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks))).
 
 Definition computerPre (ks: kwicSystemState): Prop := computer_state (kwic_volatile_state (artifact ks)) = computer_pre.
 Definition computerPost (ks: kwicSystemState): Prop := computer_state (kwic_volatile_state (artifact ks)) = computer_post.

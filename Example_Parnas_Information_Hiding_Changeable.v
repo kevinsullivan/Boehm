@@ -4,8 +4,8 @@ Require Export Example_Parnas_Information_Hiding.
 Require Export BoehmTactics.
 
 Definition corpusChangeActionSpec (trigger: kwicAssertion) (agent: kwicStakeholders) (pre post: kwicSystemState): Prop  :=  
-        trigger = corpusPreState /\ agent = customer /\ corpusPre pre /\ inMaintenancePhase pre ->
-        corpusPost post /\ modulesChanged (value post) <= modulesChanged (value pre) + 1.
+        isModular_wrt corpus pre /\ (trigger = corpusPreState /\ agent = customer /\ corpusPre pre /\ inMaintenancePhase pre ->
+        corpusPost post /\ modulesChanged (value post) <= modulesChanged (value pre) + 1).
 
 Theorem verifyChangeCorpus: ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre customer) costomerChangeCorpus.
 Proof.
@@ -13,26 +13,14 @@ unfold ActionSatisfiesActionSpec.
 intros.
 unfold corpusChangeActionSpec.
 intuition.
-unfold corpusPost;auto.
-Qed.
-
-Ltac des_inv b H := destruct b; inversion H; intuition. 
-
-Theorem kwic_modularity_certificate : modular kwic_ds.
-  Proof.
-    unfold modular.
-    split.
-    unfold no_circular_satisfaction. intuition.
-    simpl in *. destruct a; try inversion H; des_inv b H. 
-    unfold no_cross_module_circular_use. split. intuition.
-    simpl in *. destruct a; try inversion H. destruct b; inversion H0. 
-    Admitted.
+(*Prove isModular_wrt corpus s here.*)
+Admitted.
 
 Definition kwic_changeability_reqs (c: kwicContexts) (p: kwicPhases) (s: kwicStakeholders) (st: kwicSystemState): Prop :=
-  isModular st /\ (match c, p, s, st with
+  match c, p, s, st with
        | nominal, maintenance, customer, _ =>  ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre customer) costomerChangeCorpus
        | _, _, _, _ => True
-  end).
+  end.
 
 Definition kwic_accuracy_reqs (c: kwicContexts) (p: kwicPhases) (s: kwicStakeholders) (st: kwicSystemState): Prop := True.
 Definition kwic_physicalCapability_reqs (c: kwicContexts) (p: kwicPhases) (s: kwicStakeholders) (st: kwicSystemState): Prop := True.
@@ -89,10 +77,8 @@ Proofs for satisfying ility requirements.
 
 Theorem kwic_changeability_certificate: @Changeable kwicSystemType.
 Proof.
-  constructor. exists kwic_changeability_reqs. intros. constructor.
-  unfold isModular. destruct (kwic_design (artifact st)). rewrite e. simpl. exact kwic_modularity_certificate. 
-  destruct c, p, st; auto.
-  simpl. destruct s; auto. exact verifyChangeCorpus.
+Prove_satisfaction kwic_changeability_reqs c p s
+;simpl; exact verifyChangeCorpus.
 Qed.
 
 Theorem kwic_accuracy_certificate: @Accurate kwicSystemType.
