@@ -103,8 +103,9 @@ Definition kwicAssertion := @Assertion kwicSystemType.
 
 Definition kwicAction := @Action kwicSystemType.
 
-(*test more specifically whether a system is modular with respect to a single parameter*)
+(* Test more specifically whether a system is modular*)
 Definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks))).
+(* Test more specifically whether a system is modular with respect to a single parameter*)
 Definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks))).
 
 Definition computerPre (ks: kwicSystemState): Prop := computer_state (kwic_volatile_state (artifact ks)) = computer_pre.
@@ -122,6 +123,10 @@ Definition corpusPostState : kwicAssertion := fun ks: kwicSystemState => corpusP
 Definition userPreState : kwicAssertion := fun ks: kwicSystemState => userPre ks.
 Definition userPostState : kwicAssertion := fun ks: kwicSystemState => userPost ks.
 
+
+(**
+The costomerChangeCorpus action changes the corpus from its pre-state to its post-state and makes no other changes.
+ *)
 Definition costomerChangeCorpus: kwicAction :=
   fun ks: kwicSystemState =>
       mk_system kwicSystemType

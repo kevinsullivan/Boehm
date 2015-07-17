@@ -3,9 +3,32 @@ Require Export Value.
 Require Export Example_Parnas_Information_Hiding.
 Require Export BoehmTactics.
 
+(**
+[corpusChangeActionSpec] expresses a Ross-style changeability requirement
+pertaining to system instances. We interpret this one as saying that 
+a system instance is changeable if 1) it is modular with respect to the
+parameter that will be changed and 2)when the [trigger] condition on 
+a system instance state is true, then the [agent] should be able to 
+perform an operation that satisfies the conditions formalized in the 
+precondition/postcondition pair encoded in the function body. 
+This function returns a proposition, a proof of which shows that 
+a given function does satisfy this condition. Here the condition requires 
+that agent be [customer] and system is in its [corpusPre] state
+and in the [maintanance] phase of its lifecycle, and if this is the case
+then a concrete operation must effect a transition to a new state in
+which the system is in its [corpusPost] state and no more than 1 module 
+were changed due to the operation.
+*)
+
+
 Definition corpusChangeActionSpec (trigger: kwicAssertion) (agent: kwicStakeholders) (pre post: kwicSystemState): Prop  :=  
         isModular_wrt corpus pre /\ (trigger = corpusPreState /\ agent = customer /\ corpusPre pre /\ inMaintenancePhase pre ->
         corpusPost post /\ modulesChanged (value post) <= modulesChanged (value pre) + 1).
+
+(**
+This theorem and proof show that the [costomerChangeCorpus] function as 
+defined here does satsify this specification.
+*)
 
 Theorem verifyChangeCorpus: ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre customer) costomerChangeCorpus.
 Proof.
@@ -16,6 +39,16 @@ intuition.
 (*Prove isModular_wrt corpus s here.*)
 Admitted.
 
+
+(**
+Now we write the [changebility] plug-in to the Boehm framework.
+For any combination of context, phase, stakeholder, and state 
+other than the combination of interest here, this function just
+requires a trivial proof of [True]. In the one case of interest,
+it requires a proof, such as [verifyChangeCorpus], that 
+[ActionSatisfiesActionSpec (corpusChangeActionSpec 
+corpusPre customer) costomerChangeCorpus.l].
+*)
 Definition kwic_changeability_reqs (c: kwicContexts) (p: kwicPhases) (s: kwicStakeholders) (st: kwicSystemState): Prop :=
   match c, p, s, st with
        | nominal, maintenance, customer, _ =>  ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre customer) costomerChangeCorpus
