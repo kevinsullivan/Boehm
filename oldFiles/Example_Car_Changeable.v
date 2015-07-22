@@ -19,7 +19,7 @@ operation.
 *)
 
 Definition homeOilActionSpec (trigger: CarAssertion) (agent: CarStakeholders) (pre post: CarSystemState): Prop  :=  
-        trigger = oilDirtyState /\ agent = owner /\ atHome pre /\ inOwnershipPhase pre ->
+        agent = owner /\ atHome pre /\ inOwnershipPhase pre ->
         oilClean post /\ timeMinutes (value post) <= timeMinutes (value pre) + 60.
 
 (**
@@ -52,11 +52,28 @@ it requires a proof, such as [verifyChangeOil], that [VerifyAction
 (homeOilActionSpec oilDirtyState owner)  ownerChangeOil].
 *)
 
+Theorem car_modularity_certificate : modular car_dep.
+  Proof.
+    unfold modular.
+    split.
+    unfold no_circular_satisfaction. intuition.
+    split.
+    unfold no_cross_module_circular_use. intuition.
+    simpl in *. destruct a; try inversion H. destruct b; inversion H0.
+    unfold hides_volatility. intros.
+    destruct H.
+    inversion H.
+    unfold Uses in H; simpl in H.
+    destruct a, b; inversion H.
+    exists engine_module. simpl. auto.
+    exists engine_module. simpl. auto.
+  Qed.
+
 Definition car_changeability_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholders) (st: CarSystemState): Prop :=
-  match c, p, s, st with
+  isModular st /\ (match c, p, s, st with
        | home, ownership, owner, _ =>  ActionSatisfiesActionSpec (homeOilActionSpec oilDirty owner) ownerChangeOil
        | _, _, _, _ => True
-  end.
+     end).
 
 Definition car_accuracy_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholders) (st: CarSystemState): Prop := True.
 Definition car_physicalCapability_reqs (c: CarContexts) (p: CarPhases) (s: CarStakeholders) (st: CarSystemState): Prop := True.
@@ -113,8 +130,10 @@ Proofs for satisfying ility requirements.
 
 Theorem car_changeability_certificate: @Changeable CarSystemType.
 Proof.
-  Prove_satisfaction car_changeability_reqs c p s.
-  simpl; exact verifyChangeOil.
+  constructor. exists car_changeability_reqs. intros. constructor.
+  unfold isModular. destruct (car_design (artifact st)). rewrite e. simpl. exact car_modularity_certificate. 
+  destruct c, p, st; auto.
+  simpl. destruct s; auto. exact verifyChangeOil.
 Qed.
 
 Theorem car_accuracy_certificate: @Accurate CarSystemType.
