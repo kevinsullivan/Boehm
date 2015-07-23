@@ -92,7 +92,7 @@ Definition kwicAction := @Action kwicSystemType.
 
 (*test more specifically whether a system is modular with respect to a single parameter*)
 Definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks))).
-Definition satisfiesModularity_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks))).
+Definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks))).
 
 Definition computerPre (ks: kwicSystemState): Prop := computer_state (kwic_volatile_state (artifact ks)) = computer_pre.
 Definition computerPost (ks: kwicSystemState): Prop := computer_state (kwic_volatile_state (artifact ks)) = computer_post.

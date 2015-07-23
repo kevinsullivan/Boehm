@@ -1,4 +1,4 @@
-Require Export Quality.
+Require Export Satisfactory.
 Require Export Value.
 Require Export Example_Parnas_Functional_Decomposition.
 Require Export BoehmTactics.
@@ -10,3 +10,4 @@ Definition corpusChangeActionSpec (trigger: kwicAssertion) (agent: kwicStakehold
 Theorem verifyChangeCorpus: ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre customer) costomerChangeCorpus.
 Proof.
 (* Should not be proved *)
+Admitted.

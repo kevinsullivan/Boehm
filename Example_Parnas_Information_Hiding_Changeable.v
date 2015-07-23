@@ -1,4 +1,4 @@
-Require Export Quality.
+Require Export Satisfactory.
 Require Export Value.
 Require Export Example_Parnas_Information_Hiding.
 Require Export BoehmTactics.
