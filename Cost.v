@@ -1,4 +1,4 @@
-Require Export System.
+Require Export System. 
 
 Inductive Cost (sys_type: SystemType) : Prop :=
   satisfiesCostRequirements:
