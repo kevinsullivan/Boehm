@@ -1,3 +1,8 @@
+(** Speed *)
+(**
+[Speed] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+*)
+
 Require Export System.
 
 Inductive Speed (sys_type: SystemType) : Prop :=

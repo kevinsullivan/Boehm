@@ -1,3 +1,7 @@
+(** Duration *)
+(**
+[Duration] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
+*)
 Require Export System.
 
 Inductive Duration (sys_type: SystemType) : Prop :=

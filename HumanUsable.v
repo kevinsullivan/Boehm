@@ -1,3 +1,9 @@
+(** Human Usable *)
+(**
+[HumanUsable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+An instance of type [SystemType] is deemed [HumanUsable] if and only if all the requirements are satisfied.
+*)
+
 Require Export System.
 
 Inductive HumanUsable (sys_type: SystemType) : Prop :=

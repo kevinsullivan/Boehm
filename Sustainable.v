@@ -1,3 +1,9 @@
+(** Sustainable *)
+(**
+[Sustainable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
+An instance of type [SystemType] is deemed [Sustainable] if and only if all the requirements are satisfied.
+*)
+
 Require Export System.
 
 Inductive Sustainable (sys_type: SystemType) : Prop :=

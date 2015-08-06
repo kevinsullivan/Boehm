@@ -1,3 +1,9 @@
+(** Cyber Capable *)
+(**
+[CyberCapable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+An instance of type [SystemType] is deemed [CyberCapable] if and only if all the requirements are satisfied.
+*)
+
 Require Export System.
 
 Inductive CyberCapable (sys_type: SystemType) : Prop :=

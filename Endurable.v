@@ -1,3 +1,9 @@
+(** Endurable *)
+(**
+[Endurable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+An instance of type [SystemType] is deemed [Endurable] if and only if all the requirements are satisfied.
+*)
+
 Require Export System.
 
 Inductive Endurable (sys_type: SystemType) : Prop :=

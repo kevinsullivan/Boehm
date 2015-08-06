@@ -1,3 +1,9 @@
+(** Survivable *)
+(**
+[Survivable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Dependable].
+An instance of type [SystemType] is deemed [Survivable] if and only if all the requirements are satisfied.
+*)
+
 Require Export System.
 
 Inductive Survivable (sys_type: SystemType) : Prop :=

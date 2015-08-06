@@ -1,3 +1,9 @@
+(** Versatile *)
+(**
+[Versatile] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+An instance of type [SystemType] is deemed [Versatile] if and only if all the requirements are satisfied.
+*)
+
 Require Export System.
 
 Inductive Versatile (sys_type: SystemType) : Prop :=

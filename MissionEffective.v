@@ -11,6 +11,15 @@ Require Export Scalable.
 Require Export Versatile.
 Require Export Interoperable.
 
+(** Mission Effective *)
+(**
+[MissionEffective] is parameterized by an instance of type [SystemType]. The constituent attributes of [MissionEffective] are
+the things whether it can be produced and maintained in a mission effective way.
+
+Informally, in English:
+An instance of type [SystemType] is deemed [MissionEffective] 
+if and only if all the requirements of its sub-attributes are satisfied given the same conditions.
+*)
 
 Inductive MissionEffective (sys_type: SystemType): Prop :=
   satisfiesMissionEffectivenessPrerequisites:

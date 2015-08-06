@@ -1,3 +1,8 @@
+(** OtherScarceResources *)
+(**
+[OtherScarceResources] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
+*)
+
 Require Export System.
 
 Inductive OtherScarceResources (sys_type: SystemType) : Prop :=
