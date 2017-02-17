@@ -1,3 +1,9 @@
+-- Speed 
+/-
+[Speed] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+-/
+
+
 import System
 
 inductive Speed (sys_type: SystemType): Prop

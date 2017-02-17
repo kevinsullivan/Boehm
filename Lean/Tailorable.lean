@@ -1,3 +1,9 @@
+-- Tailorable
+/-
+[Tailorable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Flexible].
+An instance of type [SystemType] is deemed [Tailorable] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Tailorable (sys_type: SystemType): Prop

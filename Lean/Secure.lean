@@ -1,3 +1,9 @@
+-- Secure 
+/-
+[Secure] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Dependable].
+An instance of type [SystemType] is deemed [Secure] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Secure (sys_type: SystemType): Prop

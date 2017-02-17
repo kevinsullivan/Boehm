@@ -1,3 +1,8 @@
+--  Cost 
+/-
+[Cost] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
+-/
+
 import System
 
 inductive Cost (sys_type: SystemType): Prop

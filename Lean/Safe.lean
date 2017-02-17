@@ -1,3 +1,9 @@
+-- Safe 
+/-
+[Safe] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Dependable].
+An instance of type [SystemType] is deemed [Safe] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Safe (sys_type: SystemType): Prop

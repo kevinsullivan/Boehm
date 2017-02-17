@@ -1,3 +1,9 @@
+-- Modifiable
+/-
+[Modifiable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Flexible].
+An instance of type [SystemType] is deemed [Modifiable] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Modifiable (sys_type: SystemType): Prop

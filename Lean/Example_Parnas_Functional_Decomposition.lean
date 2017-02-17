@@ -102,13 +102,17 @@ mk :: (kwic_volatile_state: kwicVolatileState) (kwic_design: kwic_ds_type)
 
 definition kwicSystemType : SystemType := { Contexts:=kwicContexts, Stakeholders:= kwicStakeholders, Phases:= kwicPhases, ArtifactType:= kwic, ValueType:= kwicValue }
 
+/-
+Abbreviations for writing propositions, assertions, actions.
+-/
+
 definition kwicSystemState := @SystemInstance kwicSystemType
 
 definition kwicAssertion := @Assertion kwicSystemType
 
 definition kwicAction := @Action kwicSystemType
 
-
+/- test more specifically whether a system is modular with respect to a single parameter-/
 --TODO
 --definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks)))
 --definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks)))

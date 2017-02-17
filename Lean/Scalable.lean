@@ -1,3 +1,9 @@
+-- Scalable
+/-
+[Scalable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+An instance of type [SystemType] is deemed [Scalable] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Scalable (sys_type: SystemType): Prop

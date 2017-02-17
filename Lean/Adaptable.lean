@@ -1,3 +1,9 @@
+-- Adaptable 
+/-
+[Adaptable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Flexible].
+An instance of type [SystemType] is deemed [Adaptable] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Adaptable (sys_type: SystemType): Prop

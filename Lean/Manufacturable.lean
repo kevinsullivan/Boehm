@@ -1,3 +1,9 @@
+-- Manufacturable 
+/-
+[Manufacturable] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
+An instance of type [SystemType] is deemed [Manufacturable] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Manufacturable (sys_type: SystemType): Prop

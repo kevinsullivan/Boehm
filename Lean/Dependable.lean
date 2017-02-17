@@ -10,6 +10,7 @@ import Robust
 /- Dependable -/
 /-
 [Dependable] is a composite attribute of [Security], [Safety], [Reliability], ..., and [Robustness].
+
 Informally, 
 An instance of type [SystemType] is deemed [Dependable] 
 if and only if all the requirements of its sub-attributes are satisfied given the same conditions.

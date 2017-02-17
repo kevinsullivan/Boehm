@@ -123,15 +123,20 @@ mk :: (kwic_volatile_state: kwicVolatileState) (kwic_design: kwic_ds_type)
 
 definition kwicSystemType : SystemType := { Contexts:=kwicContexts, Stakeholders:= kwicStakeholders, Phases:= kwicPhases, ArtifactType:= kwic, ValueType:= kwicValue }
 
+/-
+Abbreviations for writing propositions, assertions, actions.
+-/
+
 definition kwicSystemState := @SystemInstance kwicSystemType
 
 definition kwicAssertion := @Assertion kwicSystemType
 
 definition kwicAction := @Action kwicSystemType
 
-
 --TODO
+/- Test more specifically whether a system is modular -/
 --definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks)))
+/- Test more specifically whether a system is modular with respect to a single parameter -/
 --definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks)))
 
 definition computerPre (ks: kwicSystemState): Prop := ks^.artifact^.kwic_volatile_state^.computer_state = computerState.computer_pre
@@ -149,7 +154,10 @@ definition corpusPostState : kwicAssertion := fun ks: kwicSystemState,corpusPost
 definition userPreState : kwicAssertion := fun ks: kwicSystemState, userPre ks
 definition userPostState : kwicAssertion := fun ks: kwicSystemState, userPost ks
 
-definition costomerChangeCorpus: kwicAction :=
+/-
+The customerChangeCorpus action changes the corpus from its pre-state to its post-state and makes no other changes.
+-/
+definition customerChangeCorpus: kwicAction :=
   fun ks: kwicSystemState,
       { context:=kwicContexts.nominal,
         phase:=kwicPhases.maintenance,

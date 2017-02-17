@@ -1,3 +1,9 @@
+-- Accurate 
+/-
+[Accurate] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [MissionEffective].
+An instance of type [SystemType] is deemed [Accurate] if and only if all the requirements are satisfied.
+-/
+
 import System
 
 inductive Accurate (sys_type: SystemType): Prop

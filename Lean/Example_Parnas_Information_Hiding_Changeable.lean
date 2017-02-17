@@ -33,7 +33,7 @@ begin
     split,
     unfold corpusPost,
     reflexivity,
-    unfold costomerChangeCorpus,
+    unfold customerChangeCorpus,
     simp,
     apply nat.le_add_left
 end

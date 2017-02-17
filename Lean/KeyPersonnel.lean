@@ -1,3 +1,8 @@
+-- KeyPersonnel 
+/-
+[KeyPersonnel] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
+-/
+
 import System
 
 inductive KeyPersonnel (sys_type: SystemType): Prop
