@@ -10,7 +10,10 @@ def inModule {params : Type} (m: (@Module params)) (p: params) : Prop :=
   In p m^.elements
 
 record DesignStructure {params : Type} :=
-mk :: (Modules : (list (@Module params))) (Volatile : params -> Prop) (Uses: params -> params -> Prop) (Satisfies : params -> params -> Prop)
+mk :: (Modules : (list (@Module params))) 
+      (Volatile : params -> Prop) 
+      (Uses: params -> params -> Prop) 
+      (Satisfies : params -> params -> Prop)
 
 def test_parameter {params : Type} : params -> (@DesignStructure params) -> (@DesignStructure params)
 | p d := { Modules := d^.Modules, Volatile:= (fun (x:params), p = x), Uses := d^.Uses, Satisfies := d^.Satisfies}
