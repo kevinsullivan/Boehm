@@ -107,5 +107,3 @@ definition ownerChangeOil: CarAction :=
           location := cs^.artifact^.location
         },
 	value := cs^.value }
-
-
