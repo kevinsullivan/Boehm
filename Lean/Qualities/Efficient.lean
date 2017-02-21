@@ -1,10 +1,10 @@
-import ..System.System
-import .Cost
-import .Duration
-import .KeyPersonnel
-import .OtherScarceResources
-import .Manufacturable
-import .Sustainable
+import System.System
+import Qualities.Cost
+import Qualities.Duration
+import Qualities.KeyPersonnel
+import Qualities.OtherScarceResources
+import Qualities.Manufacturable
+import Qualities.Sustainable
 
 /- Efficient -/
 /-

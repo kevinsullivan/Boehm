@@ -1,4 +1,4 @@
-import ..System.System
+import System.System
 
 inductive Reliable (sys_type: SystemType): Prop
 | intro : (exists reliable: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 
