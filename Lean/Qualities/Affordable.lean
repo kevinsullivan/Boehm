@@ -1,6 +1,6 @@
-import System
-import MissionEffective
-import Efficient
+import ..System.System
+import .MissionEffective
+import .Efficient
 
 /- Affordable -/
 /-

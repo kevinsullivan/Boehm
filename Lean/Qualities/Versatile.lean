@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Versatile] if and only if all the requirements are satisfied.
 -/
 
-import System
+import ..System.System
 
 inductive Versatile (sys_type: SystemType): Prop
 | intro : (exists versatile: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

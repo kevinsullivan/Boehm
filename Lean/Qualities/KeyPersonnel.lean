@@ -3,7 +3,7 @@
 [KeyPersonnel] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
 -/
 
-import System
+import ..System.System
 
 inductive KeyPersonnel (sys_type: SystemType): Prop
 | intro : (exists keyPersonnel: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

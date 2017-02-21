@@ -1,15 +1,15 @@
-import System
-import PhysicalCapable
-import CyberCapable
-import HumanUsable
-import Speed
-import Endurable
-import Maneuverable
-import Accurate
-import Impactful
-import Scalable
-import Versatile
-import Interoperable
+import ..System.System
+import .PhysicalCapable
+import .CyberCapable
+import .HumanUsable
+import .Speed
+import .Endurable
+import .Maneuverable
+import .Accurate
+import .Impactful
+import .Scalable
+import .Versatile
+import .Interoperable
 
 -- Mission Effective 
 /-

@@ -1,7 +1,7 @@
-import System
-import Dependable
-import Flexible
-import Changeable
+import ..System.System
+import .Dependable
+import .Flexible
+import .Changeable
 
 /- Resilient -/
 /-

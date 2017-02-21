@@ -1,6 +1,6 @@
-import System
-import Affordable
-import Resilient
+import ..System.System
+import .Affordable
+import .Resilient
 
 /- Satisfactory -/
 /-

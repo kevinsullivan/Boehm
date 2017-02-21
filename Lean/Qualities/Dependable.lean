@@ -1,11 +1,11 @@
-import System
-import Secure
-import Safe
-import Reliable
-import Maintainable
-import Available
-import Survivable
-import Robust
+import ..System.System
+import .Secure
+import .Safe
+import .Reliable
+import .Maintainable
+import .Available
+import .Survivable
+import .Robust
 
 /- Dependable -/
 /-
