@@ -26,7 +26,6 @@ definition uses : kwicParameter -> kwicParameter -> Prop
 | kwicParameter.line_alg kwicParameter.line_data := true
 | kwicParameter.line_data kwicParameter.line_alg := true
 | kwicParameter.input_alg kwicParameter.input_data := true
-/-
 | kwicParameter.input_alg kwicParameter.line_abs := true
 | kwicParameter.input_data kwicParameter.input_alg := true
 | kwicParameter.circ_alg kwicParameter.circ_data := true
@@ -40,7 +39,6 @@ definition uses : kwicParameter -> kwicParameter -> Prop
 | kwicParameter.output_alg kwicParameter.output_data := true
 | kwicParameter.output_alg kwicParameter.line_abs := true
 | kwicParameter.output_data kwicParameter.output_alg := true
--/
 | _ _ := false
 
 --TODO
@@ -54,7 +52,7 @@ definition satisfies : kwicParameter -> kwicParameter -> Prop
 | computer  alph_alg := true
 | computer  output_data := true
 | computer  output_alg := true
-/-| corpus  line_data := true
+| corpus  line_data := true
 | corpus  line_alg := true
 | corpus  input_data := true
 | corpus  input_alg := true
@@ -77,7 +75,7 @@ definition satisfies : kwicParameter -> kwicParameter -> Prop
 | alph_abs alph_data := true
 | alph_abs alph_alg := true
 | output_abs output_data := true
-| output_abs output_alg := true-/
+| output_abs output_alg := true
 | _ _ := false
 
 definition input_mod : Module := 
