@@ -1,7 +1,7 @@
-import DesignStructure
-import System
-import Changeable
-import Example_Parnas_Shared_Info
+import Examples.Parnas.DesignStructure
+import System.System
+import Qualities.Changeable
+import Examples.Parnas.Example_Parnas_Shared_Info
 
 inductive kwicParameter | computer | corpus | user
                         | alph_abs | alph_alg | alph_data

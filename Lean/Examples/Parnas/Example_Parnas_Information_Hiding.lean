@@ -1,9 +1,9 @@
-import DesignStructure
-import System
+import Examples.Parnas.DesignStructure
+import System.System
 -- This is a model of the example from Parnas 72
 
-import Changeable
-import Example_Parnas_Shared_Info
+import Qualities.Changeable
+import Examples.Parnas.Example_Parnas_Shared_Info
 
 inductive kwicParameter | computer | corpus | user
                         | line_abs | line_alg | line_data
@@ -114,7 +114,7 @@ inductive kwic_ds_type
 | mk_kwic_ds : forall (ds: DesignStructure), ds = kwic_ds -> kwic_ds_type
 
 -- TODO
-definition extract_kwic_ds : kwic_ds_type -> DesignStructure
+--definition extract_kwic_ds : kwic_ds_type -> DesignStructure
 --| (kwic_ds_type.mk_kwic_ds) ds := ds
 --| (kwic_ds_type.mk_kwic_ds) ds _ := ds
 

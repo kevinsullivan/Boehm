@@ -1,6 +1,6 @@
-import Satisfactory
-import Value
-import Example_Parnas_Functional_Decomposition
+import Qualities.Satisfactory
+import System.Value
+import Examples.Parnas.Example_Parnas_Functional_Decomposition
 
 definition corpusChangeActionSpec (trigger: kwicAssertion) (agent: kwicStakeholders) (pre post: kwicSystemState): Prop  :=  
         --isModular_wrt corpus pre /\ 
