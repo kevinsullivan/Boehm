@@ -1,6 +1,6 @@
-import ..System.System
-import .Affordable
-import .Resilient
+import System.System
+import Qualities.Affordable
+import Qualities.Resilient
 
 /- Satisfactory -/
 /-

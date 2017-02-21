@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Secure] if and only if all the requirements are satisfied.
 -/
 
-import ..System.System
+import System.System
 
 inductive Secure (sys_type: SystemType): Prop
 | intro : (exists secure: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

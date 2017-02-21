@@ -4,7 +4,7 @@
 -/
 
 
-import ..System.System
+import System.System
 
 inductive Speed (sys_type: SystemType): Prop
 | intro : (exists speed: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Sustainable] if and only if all the requirements are satisfied.
 -/
 
-import ..System.System
+import System.System
 
 inductive Sustainable (sys_type: SystemType): Prop
 | intro : (exists sustainable: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

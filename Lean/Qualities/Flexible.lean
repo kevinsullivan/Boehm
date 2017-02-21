@@ -1,7 +1,7 @@
-import ..System.System
-import .Modifiable
-import .Tailorable
-import .Adaptable
+import System.System
+import Qualities.Modifiable
+import Qualities.Tailorable
+import Qualities.Adaptable
 
 /- Flexible-/
 /-

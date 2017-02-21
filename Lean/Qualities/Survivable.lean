@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Survivable] if and only if all the requirements are satisfied.
 -/
 
-import ..System.System
+import System.System
 
 inductive Survivable (sys_type: SystemType): Prop
 | intro : (exists survivable: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

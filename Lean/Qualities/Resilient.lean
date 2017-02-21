@@ -1,7 +1,7 @@
-import ..System.System
-import .Dependable
-import .Flexible
-import .Changeable
+import System.System
+import Qualities.Dependable
+import Qualities.Flexible
+import Qualities.Changeable
 
 /- Resilient -/
 /-

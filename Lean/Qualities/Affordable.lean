@@ -1,6 +1,6 @@
-import ..System.System
-import .MissionEffective
-import .Efficient
+import System.System
+import Qualities.MissionEffective
+import Qualities.Efficient
 
 /- Affordable -/
 /-

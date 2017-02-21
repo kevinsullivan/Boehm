@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Maintainable] if and only if all the requirements are satisfied.
 -/
 
-import ..System.System
+import System.System
 
 inductive Maintainable (sys_type: SystemType): Prop
 | intro : (exists maintainable: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 
