@@ -1,4 +1,4 @@
-import Changeable
+import Qualities.Changeable
 
 inductive CarStakeholders : Type
 | manufacturer 

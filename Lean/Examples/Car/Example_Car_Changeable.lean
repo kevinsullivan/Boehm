@@ -1,6 +1,6 @@
-import Satisfactory
+import Qualities.AccurateSatisfactory
 --import Value
-import Example_Car
+import Examples.Car.Example_Car
 --import BoehmTactics
 
 /-
