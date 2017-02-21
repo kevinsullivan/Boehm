@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Maneuverable] if and only if all the requirements are satisfied.
 -/
 
-import System.System
+import SystemModel.System
 
 inductive Maneuverable (sys_type: SystemType): Prop
 | intro : (exists maneuverable: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

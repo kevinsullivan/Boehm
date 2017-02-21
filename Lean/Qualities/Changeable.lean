@@ -1,4 +1,4 @@
-import System.System
+import SystemModel.System
 
 /-
 An [Assertion] represents a property of system instance states.

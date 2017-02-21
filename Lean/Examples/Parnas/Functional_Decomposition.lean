@@ -1,5 +1,5 @@
 import Examples.Parnas.DesignStructure
-import System.System
+import SystemModel.System
 import Qualities.Changeable
 import Examples.Parnas.Shared_Info
 

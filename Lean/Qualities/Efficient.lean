@@ -1,4 +1,4 @@
-import System.System
+import SystemModel.System
 import Qualities.Cost
 import Qualities.Duration
 import Qualities.KeyPersonnel

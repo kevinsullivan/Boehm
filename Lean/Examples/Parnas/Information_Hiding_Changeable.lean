@@ -1,5 +1,5 @@
 import Qualities.Satisfactory
-import System.Value
+import SystemModel.Value
 import Examples.Parnas.Information_Hiding
 
 /-

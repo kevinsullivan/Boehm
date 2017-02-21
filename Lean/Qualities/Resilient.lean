@@ -1,4 +1,4 @@
-import System.System
+import SystemModel.System
 import Qualities.Dependable
 import Qualities.Flexible
 import Qualities.Changeable

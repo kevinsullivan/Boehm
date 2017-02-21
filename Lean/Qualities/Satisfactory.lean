@@ -1,4 +1,4 @@
-import System.System
+import SystemModel.System
 import Qualities.Affordable
 import Qualities.Resilient
 

@@ -1,5 +1,5 @@
 import Examples.Parnas.DesignStructure
-import System.System
+import SystemModel.System
 -- This is a model of the example from Parnas 72
 
 import Qualities.Changeable

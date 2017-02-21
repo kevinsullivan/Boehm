@@ -3,7 +3,7 @@
 [OtherScarceResources] is parameterized by an instance of type [SystemType], and it's a sub-attribute to [Efficient].
 -/
 
-import System.System
+import SystemModel.System
 
 inductive OtherScarceResources (sys_type: SystemType): Prop
 | intro : (exists otherScarceResources: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 

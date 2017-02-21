@@ -1,4 +1,4 @@
-import System.System
+import SystemModel.System
 import Qualities.Modifiable
 import Qualities.Tailorable
 import Qualities.Adaptable

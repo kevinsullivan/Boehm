@@ -1,4 +1,4 @@
-import System.System
+import SystemModel.System
 
 /- Convenience Aliasing -/
 definition valueType {sys_type : SystemType} := sys_type^.ValueType

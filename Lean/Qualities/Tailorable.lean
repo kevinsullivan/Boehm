@@ -4,7 +4,7 @@
 An instance of type [SystemType] is deemed [Tailorable] if and only if all the requirements are satisfied.
 -/
 
-import System.System
+import SystemModel.System
 
 inductive Tailorable (sys_type: SystemType): Prop
 | intro : (exists tailorable: sys_type ^.Contexts -> sys_type ^.Phases -> sys_type ^.Stakeholders -> @SystemInstance sys_type -> Prop, 
