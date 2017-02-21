@@ -1,7 +1,7 @@
-import DesignStructure
-import System
-import Changeable
-import Example_Parnas_Shared_Info
+import .DesignStructure
+import ...System.System
+import ...Qualities.Changeable
+import .Example_Parnas_Shared_Info
 
 inductive kwicParameter | computer | corpus | user
                         | alph_abs | alph_alg | alph_data
@@ -23,7 +23,7 @@ definition uses : kwicParameter -> kwicParameter -> Prop
 | kwicParameter.input_data kwicParameter.circ_data := true
 | kwicParameter.input_data kwicParameter.alph_data := true
 | kwicParameter.circ_alg kwicParameter.circ_data := true
-/-| kwicParameter.circ_alg kwicParameter.input_data := true
+| kwicParameter.circ_alg kwicParameter.input_data := true
 | kwicParameter.circ_data kwicParameter.input_data := true
 | kwicParameter.circ_data kwicParameter.alph_data := true
 | kwicParameter.alph_alg kwicParameter.input_data := true
@@ -33,7 +33,7 @@ definition uses : kwicParameter -> kwicParameter -> Prop
 | kwicParameter.alph_data kwicParameter.circ_data := true
 | kwicParameter.output_alg kwicParameter.input_data := true
 | kwicParameter.output_alg kwicParameter.alph_data := true
-| kwicParameter.output_alg kwicParameter.output_data := true-/
+| kwicParameter.output_alg kwicParameter.output_data := true
 | _ _ := false
 
 --TODO
@@ -46,7 +46,7 @@ definition satisfies : kwicParameter -> kwicParameter -> Prop
 | computer  input_alg := true
 | computer  alph_alg := true
 | computer  output_alg := true
-/-corpus  input_data := true
+| corpus  input_data := true
 | corpus  input_alg := true
 | corpus  circ_data := true
 | corpus  circ_alg := true
@@ -60,7 +60,7 @@ definition satisfies : kwicParameter -> kwicParameter -> Prop
 | input_abs input_alg := true
 | circ_abs circ_alg := true
 | alph_abs alph_alg := true
-| output_abs output_alg := true-/
+| output_abs output_alg := true
 | _ _ := false
 
 definition input_mod : (@Module kwicParameter) := 

@@ -1,6 +1,6 @@
-import Satisfactory
-import Value
-import Example_Parnas_Information_Hiding
+import ...Qualities.Satisfactory
+import ...System.Value
+import .Example_Parnas_Information_Hiding
 
 /-
 [corpusChangeActionSpec] expresses a Ross-style changeability requirement
@@ -25,7 +25,7 @@ definition corpusChangeActionSpec (trigger: kwicAssertion) (agent: kwicStakehold
         (trigger = corpusPreState /\ agent = kwicStakeholders.customer /\ corpusPre pre /\ inMaintenancePhase pre ->
         corpusPost post /\ post^.value^.modulesChanged <= pre^.value^.modulesChanged + 1)
 
-theorem verifyChangeCorpus: ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre kwicStakeholders.customer) costomerChangeCorpus :=
+theorem verifyChangeCorpus: ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre kwicStakeholders.customer) customerChangeCorpus :=
 begin
     unfold ActionSatisfiesActionSpec,
     unfold corpusChangeActionSpec,
@@ -39,7 +39,7 @@ begin
 end
 
 definition kwic_changeability_reqs : kwicContexts -> kwicPhases -> kwicStakeholders -> kwicSystemState -> Prop
-| kwicContexts.nominal kwicPhases.maintenance kwicStakeholders.customer _ :=  ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre kwicStakeholders.customer) costomerChangeCorpus
+| kwicContexts.nominal kwicPhases.maintenance kwicStakeholders.customer _ :=  ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre kwicStakeholders.customer) customerChangeCorpus
 | _ _ _ _ := true
 
 definition kwic_accuracy_reqs (c: kwicContexts) (p: kwicPhases) (s: kwicStakeholders) (st: kwicSystemState): Prop := true

@@ -1,9 +1,9 @@
-import DesignStructure
-import System
+import .DesignStructure
+import ...System.System
 -- This is a model of the example from Parnas 72
 
-import Changeable
-import Example_Parnas_Shared_Info
+import ...Qualities.Changeable
+import .Example_Parnas_Shared_Info
 
 inductive kwicParameter | computer | corpus | user
                         | line_abs | line_alg | line_data
