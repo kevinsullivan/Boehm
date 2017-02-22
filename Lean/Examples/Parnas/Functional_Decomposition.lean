@@ -3,6 +3,8 @@ import SystemModel.System
 import Qualities.Changeable
 import Examples.Parnas.Shared_Info
 
+set_option eqn_compiler.max_steps 256
+
 inductive kwicParameter | computer | corpus | user
                         | alph_abs | alph_alg | alph_data
                         | circ_abs | circ_alg | circ_data
