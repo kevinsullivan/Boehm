@@ -20,10 +20,14 @@ were changed due to the operation.
 -/
 
 definition corpusChangeActionSpec (trigger: kwicAssertion) (agent: kwicStakeholders) (pre post: kwicSystemState): Prop  :=  
-        --TODO
-        --isModular_wrt corpus pre /\ 
+        isModular_wrt kwicParameter.corpus pre /\ 
         (trigger = corpusPreState /\ agent = kwicStakeholders.customer /\ corpusPre pre /\ inMaintenancePhase pre ->
         corpusPost post /\ post^.value^.modulesChanged <= pre^.value^.modulesChanged + 1)
+
+
+-- TODO: finish the proof
+theorem proveModular: forall (s: SystemInstance), isModular_wrt kwicParameter.corpus s :=
+sorry
 
 theorem verifyChangeCorpus: ActionSatisfiesActionSpec (corpusChangeActionSpec corpusPre kwicStakeholders.customer) customerChangeCorpus :=
 begin
@@ -31,7 +35,10 @@ begin
     unfold corpusChangeActionSpec,
     intros,
     split,
+    apply proveModular,    
     unfold corpusPost,
+    intros,
+    split,    
     reflexivity,
     unfold customerChangeCorpus,
     simp,

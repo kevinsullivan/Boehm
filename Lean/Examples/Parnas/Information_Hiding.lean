@@ -17,8 +17,6 @@ inductive kwicParameter | computer | corpus | user
                         
 open kwicParameter
 
---TODO
--- error: maximum number of steps (128) exceeded 
 definition uses : kwicParameter -> kwicParameter -> Prop
 | kwicParameter.master kwicParameter.line_abs := true
 | kwicParameter.master kwicParameter.input_abs := true
@@ -43,8 +41,6 @@ definition uses : kwicParameter -> kwicParameter -> Prop
 | kwicParameter.output_data kwicParameter.output_alg := true
 | _ _ := false
 
---TODO
--- error: maximum number of steps (128) exceeded 
 definition satisfies : kwicParameter -> kwicParameter -> Prop
 | computer  line_data := true
 | computer  line_alg := true
@@ -111,12 +107,10 @@ definition kwic_ds: DesignStructure :=
 { Modules := kwic_modules, Volatile := kwic_volatile, Uses:= uses, Satisfies:= satisfies }
 
 inductive kwic_ds_type 
-| mk_kwic_ds : forall (ds: DesignStructure), ds = kwic_ds -> kwic_ds_type
+| mk_kwic_ds : (@DesignStructure kwicParameter) -> Prop -> kwic_ds_type
 
--- TODO
---definition extract_kwic_ds : kwic_ds_type -> DesignStructure
---| (kwic_ds_type.mk_kwic_ds) ds := ds
---| (kwic_ds_type.mk_kwic_ds) ds _ := ds
+definition extract_kwic_ds : kwic_ds_type -> (@DesignStructure kwicParameter)
+| (kwic_ds_type.mk_kwic_ds ds _) := ds
 
 record kwic := 
 mk :: (kwic_volatile_state: kwicVolatileState) (kwic_design: kwic_ds_type)
@@ -133,11 +127,10 @@ definition kwicAssertion := @Assertion kwicSystemType
 
 definition kwicAction := @Action kwicSystemType
 
---TODO
 /- Test more specifically whether a system is modular -/
---definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds (kwic_design (artifact ks)))
+definition isModular (ks: kwicSystemState): Prop := modular (extract_kwic_ds ks^.artifact^.kwic_design)
 /- Test more specifically whether a system is modular with respect to a single parameter -/
---definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds (kwic_design (artifact ks)))
+definition isModular_wrt (kp: kwicParameter) (ks: kwicSystemState): Prop := modular_wrt kp (extract_kwic_ds ks^.artifact^.kwic_design)
 
 definition computerPre (ks: kwicSystemState): Prop := ks^.artifact^.kwic_volatile_state^.computer_state = computerState.computer_pre
 definition computerPost (ks: kwicSystemState): Prop := ks^.artifact^.kwic_volatile_state^.computer_state = computerState.computer_post
@@ -166,7 +159,5 @@ definition customerChangeCorpus: kwicAction :=
                 {   computer_state := ks^.artifact^.kwic_volatile_state^.computer_state,
                     corpus_state:= corpusState.corpus_post,
                     user_state:= ks^.artifact^.kwic_volatile_state^.user_state },
-              -- TODO
-              --kwic_design := mk_kwic_ds kwic_ds eq_refl |}
-              kwic_design := ks^.artifact^.kwic_design},
+              kwic_design := (kwic_ds_type.mk_kwic_ds kwic_ds (kwic_ds=kwic_ds))},
         value := ks^.value }
