@@ -1,3 +1,4 @@
+.gitignore
 *.vo
 *.glob
 *.v.d
@@ -5,3 +6,4 @@
 \#*\#
 .DS_STORE
 *.olean
+*.log
