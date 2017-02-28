@@ -1,12 +1,12 @@
 Require Import Structure.
 Require Import System.
 
+(** Lemmas that are needed in order to prove the main theorem *)
 Lemma plus_comm : forall n m, n + m = m + n.
 Proof.
 intros n m; elim n; simpl in |- *; auto with arith.
 intros y H; elim (plus_n_Sm m y); auto with arith.
 Qed.
-
 Lemma maxLessThan : forall a b k, max a b <= k -> a <= k.
 Proof.
   intros a.
@@ -18,7 +18,6 @@ Proof.
     simpl in H. apply le_n_S. apply IHa with (b:=b).
     apply le_S_n. apply H.
 Qed.
-
 Lemma max_comm : forall a b, max a b = max b a.
 Proof.
   intros a.
@@ -28,6 +27,10 @@ Proof.
     simpl. rewrite IHa. reflexivity.
 Qed.
 
+(** The main theorem saying that
+    We have evidence for all the ilities in the hierarchy
+    as long as the hierarchy is created the way we define
+    (All the Leaf ilities require a proof of their requirements when instancing *)
 Theorem proofIlities : forall (s : SystemType) (n : ilities), (@ilitiesProp s) n.
 Proof.
   intros.
